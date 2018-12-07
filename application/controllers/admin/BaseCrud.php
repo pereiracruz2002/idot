@@ -19,18 +19,15 @@ class BaseCrud extends CI_Controller {
     var $selects = '*';
     var $joins = false;
     var $group = false;
-    var $order = array();
     var $base_ativo = false; // var $base_ativo = 'ativo';
     var $data = array();
     var $models_visualizar = array(); // array("nome da model (sem _model)" => array("titulo" => "Tiulo da visualização", "join" => "tabela.id_tabela=tabela2.id_tabela2"));
     var $fields_groups = false;
-    var $msg_no_items = "Nenhum registro encontrado";
-    var $display_grid = true;
 
     function __construct() {
         parent::__construct();
-        if (!$this->session->userdata('operador')) {
-            redirect('/meu-painel-wvtodoz');
+        if (!$this->session->userdata('admin')) {
+            redirect('/admin/login');
         }
         $this->_modelname();
     }
@@ -86,7 +83,7 @@ class BaseCrud extends CI_Controller {
             $this->_filter_pos_save($data, $id);
     }
 
-    function _call_filter_pre_delete(&$id) {
+    function _call_filter_pre_delete($id) {
         if (strstr($this->actions, 'D')) {
             if (method_exists($this, '_filter_pre_delete'))
                 return $this->_filter_pre_delete($id);
@@ -97,12 +94,7 @@ class BaseCrud extends CI_Controller {
         }
     }
 
-    function _call_pre_edit(&$id) {
-        if (method_exists($this, '_pre_edit'))
-            $this->_pre_edit($id);
-    }
-
-    function _call_filter_pos_delete(&$id) {
+    function _call_filter_pos_delete($id) {
         if (method_exists($this, '_filter_pos_delete'))
             $this->_filter_pos_delete($id);
     }
@@ -167,9 +159,7 @@ class BaseCrud extends CI_Controller {
         }
 
         $where = array();
-
         $this->load->model($this->modelname . "_model", 'model');
-
         $config['base_url'] = site_url($this->base_url . "/listar/");
         $config['uri_segment'] = 3;
         $config['per_page'] = 100;
@@ -179,6 +169,7 @@ class BaseCrud extends CI_Controller {
             $where_ativo = array();
         }
         $busca = $this->input->posts();
+        
         if (!is_numeric($this->uri->segment(3)) and $this->uri->segment(3) != "") {
             $query = base64_decode($this->uri->segment(3));
             $termos = explode("&", $query);
@@ -193,6 +184,9 @@ class BaseCrud extends CI_Controller {
             $url = "";
             foreach ($busca as $key => $value) {
                 if ($value) {
+                    if ($key == $this->model->id_col) {
+                        $where_ativo[$this->model->table . '.' . $key] = $value;
+                    }
                     $where[$this->model->table . '.' . $key] = $value;
                     $this->model->fields[$key]['value'] = $value;
                     $url .= $key . "=" . $value . "&";
@@ -202,28 +196,22 @@ class BaseCrud extends CI_Controller {
             $config['base_url'] = site_url($this->base_url . "/listar/{$params}");
             $config['uri_segment'] = 4;
         }
-        if(!$this->order){
-            $this->order = array($this->model->table . "." . $this->model->id_col => "desc");
-        }
         $this->_call_filter_pre_listar($where_ativo, $where);
+        $order = array($this->model->table . "." . $this->model->id_col => "desc");
 
-        if ($this->display_grid) {
-            $results = $this->model->search($where, $this->uri->segment($config['uri_segment']), $config['per_page'], $this->selects, $this->joins, $where_ativo, $this->order, $this->group);
+        $results = $this->model->search($where, $this->uri->segment($config['uri_segment']), $config['per_page'], $this->selects, $this->joins, $where_ativo, $order, $this->group);
+        /*echo '<pre>';
+        print_r($results);
+        return;*/
+        $config['total_rows'] = $results['total_rows'];
+        $data['total'] = $results['total_rows'];
 
-            $config['total_rows'] = $results['total_rows'];
-            $data['total'] = $results['total_rows'];
+        $this->_call_filter_pre_read($results['resultados']);
+        $data['itens'] = $results['resultados'];
 
-            $this->_call_filter_pre_read($results['resultados']);
-            $data['itens'] = $results['resultados'];
-
-            $this->load->library('pagination');
-            $this->pagination->initialize($config);
-            $data['paginacao'] = $this->pagination->create_links();
-        } else {
-            $data['total'] = 0;
-            $data['itens'] = array();
-            $data['paginacao'] = false;
-        }
+        $this->load->library('pagination');
+        $this->pagination->initialize($config);
+        $data['paginacao'] = $this->pagination->create_links();
 
         $data['form'] = "";
         foreach (explode(',', $this->campos_busca) as $item) {
@@ -240,19 +228,21 @@ class BaseCrud extends CI_Controller {
         $data['camposBusca'] = explode(',', $this->campos_busca);
         $data['model'] = $this->model;
         $data['c'] = & $this;
+        $data['teste'] = 'hello';
 
-        $this->load->view('painel/crud/index', array_merge($data, $this->data));
+        //exit();
+        $this->load->view('admin/crud/index', array_merge($data, $this->data));
     }
 
-    function _try_save(&$data, $method = 'novo', $id = null) {        
+    function _try_save(&$data, $method = 'novo', $id = null) {
         $crud = $this->_crud();
+        $this->load->model($this->modelname . '_model', 'model');
         $url = site_url($this->base_url);
 
         if ($this->input->posts()) {
 
-            foreach (array_keys($this->model->fields) as $k){
+            foreach (array_keys($this->model->fields) as $k)
                 $data[0]['values'][$k] = $this->input->post($k);
-            }
 
             $this->_call_pre_validate($method);
 
@@ -262,7 +252,6 @@ class BaseCrud extends CI_Controller {
                     $_data[$item] = $data[0]['values'][$item];
                 if ($id)
                     $_data[$this->model->id_col] = $id;
-
                 $this->_call_filter_pre_save($_data);
                 // Salvando
 
@@ -280,10 +269,9 @@ class BaseCrud extends CI_Controller {
         }
     }
 
-    public function novo() 
-    {
-        $this->load->model($this->modelname . '_model', 'model');
+    function novo() {
         $this->data['c'] = & $this;
+        $this->data['model'] = $this->_model();
         $this->data['crud'] = $this->_crud();
         if (!in_array('C', $this->data['crud'])) {
             redirect($this->base_url);
@@ -293,22 +281,22 @@ class BaseCrud extends CI_Controller {
         $this->data['ok'] = false;
         $this->data['titulo'] = "Cadastrar {$this->titulo}";
         $data = array();
-
-        $this->_try_save($data);
         $this->data['data'] = $data;
 
+        $this->_try_save($data);
+
         $this->_call_pre_view($data);
-        $this->load->view('painel/crud/form', $this->data);
+        $this->load->view('admin/crud/form', $this->data);
     }
 
-    public function editar($id, $ok = null) 
-    {
-        if (!$this->session->userdata('operador')) {
+    function editar($id, $ok = null) {
+
+        if (!$this->session->userdata('admin')) {
             redirect('/');
         }
 
         $c = & $this;
-        $this->load->model($this->modelname . '_model', 'model');
+        $model = $this->_model();
         $crud = $this->_crud();
 
         if (!in_array('U', $crud)) {
@@ -320,9 +308,7 @@ class BaseCrud extends CI_Controller {
         $titulo = 'Editar';
         $vars = array();
 
-        $this->_call_pre_edit($id);
-
-        $r = $this->model->get($id)->row();
+        $r = $model->get($id)->row();
         if (!$r) {
             redirect($this->base_url);
         }
@@ -334,17 +320,19 @@ class BaseCrud extends CI_Controller {
         $this->_try_save($data, 'update', $id);
 
         $dados = compact('titulo', 'url', 'model', 'data', 'c', 'action', 'ok', 'crud', 'vars');
+
         $dados_view = array_merge($dados, $this->data);
-        $this->load->view('painel/crud/form', $dados_view);
+        
+        $this->load->view('admin/crud/form', $dados_view);
     }
 
     function deletar($id) {
         if (!in_array('D', $this->_crud())) {
             redirect($this->base_url);
         }
-        $this->load->model($this->modelname . '_model', 'model');
+        $model = $this->_model();
         if ($this->_call_filter_pre_delete($id)) {
-            $this->model->delete($id);
+            $model->delete($id);
             $this->_call_filter_pos_delete($id);
             $this->output->set_output("ok");
         } else {
@@ -408,7 +396,7 @@ class BaseCrud extends CI_Controller {
         $this->data['fields'] = $this->{$this->modelname}->fields;
         $this->data['c'] = & $this;
 
-        $this->load->view('painel/crud/visualizar', $this->data);
+        $this->load->view('admin/crud/visualizar', $this->data);
     }
 
 }

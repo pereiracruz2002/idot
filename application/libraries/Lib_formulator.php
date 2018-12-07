@@ -75,12 +75,8 @@ class Lib_formulator {
       $prepend = (isset($prepend) ? $prepend : '');
       $div_class =(isset($div_class) ? $div_class: '');
       $label_class =(isset($label_class) ? $label_class : '');
-      if (in_array($type, array('checkbox', 'radio'))){
-          $input = "<label for=\"{$uid}\" class=\"{$label_class} label-{$type}\"> {$input}<span class=\"custom-checkbox\"></span> {$label}</label>";
-
-      }else{
-        $input = "<div class=\"form-group {$div_class}\"><label for=\"{$uid}\" class=\"control-label {$label_class} \">{$label}</label>{$prepend} {$input} {$append}</div>";
-      }
+      if (in_array($type, array('checkbox', 'radio'))) $input = "<label for=\"{$uid}\" class=\"{$label_class} label-{$type}\"> {$input}<span class=\"lbl\"></span> {$label}</label>";
+      else $input = "<div class=\"form-group {$div_class}\"><label for=\"{$uid}\" class=\"control-label {$label_class} \">{$label}</label>{$prepend} {$input} {$append}</div>";
       
       
     }
@@ -104,18 +100,11 @@ class Lib_formulator {
     return $this->input('password', $args);
   }
 
-  function time($args=array()) {
-    return $this->input('time', $args);
-  }
   function date($args=array()) {
-    return $this->input('date', $args);
+    return $this->input('text', $args);
   }
-  function datetime($args=array()) {
-    return $this->input('datetime-local', $args);
-  }
-  function tel($args=array()) {
-    return $this->input('tel', $args);
-  }
+
+
   function hidden ($args=array()) {
     return $this->input('hidden', $args);
   }
@@ -206,34 +195,20 @@ class Lib_formulator {
     $args['name'] = $args['name']."[]";
     
     if(isset($args['label']))
-    	$this->inputs[] = '<div class="form-group '.$div_class.'"><label class="col-md-2 control-label">' . $args['label'] . '</label>';
+    	$this->inputs[] = '<div class="form-group '.$div_class.'"><label class="col-sm-3 control-label">' . $args['label'] . '</label>';
     else
     	$this->inputs[] = '<div class="checks form-group">';
       
     if(isset($args['prepend']))
         $this->inputs[] = $args['prepend'];
-
-
+    
     foreach ($values as $key => $value) {
       if (in_array($key, $val)) $args['checked'] = 'checked';
       else $args['checked'] = false;
       $arg = array_merge($args,array('value' => $key, 'label' => $value));
-      
       $this->inputs[] = '<div class="checkbox">';
-      if(isset($args['extend'])){
-        $this->inputs[] = "<div class='container-fluid'><div class='".(isset($args['div_checks_class']) ? $args['div_checks_class'] : 'col-sm-4')."'>";
-      }
       $this->input('checkbox', $arg);
-
-      if(isset($args['extend'])){
-        $this->inputs[] = '</div><!--/col-md-4-->';
-        if(isset($args['extend'][$key])){
-          $this->inputs[] = $args['extend'][$key];  
-        }
-        
-        $this->inputs[] = '</div><!--/row-->';
-      }
-      $this->inputs[] = '</div><!--/checkbox-->';
+      $this->inputs[] = '</div>';
     }
     if(isset($args['append']))
         $this->inputs[] = $args['append'];
@@ -308,6 +283,7 @@ class Lib_formulator {
     $prepend = (isset($prepend) ? $prepend : '');
     $div_class =(isset($div_class) ? $div_class: '');
     $label_class =(isset($label_class) ? $label_class : '');
+
 
     $input = sprintf("<select %s>\n%s\n</select>",
       (count($_data_extra) ? join(' ', $_data_extra).' ' : ''),

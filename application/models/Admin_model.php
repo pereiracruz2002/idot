@@ -38,7 +38,7 @@ class Admin_model extends My_Model
             $this->load->library('encrypt');
             if(password_verify($senha,$cadastro->senha)){
                 unset($cadastro->senha);
-                $this->session->set_userdata('operador', $cadastro);
+                $this->session->set_userdata('admin', $cadastro);
                 $this->session->unset_userdata('cliente');
                 $this->update(array('last_login' => date('Y-m-d H:i:s')), $cadastro->admin_id);
                 return true;

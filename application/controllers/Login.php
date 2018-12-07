@@ -4,9 +4,7 @@ class Login extends CI_Controller
     var $data = array();
     public function index() 
     {
-        if($this->session->userdata('operador')){
-            redirect('meu-painel-wvtodoz/painel');
-        }
+        
         $this->load->model('admin_model','admin');
         if($this->input->posts()){
             $senha = password_hash('senha', PASSWORD_DEFAULT);
@@ -22,6 +20,6 @@ class Login extends CI_Controller
     public function sair() 
     {
         $this->session->sess_destroy();
-        redirect('meu-painel-wvtodoz/login');
+        redirect('login');
     }
 }

@@ -50,8 +50,8 @@
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="picture"><i class="fa fa-user"></i></span>
-                                <span class="username"><?php echo $this->session->userdata('admin')->nome ?></span>
-                                <b class="caret"></b>
+                                <!-- <span class="username"><?php echo $this->session->userdata('admin')->nome ?></span>
+                                <b class="caret"></b> -->
                             </a>
                             <ul class="dropdown-menu extended logout">
                                 <?php /* <li><a href="<?php echo site_url('admin/configuracoes') ?>"><i class="fa fa-cog"></i> Configurações</a></li> */ ?>
