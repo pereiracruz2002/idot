@@ -72,7 +72,7 @@
                               </ul>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<?php echo site_url('login/sair') ?>">
                                 <p>Sair</p>
                             </a>
                         </li>
