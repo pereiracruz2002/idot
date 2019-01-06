@@ -1,21 +1,36 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex, nofollow">
-        <title>Administrativo <?php echo (isset($title) ? " - " . $title : "") ?></title>
-        <link href="<?php echo base_url() ?>assets/admin/bs3/css/bootstrap.min.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>assets/admin/css/bootstrap-reset.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>assets/admin/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>assets/admin/css/table-responsive.css" rel="stylesheet" />
-        <link rel="icon" href="<?php echo base_url() ?>assets/admin/images/favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="<?php echo base_url() ?>assets/admin/images/favicon.ico" type="image/x-icon" />
-        <link href="<?php echo base_url() ?>assets/admin/css/style.css" rel="stylesheet">
-        <link href="<?php echo base_url() ?>assets/admin/css/style-responsive.css" rel="stylesheet" />
-        <link href="<?php echo base_url() ?>assets/admin/js/select2/select2.css" rel="stylesheet">
-        <?php
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="<?php base_url();?>assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <title>Sistema IDOT</title>
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+
+    <!-- Bootstrap core CSS     -->
+    <link href="/assets/admin/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Animation library for notifications   -->
+    <link href="/assets/admin/css/animate.min.css" rel="stylesheet"/>
+
+    <!--  Light Bootstrap Table core CSS    -->
+    <link href="/assets/admin/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+
+
+    <!--  CSS for Demo Purpose, don't include it in your project     -->
+    <link href="/assets/admin/css/demo.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href="/assets/admin/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    
+    <?php
         if (isset($cssFiles)):
             foreach ($cssFiles as $v):
                 ?>
@@ -27,84 +42,84 @@
         <script>var base_url = '<?php echo site_url('admin') ?>/';</script> 
         <script>var base = '<?php echo base_url() ?>';</script>
 
-    </head>
-    <body>
-        <section id="container" >
-            <?php if (!isset($webshot)): ?>
+</head>
+<body>
+<div class="sidebar" data-color="purple" data-image="/assets/admin/img/sidebar-5.jpg">
 
-            <header class="header fixed-top clearfix">
-                <div class="brand">
-                    <a href="/admin/painel" class="logo">
-                        <!--<img src="<?php echo base_url() ?>assets/admin/images/logo.png" alt="Sua Franqia" class="img-responsive">-->
-                    </a>
-                    <div class="sidebar-toggle-box">
-                        <div class="fa fa-bars"></div>
-                    </div>
-                </div>
+    <!--
 
-                <div class="top-nav clearfix">
-                    <ul class="nav pull-right top-menu">
-                        <li>
-                            <form method="post" action="<?php echo site_url('admin/franquias') ?>"><input type="text" class="form-control search" name="franquias" placeholder="Procurar Franquia"></form>
-                        </li>
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="picture"><i class="fa fa-user"></i></span>
-                                <!-- <span class="username"><?php echo $this->session->userdata('admin')->nome ?></span>
-                                <b class="caret"></b> -->
-                            </a>
-                            <ul class="dropdown-menu extended logout">
-                                <?php /* <li><a href="<?php echo site_url('admin/configuracoes') ?>"><i class="fa fa-cog"></i> Configurações</a></li> */ ?>
-                                <li><a href="<?php echo site_url('admin/login/logout') ?>"><i class="fa fa-key"></i> Sair</a></li>
-                            </ul>
-                        </li>
-                        <!-- user login dropdown end -->
-                    </ul>
-                    <!--search & user info end-->
-                </div>
-            </header>
-            <!--header end-->
-            <aside>
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
 
-                <div id="sidebar" class="nav-collapse">
-                    <!-- sidebar menu start-->            
-                    <div class="leftside-navigation">
-                        <ul class="sidebar-menu" id="nav-accordion">
-                            
-                            <li>
-                                <a id="painel" href="<?php echo site_url('admin/painel') ?>" class="<?php echo ($menu_active == 'painel' ? 'active' : '') ?>">
-                                    <i class="fa fa-dashboard"></i>
-                                    <span>Painel</span>
-                                </a>
-                            </li>
-                            
-                             <li>
-                              <a id="relatorios" href="<?php echo site_url('admin/arquivos_downloads') ?>"  class="<?php echo ($menu_active == 'arquivos_downloads' ? 'active' : '') ?>">
-                                <i class="ico-download"></i>
-                                <span>Arquivos para Upload</span> 
-                              </a>
-                            </li>
-                            
+    -->
 
-                            <?php /*if ($menu->acessaClassificados):  ?>
-                            <li>
-                                <a id="classificados" href="<?php echo site_url('admin/classificados') ?>" class="<?php echo ($menu_active == 'classificados' ? 'active' : '') ?>">
-                                    <i class="fa fa-newspaper-o"></i>
-                                    <span>Classificados</span>
-                                </a>
-                            </li>
-                            <?php endif; */?>
+    <div class="sidebar-wrapper">
+        <div class="logo">
+            Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a>
+            </a>
+        </div>
 
-                        </ul>
-                    </div>        
-                    <!-- sidebar menu end-->
-                </div>
-            </aside>
-            <!--sidebar end-->
-            <!--main content start-->
-            <section id="main-content">
-                <section class="wrapper">
-        <?php else: ?>
-            <section id="webshot-content">
-                <section class="webshot-wrapper">
-        <?php endif; ?>
+        <ul class="nav">
+            <li class="active">
+                <a href="<?php echo site_url('admin/painel') ?>">
+                    <i class="pe-7s-graph"></i>
+                    <p>Painel</p>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('admin/admins') ?>">
+                    <i class="pe-7s-user"></i>
+                    <p>Administradores</p>
+                </a>
+            </li>
+            <li>
+                <a href="user.html">
+                    <i class="pe-7s-user"></i>
+                    <p>Professores</p>
+                </a>
+            </li>
+            <li>
+                <a href="user.html">
+                    <i class="pe-7s-user"></i>
+                    <p>Alunos</p>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('admin/cursos') ?>">
+                    <i class="pe-7s-note2"></i>
+                    <p>Cursos</p>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('admin/modulos') ?>">
+                    <i class="pe-7s-note2"></i>
+                    <p>Módulos</p>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('admin/aulas') ?>">
+                    <i class="pe-7s-note2"></i>
+                    <p>Aulas</p>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('admin/salas') ?>">
+                    <i class="pe-7s-home"></i>
+                    <p>Salas</p>
+                </a>
+            </li>
+            <li>
+                <a href="notifications.html">
+                    <i class="pe-7s-bell"></i>
+                    <p>Notificações</p>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('admin/agendamentos') ?>">
+                    <i class="pe-7s-date"></i>
+                    <p>Agendamentos</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

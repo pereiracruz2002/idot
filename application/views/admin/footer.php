@@ -1,16 +1,49 @@
-    </section>
-</section>
 
-<script src="<?php echo base_url() ?>assets/admin/js/jquery.js"></script>
-<script src="<?php echo base_url() ?>assets/admin/js/mask.js"></script>
-<script src="<?php echo base_url() ?>assets/admin/js/scripts.js?c=<?php echo uniqid() ?>"></script>
-<script src="<?php echo base_url() ?>assets/admin/bs3/js/bootstrap.min.js"></script>
-<script class="include" type="text/javascript" src="<?php echo base_url() ?>assets/admin/js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="<?php echo base_url() ?>assets/admin/js/jquery.scrollTo.min.js"></script>
-<script src="<?php echo base_url() ?>assets/admin/js/jQuery-slimScroll-1.3.0/jquery.slimscroll.js"></script>
-<script src="<?php echo base_url() ?>assets/admin/js/jquery.nicescroll.js"></script>
 
-<script src="<?php echo base_url() ?>assets/admin/js/select2/select2.js"></script>
+    <!--   Core JS Files   -->
+    <script src="/assets/admin/js/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="/assets/admin/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+
+
+    <!--  Checkbox, Radio & Switch Plugins -->
+    <script src="/assets/admin/js/bootstrap-checkbox-radio-switch.js"></script>
+
+    <!--  Charts Plugin -->
+    <script src="/assets/admin/js/chartist.min.js"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="/assets/admin/js/bootstrap-notify.js"></script>
+
+    <!--  Google Maps Plugin    -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+    <script src="/assets/admin/js/light-bootstrap-dashboard.js"></script>
+
+    <!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+    <script src="/assets/admin/js/demo.js"></script>
+
+    <script src="/assets/admin/js/tinymce/tinymce.min.js"></script>
+
+    <script src="/assets/admin/js/util.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            demo.initChartist();
+
+            $.notify({
+                icon: 'pe-7s-gift',
+                message: "Bem Vindo ao painel do sistema <b>IDOT</b>"
+
+            },{
+                type: 'info',
+                timer: 4000
+            });
+
+        });
+    </script>
 <?php
 if (isset($jsFiles)):
     foreach ($jsFiles as $v):

@@ -276,7 +276,7 @@ class BaseCrud extends CI_Controller {
         if (!in_array('C', $this->data['crud'])) {
             redirect($this->base_url);
         }
-        $this->data['url'] = site_url($this->base_url);
+        $this->data['url'] = $this->base_url;
         $this->data['action'] = '/novo';
         $this->data['ok'] = false;
         $this->data['titulo'] = "Cadastrar {$this->titulo}";
@@ -336,6 +336,7 @@ class BaseCrud extends CI_Controller {
             $this->_call_filter_pos_delete($id);
             $this->output->set_output("ok");
         } else {
+            echo $this->db->last_query();
             $this->output->set_output("erro ao deletar registro");
         }
     }

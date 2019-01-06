@@ -9,12 +9,12 @@ class Login extends CI_Controller
         if($this->input->posts()){
             $senha = password_hash('senha', PASSWORD_DEFAULT);
             if($this->admin->login($this->input->post('login'), $this->input->post('senha'))) {
-                redirect('admin/painel');
+                redirect('painel');
             } else {
                 $this->data['msg'] = 'Login incorreto';
             }
         }
-        $this->load->view('painel/login', $this->data);
+        $this->load->view('admin/login', $this->data);
     }
 
     public function sair() 

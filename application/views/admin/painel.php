@@ -1,216 +1,326 @@
 <?php include_once(dirname(__FILE__) . '/header.php'); ?>
 
-<header class="page-header">
-    <div class="panel">
-        <div class="input-group">
-            <input type="text" class="input-sm form-control" name="date-range-picker" />
-            <span class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-            </span>
-           <!--  <input type="hidden" name="IDFranquia" value="<?php echo $this->uri->segment(4) ?>" />
-            <input type="hidden" name="de" value="<?php echo isset($where['de'])? date('d-m-Y', strtotime($where['de'])) : date('d-m-Y', strtotime('-1 month')) ?>" />
-            <input type="hidden" name="ate" value="<?php echo isset($where['ate'])? date('d-m-Y', strtotime($where['ate'])) :date('d-m-Y') ?>" /> -->
-        </div>
-    </div>
-    <?php /* ?>
-    <div class="pull-right col-sm-8">
-        <div class="col-sm-4">
-            <span class="mini-stat-icon pink"><i class="ico-users"></i></span>
-            <div class="mini-stat-info">
-                <span><?php echo number_format($total_leads_unicos, 0, '', '.') ?></span>
-                Cadastros Únicos 
+
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Painel</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-dashboard"></i>
+                                <p class="hidden-lg hidden-md">Painel</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-globe"></i>
+                                    <b class="caret hidden-sm hidden-xs"></b>
+                                    <span class="notification hidden-sm hidden-xs">5</span>
+                                    <p class="hidden-lg hidden-md">
+                                        5 Notifications
+                                        <b class="caret"></b>
+                                    </p>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Notification 1</a></li>
+                                <li><a href="#">Notification 2</a></li>
+                                <li><a href="#">Notification 3</a></li>
+                                <li><a href="#">Notification 4</a></li>
+                                <li><a href="#">Another notification</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                           <a href="">
+                                <i class="fa fa-search"></i>
+                                <p class="hidden-lg hidden-md">Search</p>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href="">
+                               <p>Account</p>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <p>
+                                        Dropdown
+                                        <b class="caret"></b>
+                                    </p>
+                              </a>
+                              <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                              </ul>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <p>Sair</p>
+                            </a>
+                        </li>
+                        <li class="separator hidden-lg hidden-md"></li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <span class="mini-stat-icon orange"><i class="fa fa-users"></i></span>
-            <div class="mini-stat-info">
-                <span><?php echo number_format($statsAnalytics['total']['sessions'], 0, '', '.') ?></span>
-                Visitas
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <span class="mini-stat-icon tar"><i class="fa fa-eye"></i></span>
-            <div class="mini-stat-info">
-                <span><?php echo number_format($statsAnalytics['total']['pageviews'], 0, '', '.') ?></span>
-                PageViews
-            </div>
-        </div>
-    </div>
-    <h2>Sua Franquia</h2>
-    <?php /*<small class="mute">Dados do dia <?php echo date('d/m/Y', strtotime('-30 days')) ?> até hoje</small> */ ?>
-</header>
-<?php /* ?>
-<div class="panel">
-    <div class="panel-heading"><i class="fa fa-pie-chart"></i> Acessos por conteúdos</div>
-    <div class="panel-body">
-        <div class="col-sm-4">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Seção</th>
-                        <th>Visitas</th>
-                        <th>PageViews</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($statsAnalytics['secoes'] as $key => $item): ?>
-                        <tr>
-                            <td><?php echo ucfirst($key) ?></td>
-                            <td><?php echo number_format($item['total_sessions'], 0, '', '.') ?></td>
-                            <td><?php echo number_format($item['total_pageviews'], 0, '', '.') ?></td>
-                            <td><a href="#modal_<?php echo $key ?>" class="detalhes_visitas"><i class="fa fa-external-link"></i></a></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <?php foreach ($statsAnalytics['secoes'] as $key => $item): ?>
-                <div class="modal fade" tabindex="-1" role="dialog" id ="modal_<?php echo $key ?>">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title"><?php echo ucfirst($key) ?></h4>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Email Statistics</h4>
+                                <p class="category">Last Campaign Performance</p>
                             </div>
-                            <div class="modal-body">
-                                <div class="overflow-modal">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>URL</th>
-                                                <th>Visitas</th>
-                                                <th>PageViews</th>
-                                            </tr>
-                                        </thead>
+                            <div class="content">
+                                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+
+                                <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Open
+                                        <i class="fa fa-circle text-danger"></i> Bounce
+                                        <i class="fa fa-circle text-warning"></i> Unsubscribe
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Users Behavior</h4>
+                                <p class="category">24 Hours performance</p>
+                            </div>
+                            <div class="content">
+                                <div id="chartHours" class="ct-chart"></div>
+                                <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Open
+                                        <i class="fa fa-circle text-danger"></i> Click
+                                        <i class="fa fa-circle text-warning"></i> Click Second Time
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title">2014 Sales</h4>
+                                <p class="category">All products including Taxes</p>
+                            </div>
+                            <div class="content">
+                                <div id="chartActivity" class="ct-chart"></div>
+
+                                <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Tesla Model S
+                                        <i class="fa fa-circle text-danger"></i> BMW 5 Series
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-check"></i> Data information certified
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="header">
+                                <h4 class="title">Tasks</h4>
+                                <p class="category">Backend development</p>
+                            </div>
+                            <div class="content">
+                                <div class="table-full-width">
+                                    <table class="table">
                                         <tbody>
-                                            <?php foreach ($item as $path => $total): ?>
-                                                <?php if (!in_array($path, array('total_pageviews', 'total_sessions'))): ?>
-                                                    <tr>
-                                                        <td><?php echo $path ?></td>
-                                                        <td><?php echo number_format($total['sessions'], 0, '', '.') ?></td>
-                                                        <td><?php echo number_format($total['pageviews'], 0, '', '.') ?></td>
-                                                    </tr>
-                                                <?php endif; ?>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                        <tfoot>
                                             <tr>
-                                                <td>Total:</td>
-                                                <td><?php echo number_format($item['total_sessions'], 0, '', '.') ?></td>
-                                                <td><?php echo number_format($item['total_pageviews'], 0, '', '.') ?></td>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Sign contract for "What are conference organizers afraid of?"</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
                                             </tr>
-                                        </tfoot>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox" checked="">
+                                                    </label>
+                                                </td>
+                                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox" checked="">
+                                                    </label>
+                                                </td>
+                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Read "Following makes Medium better"</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <label class="checkbox">
+                                                        <input type="checkbox" value="" data-toggle="checkbox">
+                                                    </label>
+                                                </td>
+                                                <td>Unfollow 5 enemies from twitter</td>
+                                                <td class="td-actions text-right">
+                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     </table>
                                 </div>
 
+                                <div class="footer">
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            </div>
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-            <?php endforeach; ?>
-        </div> 
-
-        <div class="col-sm-8">
-            <div class="col-sm-6">
-                <div class="chart-container" style="position: relative; height:300px;">
-                    <script>
-                        var chartVisitas_data = <?php echo json_encode($chartVisitas_data); ?>;
-                    </script>
-                    <canvas id="chartVisitas"></canvas>
-                </div>
-            </div>
-
-            <div class="col-sm-6">
-                <div class="chart-container" style="position: relative; height:300px;">
-                    <script>
-                        var chartPageViews_data = <?php echo json_encode($chartPageViews_data); ?>;
-                    </script>
-                    <canvas id="chartPageViews"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                               Blog
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="copyright pull-right">
+                    &copy; <script>document.write(new Date().getFullYear())</script> Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a>
+                </p>
+            </div>
+        </footer>
+
     </div>
 </div>
 
-<div class="row">
-    <div class="col-sm-3">
-        <div class="panel">
-            <div class="panel-heading">
-                <i class="ico-user-plus"></i> Total de Cadastros
-            </div>
-            <div class="panel-body">
-                <h1 class="text-center"><?php echo number_format($total_leads, 0, '', '.') ?></h1>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="panel-heading">
-                <i class="fa fa-facebook"></i> Fãs no Facebook 
-            </div>
-            <div class="panel-body">
-                <h3 class="text-center"><?php echo number_format($fan_count, 0, '', '.') ?></h3>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-sm-6">
-        <div class="panel">
-            <div class="panel-heading"><i class="ico-podium"></i> Ranking das franquias</div>
-            <div class="panel-body">
-                <div class="overflow-widget">
-                    <table class="table table-stripped">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Franquia</th>
-                                <th>Leads</th>
-                                <th>Seg</th>
-                                <th>Comp</th>
-                                <th>Exc</th>
-                                <th>Not</th>
-                                <th>Ramo</th>
-                                <th>Reg</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($ranking as $key => $item): ?>
-                                <tr>
-                                    <td><?php echo $key + 1 ?></td>
-                                    <td><?php echo $item->nomeFantasia ?></td>
-                                    <td><?php echo $item->cadastros ?></td>
-                                    <td><?php echo $item->segmento ?></td>
-                                    <td><?php echo $item->comparativo ?></td>
-                                    <td><?php echo $item->pagina_exclusiva ?></td>
-                                    <td><?php echo $item->noticias ?></td>
-                                    <td><?php echo $item->ramo ?></td>
-                                    <td><?php echo $item->regiao ?></td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-sm-3">
-        <div class="panel">
-            <div class="panel-heading">
-                <i class="ico-office"></i> Franquias
-            </div>
-            <div class="panel panel-body">
-                <div class="chart-container" style="position: relative; height:225px;">
-                    <script>
-                        var chartFranquias_data = <?php echo json_encode($chartFranquias_data); ?>;
-                    </script>
-                    <canvas id="chartFranquias"></canvas>
-                </div>           
-            </div>
-        </div>
-    </div>
-</div>
-<?php */ ?>
 
 <?php include_once(dirname(__FILE__) . '/footer.php'); ?>

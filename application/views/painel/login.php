@@ -7,8 +7,8 @@
 
     <title>Administrar</title>
 
-    <link href="<?php echo base_url() ?>administrativo-assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<?php echo base_url() ?>administrativo-assets/css/login.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>assets/admin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo base_url() ?>assets/admin/css/login.css" rel="stylesheet">
 
   </head>
 
