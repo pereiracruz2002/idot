@@ -63,12 +63,7 @@
                     <p>Painel</p>
                 </a>
             </li>
-            <li>
-                <a href="<?php echo site_url('admin/admins') ?>">
-                    <i class="pe-7s-user"></i>
-                    <p>Administradores Novos</p>
-                </a>
-            </li>
+            
             <li>
                 <a href="<?php echo site_url('admin/admins') ?>">
                     <i class="pe-7s-user"></i>
@@ -76,7 +71,7 @@
                 </a>
             </li>
             <li>
-                <a href="user.html">
+                <a href="<?php echo site_url('admin/professor') ?>">
                     <i class="pe-7s-user"></i>
                     <p>Professores</p>
                 </a>
