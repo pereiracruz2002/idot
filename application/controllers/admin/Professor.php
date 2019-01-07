@@ -19,6 +19,18 @@ class Professor extends BaseCrud {
         $this->data['menu_active'] = 'professor';
     }
 
+    public function _pre_form(&$model) 
+    {
+      $model->fields['login']['type'] = 'text';
+      $model->fields['login']['label'] = 'Login';
+      $model->fields['login']['rules'] = 'required|callback_uniqlogin';
+      $model->fields['login']['label_class'] = 'col-md-2';
+      $model->fields['login']['prepend'] = '<div class="col-md-3">';
+      $model->fields['login']['append'] = '</div>';
+
+
+    }
+
 
 
   function upload_foto(){
