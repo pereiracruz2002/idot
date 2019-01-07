@@ -54,16 +54,19 @@
     -->
 
     <div class="sidebar-wrapper">
-        <div class="logo">
-            Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a>
-            </a>
-        </div>
+        
 
         <ul class="nav">
             <li class="active">
                 <a href="<?php echo site_url('admin/painel') ?>">
                     <i class="pe-7s-graph"></i>
                     <p>Painel</p>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo site_url('admin/admins') ?>">
+                    <i class="pe-7s-user"></i>
+                    <p>Administradores Novos</p>
                 </a>
             </li>
             <li>

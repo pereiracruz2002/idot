@@ -1,6 +1,6 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
-<head>
+   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="<?php base_url();?>assets/img/favicon.ico">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -169,75 +169,32 @@
 }
     </style>
  </head>
-
     <body class="login-body">
-   
-        
-
-
-    <div class="container">
-        <div class="card card-container">
-
-            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-            <p id="profile-name" class="profile-name-card"></p>
-            <?php echo (isset($msg) ? box_alert($msg) : ''); ?>
-            <form class="form-signin" method="POST">
-                <span id="reauth-email" class="reauth-email"></span>
-                <input type="text"name="login"  id="inputLogin" class="form-control" placeholder="Login" required autofocus>
-                <input type="password" name="senha" id="inputPassword" class="form-control" placeholder="Senha" required>
-                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Login</button>
-            </form><!-- /form -->
-             <a id="modalForgot" class="forgot-password" data-toggle="modal" href="#forgotPassword">Esqueceu a senha?
-            </a>
-        </div><!-- /card-container -->
-    </div><!-- /container -->
-
-        <div aria-hidden="true" aria-labelledby="forgotPassword" role="dialog" tabindex="-1" id="forgotPassword" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form class="form-forgot" id="forgot" action="/admin/login/forgotPassword" method="post">
-                        <div class="modal-header">
-                            <a href="#" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
-                            <h4 class="modal-title">Recuperar a senha</h4>
+        <div class="container"> 
+            <form class="form-signin" action="" method="post">
+                <div class="login-wrap">
+                    <div class="alert alert-block alert-danger <?php echo (!isset($error) ? 'hide' : 'fade in'); ?>">
+                        <?php if (isset($error)) echo $error; ?>
+                    </div>
+                    <div class="alert alert-block alert-success <?php echo (!isset($success) ? 'hide' : 'fade in'); ?>">
+                        <?php if (isset($success)) echo $success; ?>
+                    </div>
+                    <div class="<?php echo (!isset($success) ? 'hide' : 'fade in'); ?>">
+                        <a class="btn btn-success" href="/admin/login">Voltar para tela de login</a>
+                    </div>
+                    <?php if (isset($data)): ?>
+                        <div class="user-login-info">
+                            <h4>
+                                Olá <?php echo $data->nome; ?>,
+                            </h4>
+                            <input type="hidden" name="code" value="<?php echo $data->code ?>" />
+                            <input type="password" name="password" class="form-control" placeholder="Nova senha" required />
+                            <input type="password" name="password_again" class="form-control" placeholder="Confirme a nova senha" required />
                         </div>
-                        <div class="modal-body">
-                            <div class="alert alert-block alert-danger <?php echo (!isset($error_forgot) ? 'hide' : 'fade in'); ?>">
-                                <?php if (isset($error_forgot)) echo $error_forgot; ?>
-                            </div>
-                            <div class="alert alert-block alert-success <?php echo (!isset($success_forgot) ? 'hide' : 'fade in'); ?>">
-                                <?php if (isset($success_forgot)) echo $success_forgot; ?>
-                            </div>
-                            <div>
-                                <p>Digite o seu email para receber um link de recuperação de senha.</p>
-                                <input type="email" name="email" placeholder="Email" autocomplete="on" class="form-control placeholder-no-fix" autofocus="" required="" />
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-success" type="submit">Enviar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-
-
-        <!--   Core JS Files   -->
-        <script src="/assets/admin/js/jquery-1.10.2.js" type="text/javascript"></script>
-        <script src="/assets/admin/js/bootstrap.min.js" type="text/javascript"></script>
-        <script>
-            $(document).ready(function () {
-                <?php if (isset($error_forgot) || isset($success_forgot)): ?>
-                    $("#modalForgot").trigger("click");
-                <?php endif; ?>
-                    
-                $("form").on("submit", function () {
-                    $(this).find("button").each(function () {
-                        $(this).attr("disabled", "disabled").html('<i class="fa ico-spinner3 fa-spin"></i>');
-                    });
-                });
-            });
-        </script>
+                        <button class="btn btn-lg btn-login btn-block" type="submit">Atualizar</button>
+                    <?php endif; ?>
+                </div>  
+            </form>
+        </div> <!-- /container -->
     </body>
 </html>
-
