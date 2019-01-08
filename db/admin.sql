@@ -26,3 +26,8 @@ CREATE TABLE `idot`.`alunos` (
   `turma` VARCHAR(45) NULL,
   `historico_endereco` TEXT NULL,
   PRIMARY KEY (`alunos_id`));
+
+ALTER TABLE `idot`.`professor` 
+ADD COLUMN `login` VARCHAR(45) NULL AFTER `ativo`,
+ADD COLUMN `senha` VARCHAR(255) NULL AFTER `login`;
+
