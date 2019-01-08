@@ -39,8 +39,36 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'denis','$2y$10$xM/wyQeR9R5Hp5hKsQbcHOsrDNOLCcsHMPBnnv9n74KJYfcSW.MN6','2018-11-27 09:59:21',NULL),(2,'tiago','$2y$10$CpK0H95UDV/3jqFPGvRWFuxJl5mkR.pHINN20Njg4rGyM4GeEunfO','2018-11-27 10:05:18',NULL),(3,'cynthia','$2y$10$lIw9x/sf2JrHecanXLqWo.RknaznQlZsxO/2ySBtIsb4iGJSTZGCu','2018-08-28 15:35:19',NULL),(4,'akao','$2y$10$3L3V8p2rbI/ivQsofMzW/ecFfS3ts/YAw.tyBcWuMv8LIKYE2kCRW',NULL,NULL),(6,'flavio','$2y$10$gvUe27njyCTKRxvtWNlqbOCRhI4aEp.HnbD.mpwVw4qNDjmy0/F0e','2019-01-07 15:59:39',NULL),(8,'kauan','$2y$10$fUvaYCTzJjK1eetZSutnjuzcK36c1FtlxI4aRVfivnXTlBZQ1j7E2','2018-12-06 10:56:24',NULL),(9,'admin','$2y$10$MpmtQyMU2.AwJNXzwiReb.z3FXOmRHzAUJ4vz9cHjiyaj/Af8bGYS',NULL,NULL),(10,'scott','63527b3290e1e132dd7eb485e5d35284','2019-01-08 09:34:24',NULL);
+INSERT INTO `admin` VALUES (1,'denis','$2y$10$xM/wyQeR9R5Hp5hKsQbcHOsrDNOLCcsHMPBnnv9n74KJYfcSW.MN6','2018-11-27 09:59:21',NULL),(2,'tiago','$2y$10$CpK0H95UDV/3jqFPGvRWFuxJl5mkR.pHINN20Njg4rGyM4GeEunfO','2018-11-27 10:05:18',NULL),(3,'cynthia','$2y$10$lIw9x/sf2JrHecanXLqWo.RknaznQlZsxO/2ySBtIsb4iGJSTZGCu','2018-08-28 15:35:19',NULL),(4,'akao','$2y$10$3L3V8p2rbI/ivQsofMzW/ecFfS3ts/YAw.tyBcWuMv8LIKYE2kCRW',NULL,NULL),(6,'flavio','$2y$10$gvUe27njyCTKRxvtWNlqbOCRhI4aEp.HnbD.mpwVw4qNDjmy0/F0e','2019-01-07 15:59:39',NULL),(8,'kauan','$2y$10$fUvaYCTzJjK1eetZSutnjuzcK36c1FtlxI4aRVfivnXTlBZQ1j7E2','2018-12-06 10:56:24',NULL),(9,'admin','$2y$10$MpmtQyMU2.AwJNXzwiReb.z3FXOmRHzAUJ4vz9cHjiyaj/Af8bGYS',NULL,NULL),(10,'scott','63527b3290e1e132dd7eb485e5d35284','2019-01-08 17:28:33',NULL);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `agendamento`
+--
+
+DROP TABLE IF EXISTS `agendamento`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `agendamento` (
+  `agenda_id` int(11) NOT NULL AUTO_INCREMENT,
+  `data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `vagas` int(11) NOT NULL,
+  `professor_id` int(11) NOT NULL,
+  `curso_id` int(11) NOT NULL,
+  `modulo_id` int(11) NOT NULL,
+  `sala_id` int(11) NOT NULL,
+  PRIMARY KEY (`agenda_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `agendamento`
+--
+
+LOCK TABLES `agendamento` WRITE;
+/*!40000 ALTER TABLE `agendamento` DISABLE KEYS */;
+/*!40000 ALTER TABLE `agendamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -61,6 +89,7 @@ CREATE TABLE `alunos` (
   `endereco` varchar(255) DEFAULT NULL,
   `turma` varchar(45) DEFAULT NULL,
   `historico_endereco` text,
+  `last_login` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`alunos_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -414,8 +443,12 @@ CREATE TABLE `professor` (
   `texto` text COLLATE utf8_unicode_ci NOT NULL,
   `foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ativo` tinyint(1) NOT NULL DEFAULT '1',
+  `login` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `senha` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` enum('ativo','inativo') COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_login` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id_professor`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,6 +457,7 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
+INSERT INTO `professor` VALUES (1,'luis@santoro.com.br','Luis','<p>teste</p>',NULL,1,'luis','77aa95e36e6d9f135a550b3b8775a125','ativo',NULL);
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -474,7 +508,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('mtgckhcf4ho5mvhjobqr8flr89lr1eur','127.0.0.1',1544205039,_binary '__ci_last_regenerate|i:1544204920;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-07 14:58:53\";}'),('8341cpuh5788nje0a138d2s2l3td0bed','127.0.0.1',1545561485,_binary '__ci_last_regenerate|i:1545561485;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-23 08:31:53\";}'),('c6bmkeacshg6m68pdsuc64e6prgdedof','127.0.0.1',1546004337,_binary '__ci_last_regenerate|i:1546004284;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:32:58\";}'),('b37msdrgiqsbs172pm1ng9ivb5jfnj5q','127.0.0.1',1546019592,_binary '__ci_last_regenerate|i:1546019592;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:38:57\";}'),('u40alalcdq892qagc57fl0vdf7lk8cri','127.0.0.1',1546030840,_binary '__ci_last_regenerate|i:1546030795;'),('rvknmphte7m8vr46ce56jjh1t5c0uq47','127.0.0.1',1546112697,_binary '__ci_last_regenerate|i:1546112697;'),('i9ikikugajtun0vnn4ha6rkd51odlu4m','127.0.0.1',1546117466,_binary '__ci_last_regenerate|i:1546117466;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 18:41:10\";}'),('d4a7eo74cead4c2qj1392dtrqcq4db69','127.0.0.1',1546119499,_binary '__ci_last_regenerate|i:1546119455;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:04:34\";}'),('ak6geprqlipgebci46gcane66i9toi3t','127.0.0.1',1546435243,_binary '__ci_last_regenerate|i:1546435243;'),('v9q1kqkctclv3177km2j803ftglai75i','127.0.0.1',1546439041,_binary '__ci_last_regenerate|i:1546439004;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:32:01\";}'),('m5l9njs52icekebqaj9a7gkej1qq0j6g','127.0.0.1',1546459187,_binary '__ci_last_regenerate|i:1546458986;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 09:45:07\";}'),('ume8v5gkrbdk5tgv76pqa4dmlgnfbaud','127.0.0.1',1546516210,_binary '__ci_last_regenerate|i:1546516207;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 16:26:46\";}'),('upp314osb7o9vme6cgrrnhsj7jss9m1j','127.0.0.1',1546540961,_binary '__ci_last_regenerate|i:1546540961;'),('ef9crul6a8sp36utlsvbfdo1nqncad92','127.0.0.1',1546859694,_binary '__ci_last_regenerate|i:1546859694;'),('go6c07qf7lfajregi7eep2videg7lhrp','127.0.0.1',1546890323,_binary '__ci_last_regenerate|i:1546890323;'),('q61p82iv2g3h8ft0hjjn85d25f0p8akn','127.0.0.1',1546947252,_binary '__ci_last_regenerate|i:1546947252;'),('6qe1qr0l7566s89a5hemdqfgj0v1f79j','127.0.0.1',1546962989,_binary '__ci_last_regenerate|i:1546962808;admin|O:8:\"stdClass\":4:{s:8:\"admin_id\";s:2:\"10\";s:5:\"login\";s:5:\"scott\";s:10:\"last_login\";s:19:\"2019-01-07 17:07:09\";s:5:\"email\";N;}');
+INSERT INTO `sessions` VALUES ('mtgckhcf4ho5mvhjobqr8flr89lr1eur','127.0.0.1',1544205039,_binary '__ci_last_regenerate|i:1544204920;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-07 14:58:53\";}'),('8341cpuh5788nje0a138d2s2l3td0bed','127.0.0.1',1545561485,_binary '__ci_last_regenerate|i:1545561485;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-23 08:31:53\";}'),('c6bmkeacshg6m68pdsuc64e6prgdedof','127.0.0.1',1546004337,_binary '__ci_last_regenerate|i:1546004284;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:32:58\";}'),('b37msdrgiqsbs172pm1ng9ivb5jfnj5q','127.0.0.1',1546019592,_binary '__ci_last_regenerate|i:1546019592;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:38:57\";}'),('u40alalcdq892qagc57fl0vdf7lk8cri','127.0.0.1',1546030840,_binary '__ci_last_regenerate|i:1546030795;'),('rvknmphte7m8vr46ce56jjh1t5c0uq47','127.0.0.1',1546112697,_binary '__ci_last_regenerate|i:1546112697;'),('i9ikikugajtun0vnn4ha6rkd51odlu4m','127.0.0.1',1546117466,_binary '__ci_last_regenerate|i:1546117466;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 18:41:10\";}'),('d4a7eo74cead4c2qj1392dtrqcq4db69','127.0.0.1',1546119499,_binary '__ci_last_regenerate|i:1546119455;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:04:34\";}'),('ak6geprqlipgebci46gcane66i9toi3t','127.0.0.1',1546435243,_binary '__ci_last_regenerate|i:1546435243;'),('v9q1kqkctclv3177km2j803ftglai75i','127.0.0.1',1546439041,_binary '__ci_last_regenerate|i:1546439004;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:32:01\";}'),('m5l9njs52icekebqaj9a7gkej1qq0j6g','127.0.0.1',1546459187,_binary '__ci_last_regenerate|i:1546458986;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 09:45:07\";}'),('ume8v5gkrbdk5tgv76pqa4dmlgnfbaud','127.0.0.1',1546516210,_binary '__ci_last_regenerate|i:1546516207;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 16:26:46\";}'),('upp314osb7o9vme6cgrrnhsj7jss9m1j','127.0.0.1',1546540961,_binary '__ci_last_regenerate|i:1546540961;'),('ef9crul6a8sp36utlsvbfdo1nqncad92','127.0.0.1',1546859694,_binary '__ci_last_regenerate|i:1546859694;'),('go6c07qf7lfajregi7eep2videg7lhrp','127.0.0.1',1546890323,_binary '__ci_last_regenerate|i:1546890323;'),('q61p82iv2g3h8ft0hjjn85d25f0p8akn','127.0.0.1',1546947252,_binary '__ci_last_regenerate|i:1546947252;'),('ftbt6q04uoio2h80na7j37a29mte89er','127.0.0.1',1546977339,_binary '__ci_last_regenerate|i:1546977269;admin|O:8:\"stdClass\":4:{s:8:\"admin_id\";s:2:\"10\";s:5:\"login\";s:5:\"scott\";s:10:\"last_login\";s:19:\"2019-01-08 15:22:58\";s:5:\"email\";N;}');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -545,4 +579,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-08 13:57:21
+-- Dump completed on 2019-01-08 17:58:02
