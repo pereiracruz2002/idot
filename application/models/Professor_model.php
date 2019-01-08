@@ -57,6 +57,17 @@ class Professor_model extends My_Model{
             'append' => '</div>',
             'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
         ),
+
+        'status' => array(
+            'type' => 'select',
+            'label' => 'Status',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
+        ),
 		// "foto"=> array("type" => "file",
 		// 					"label" => "Foto",
 		// 					"class" => "",
@@ -64,5 +75,23 @@ class Professor_model extends My_Model{
 		// 					),
 
 	);
+
+	public function login($login, $senha) 
+    {
+        $where['login'] = $login;
+        $cadastro = $this->get_where($where)->row();
+        if($cadastro){
+            $this->load->library('encrypt');
+            if ($cadastro->senha == md5($senha)) {
+            //if(password_verify($senha,$cadastro->senha)){
+                unset($cadastro->senha);
+                $this->session->set_userdata('professor', $cadastro);
+                $this->session->unset_userdata('cliente');
+                $this->update(array('last_login' => date('Y-m-d H:i:s')), $cadastro->admin_id);
+                return true;
+            }
+        }
+        return false;
+    }
 }
 ?>

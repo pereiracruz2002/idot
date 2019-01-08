@@ -88,7 +88,24 @@ class Alunos_model extends My_Model{
         ),
 
 	);
+
+    public function login($login, $senha) 
+    {
+        $where['login'] = $login;
+        $cadastro = $this->get_where($where)->row();
+        if($cadastro){
+            $this->load->library('encrypt');
+            if ($cadastro->senha == md5($senha)) {
+            //if(password_verify($senha,$cadastro->senha)){
+                unset($cadastro->senha);
+                $this->session->set_userdata('professor', $cadastro);
+                $this->session->unset_userdata('cliente');
+                $this->update(array('last_login' => date('Y-m-d H:i:s')), $cadastro->admin_id);
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
-//nome, email, telefone, data de cadastro, matricula,endereco,turmo, historico de turma
 ?>

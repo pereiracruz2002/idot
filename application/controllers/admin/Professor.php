@@ -31,6 +31,21 @@ class Professor extends BaseCrud {
 
     }
 
+    public function uniqlogin($login) 
+  {
+        $where['login'] = $login;
+        if($this->uri->segment(3) == 'editar'){
+            $where['admin_id !='] = $this->uri->segment(4);
+        }
+        $cadastro = $this->model->get_where($where)->row();
+        if($cadastro){
+            $this->form_validation->set_message('uniqlogin', 'Esse login já está em uso');
+            return false;
+        } else {
+            return true;
+        }
+  }
+
 
 
   function upload_foto(){
@@ -52,12 +67,22 @@ class Professor extends BaseCrud {
     }
   }
 
-  function _filter_pre_save(&$_data){
-    if($this->upload_foto)
-      $_data['foto'] = $this->upload_foto;
-    else
-      unset($_data['foto']);
-  }
+  public function _filter_pre_save(&$data) 
+    {
+        if($data['senha']){
+             $data['senha'] = md5($data['senha']);
+            //$data['senha'] = password_hash($data['senha'], PASSWORD_DEFAULT);
+        } else {
+            unset($data['senha']);
+        }
+    }
+
+  // function _filter_pre_save(&$_data){
+  //   if($this->upload_foto)
+  //     $_data['foto'] = $this->upload_foto;
+  //   else
+  //     unset($_data['foto']);
+  // }
 
 
 

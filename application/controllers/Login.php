@@ -7,12 +7,29 @@ class Login extends CI_Controller
     {
         
         $this->load->model('admin_model','admin');
+        $this->load->model('professor_model','professor');
+        $this->load->model('alunos_model','aluno');
+
         if($this->input->posts()){
             //$senha = password_hash('senha', PASSWORD_DEFAULT); 
             if($this->admin->login($this->input->post('login'), $this->input->post('senha'))) {
                 redirect('painel');
             } else {
-                $this->data['msg'] = 'Login incorreto';
+
+                if($this->professor->login($this->input->post('login'), $this->input->post('senha'))) {
+                    redirect('painel');
+                }else{
+
+                    if($this->alunos->login($this->input->post('login'), $this->input->post('senha'))) {
+                        redirect('painel');
+                    }else{
+                        $this->data['msg'] = 'Login incorreto';
+                    }
+
+                }
+
+
+                
             }
         }
         $this->load->view('admin/login', $this->data);
