@@ -2,7 +2,12 @@
 class Modulos_model extends My_Model
 {
 	var $id_col = 'modulos_id';
-    var $fields = array(   
+    var $fields = array(  
+        'curso_id' => array(
+            'type' => 'hidden',
+            'label' => '',
+        ),
+
         'titulo' => array(
             'type' => 'text',
             'label' => 'Título',

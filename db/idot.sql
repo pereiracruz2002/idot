@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.31, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
 --
 -- Host: localhost    Database: idot
 -- ------------------------------------------------------
--- Server version	5.6.31-0ubuntu0.15.10.1
+-- Server version	5.7.24-0ubuntu0.18.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,9 +27,10 @@ CREATE TABLE `admin` (
   `login` varchar(45) DEFAULT NULL,
   `senha` varchar(255) DEFAULT NULL,
   `last_login` varchar(45) DEFAULT NULL,
+  `email` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`admin_id`),
   KEY `index2` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,8 +39,39 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'denis','$2y$10$xM/wyQeR9R5Hp5hKsQbcHOsrDNOLCcsHMPBnnv9n74KJYfcSW.MN6','2018-11-27 09:59:21'),(2,'tiago','$2y$10$CpK0H95UDV/3jqFPGvRWFuxJl5mkR.pHINN20Njg4rGyM4GeEunfO','2018-11-27 10:05:18'),(3,'cynthia','$2y$10$lIw9x/sf2JrHecanXLqWo.RknaznQlZsxO/2ySBtIsb4iGJSTZGCu','2018-08-28 15:35:19'),(4,'akao','$2y$10$3L3V8p2rbI/ivQsofMzW/ecFfS3ts/YAw.tyBcWuMv8LIKYE2kCRW',NULL),(6,'flavio','$2y$10$gvUe27njyCTKRxvtWNlqbOCRhI4aEp.HnbD.mpwVw4qNDjmy0/F0e','2019-01-03 08:10:43'),(8,'kauan','$2y$10$fUvaYCTzJjK1eetZSutnjuzcK36c1FtlxI4aRVfivnXTlBZQ1j7E2','2018-12-06 10:56:24');
+INSERT INTO `admin` VALUES (1,'denis','$2y$10$xM/wyQeR9R5Hp5hKsQbcHOsrDNOLCcsHMPBnnv9n74KJYfcSW.MN6','2018-11-27 09:59:21',NULL),(2,'tiago','$2y$10$CpK0H95UDV/3jqFPGvRWFuxJl5mkR.pHINN20Njg4rGyM4GeEunfO','2018-11-27 10:05:18',NULL),(3,'cynthia','$2y$10$lIw9x/sf2JrHecanXLqWo.RknaznQlZsxO/2ySBtIsb4iGJSTZGCu','2018-08-28 15:35:19',NULL),(4,'akao','$2y$10$3L3V8p2rbI/ivQsofMzW/ecFfS3ts/YAw.tyBcWuMv8LIKYE2kCRW',NULL,NULL),(6,'flavio','$2y$10$gvUe27njyCTKRxvtWNlqbOCRhI4aEp.HnbD.mpwVw4qNDjmy0/F0e','2019-01-07 15:59:39',NULL),(8,'kauan','$2y$10$fUvaYCTzJjK1eetZSutnjuzcK36c1FtlxI4aRVfivnXTlBZQ1j7E2','2018-12-06 10:56:24',NULL),(9,'admin','$2y$10$MpmtQyMU2.AwJNXzwiReb.z3FXOmRHzAUJ4vz9cHjiyaj/Af8bGYS',NULL,NULL),(10,'scott','63527b3290e1e132dd7eb485e5d35284','2019-01-08 09:34:24',NULL);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `alunos`
+--
+
+DROP TABLE IF EXISTS `alunos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `alunos` (
+  `alunos_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `matricula` varchar(45) DEFAULT NULL,
+  `login` varchar(45) DEFAULT NULL,
+  `senha` varchar(255) DEFAULT NULL,
+  `data_cadastro` varchar(45) DEFAULT NULL,
+  `endereco` varchar(255) DEFAULT NULL,
+  `turma` varchar(45) DEFAULT NULL,
+  `historico_endereco` text,
+  PRIMARY KEY (`alunos_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `alunos`
+--
+
+LOCK TABLES `alunos` WRITE;
+/*!40000 ALTER TABLE `alunos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `alunos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -252,7 +284,7 @@ CREATE TABLE `modulos` (
   `curso_id` int(11) NOT NULL,
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`modulos_id`,`curso_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +293,7 @@ CREATE TABLE `modulos` (
 
 LOCK TABLES `modulos` WRITE;
 /*!40000 ALTER TABLE `modulos` DISABLE KEYS */;
-INSERT INTO `modulos` VALUES (2,'Sql básico',0,'ativo'),(3,'Criar plugins no WP',0,'ativo');
+INSERT INTO `modulos` VALUES (2,'Sql básico',2,'ativo'),(3,'Criar plugins no WP',4,'ativo'),(10,'Criar templates simples',4,'ativo');
 /*!40000 ALTER TABLE `modulos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,6 +401,33 @@ INSERT INTO `planos` VALUES (1,'Pro',NULL,NULL,'<li>Funcionários ilimitados</li
 UNLOCK TABLES;
 
 --
+-- Table structure for table `professor`
+--
+
+DROP TABLE IF EXISTS `professor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `professor` (
+  `id_professor` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nome` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `texto` text COLLATE utf8_unicode_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `ativo` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id_professor`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `professor`
+--
+
+LOCK TABLES `professor` WRITE;
+/*!40000 ALTER TABLE `professor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `professor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `salas`
 --
 
@@ -415,8 +474,33 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('mtgckhcf4ho5mvhjobqr8flr89lr1eur','127.0.0.1',1544205039,'__ci_last_regenerate|i:1544204920;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-07 14:58:53\";}'),('8341cpuh5788nje0a138d2s2l3td0bed','127.0.0.1',1545561485,'__ci_last_regenerate|i:1545561485;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-23 08:31:53\";}'),('c6bmkeacshg6m68pdsuc64e6prgdedof','127.0.0.1',1546004337,'__ci_last_regenerate|i:1546004284;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:32:58\";}'),('b37msdrgiqsbs172pm1ng9ivb5jfnj5q','127.0.0.1',1546019592,'__ci_last_regenerate|i:1546019592;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:38:57\";}'),('u40alalcdq892qagc57fl0vdf7lk8cri','127.0.0.1',1546030840,'__ci_last_regenerate|i:1546030795;'),('rvknmphte7m8vr46ce56jjh1t5c0uq47','127.0.0.1',1546112697,'__ci_last_regenerate|i:1546112697;'),('i9ikikugajtun0vnn4ha6rkd51odlu4m','127.0.0.1',1546117466,'__ci_last_regenerate|i:1546117466;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 18:41:10\";}'),('d4a7eo74cead4c2qj1392dtrqcq4db69','127.0.0.1',1546119499,'__ci_last_regenerate|i:1546119455;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:04:34\";}'),('ak6geprqlipgebci46gcane66i9toi3t','127.0.0.1',1546435243,'__ci_last_regenerate|i:1546435243;'),('v9q1kqkctclv3177km2j803ftglai75i','127.0.0.1',1546439041,'__ci_last_regenerate|i:1546439004;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:32:01\";}'),('m5l9njs52icekebqaj9a7gkej1qq0j6g','127.0.0.1',1546459187,'__ci_last_regenerate|i:1546458986;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 09:45:07\";}'),('ume8v5gkrbdk5tgv76pqa4dmlgnfbaud','127.0.0.1',1546516210,'__ci_last_regenerate|i:1546516207;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 16:26:46\";}'),('upp314osb7o9vme6cgrrnhsj7jss9m1j','127.0.0.1',1546540961,'__ci_last_regenerate|i:1546540961;');
+INSERT INTO `sessions` VALUES ('mtgckhcf4ho5mvhjobqr8flr89lr1eur','127.0.0.1',1544205039,_binary '__ci_last_regenerate|i:1544204920;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-07 14:58:53\";}'),('8341cpuh5788nje0a138d2s2l3td0bed','127.0.0.1',1545561485,_binary '__ci_last_regenerate|i:1545561485;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-23 08:31:53\";}'),('c6bmkeacshg6m68pdsuc64e6prgdedof','127.0.0.1',1546004337,_binary '__ci_last_regenerate|i:1546004284;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:32:58\";}'),('b37msdrgiqsbs172pm1ng9ivb5jfnj5q','127.0.0.1',1546019592,_binary '__ci_last_regenerate|i:1546019592;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-28 11:38:57\";}'),('u40alalcdq892qagc57fl0vdf7lk8cri','127.0.0.1',1546030840,_binary '__ci_last_regenerate|i:1546030795;'),('rvknmphte7m8vr46ce56jjh1t5c0uq47','127.0.0.1',1546112697,_binary '__ci_last_regenerate|i:1546112697;'),('i9ikikugajtun0vnn4ha6rkd51odlu4m','127.0.0.1',1546117466,_binary '__ci_last_regenerate|i:1546117466;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 18:41:10\";}'),('d4a7eo74cead4c2qj1392dtrqcq4db69','127.0.0.1',1546119499,_binary '__ci_last_regenerate|i:1546119455;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:04:34\";}'),('ak6geprqlipgebci46gcane66i9toi3t','127.0.0.1',1546435243,_binary '__ci_last_regenerate|i:1546435243;'),('v9q1kqkctclv3177km2j803ftglai75i','127.0.0.1',1546439041,_binary '__ci_last_regenerate|i:1546439004;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2018-12-29 19:32:01\";}'),('m5l9njs52icekebqaj9a7gkej1qq0j6g','127.0.0.1',1546459187,_binary '__ci_last_regenerate|i:1546458986;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 09:45:07\";}'),('ume8v5gkrbdk5tgv76pqa4dmlgnfbaud','127.0.0.1',1546516210,_binary '__ci_last_regenerate|i:1546516207;admin|O:8:\"stdClass\":3:{s:8:\"admin_id\";s:1:\"6\";s:5:\"login\";s:6:\"flavio\";s:10:\"last_login\";s:19:\"2019-01-02 16:26:46\";}'),('upp314osb7o9vme6cgrrnhsj7jss9m1j','127.0.0.1',1546540961,_binary '__ci_last_regenerate|i:1546540961;'),('ef9crul6a8sp36utlsvbfdo1nqncad92','127.0.0.1',1546859694,_binary '__ci_last_regenerate|i:1546859694;'),('go6c07qf7lfajregi7eep2videg7lhrp','127.0.0.1',1546890323,_binary '__ci_last_regenerate|i:1546890323;'),('q61p82iv2g3h8ft0hjjn85d25f0p8akn','127.0.0.1',1546947252,_binary '__ci_last_regenerate|i:1546947252;'),('6qe1qr0l7566s89a5hemdqfgj0v1f79j','127.0.0.1',1546962989,_binary '__ci_last_regenerate|i:1546962808;admin|O:8:\"stdClass\":4:{s:8:\"admin_id\";s:2:\"10\";s:5:\"login\";s:5:\"scott\";s:10:\"last_login\";s:19:\"2019-01-07 17:07:09\";s:5:\"email\";N;}');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_types`
+--
+
+DROP TABLE IF EXISTS `user_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_types` (
+  `user_type_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `label` varchar(45) NOT NULL,
+  PRIMARY KEY (`user_type_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_types`
+--
+
+LOCK TABLES `user_types` WRITE;
+/*!40000 ALTER TABLE `user_types` DISABLE KEYS */;
+INSERT INTO `user_types` VALUES (1,'Admin','Admin'),(2,'Chef','Chef'),(3,'Guest','Convidado'),(4,'Companion','Acompanhante');
+/*!40000 ALTER TABLE `user_types` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -427,7 +511,7 @@ DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuario` (
-  `IDUser` int(11) NOT NULL AUTO_INCREMENT,
+  `IDUser` int(11) NOT NULL,
   `login` varchar(25) COLLATE latin1_general_ci NOT NULL,
   `senha` text COLLATE latin1_general_ci NOT NULL,
   `nome` varchar(300) COLLATE latin1_general_ci DEFAULT NULL,
@@ -435,13 +519,11 @@ CREATE TABLE `usuario` (
   `dataCadastro` date DEFAULT '0000-00-00',
   `nivel` int(2) NOT NULL,
   `status` tinyint(1) DEFAULT '0',
-  `aceitou_termo` tinyint(4) NOT NULL DEFAULT '0',
   `rg` varchar(45) COLLATE latin1_general_ci DEFAULT NULL,
   `observacao` text COLLATE latin1_general_ci,
   `IDPais` int(11) NOT NULL DEFAULT '15',
   `updatePass` datetime DEFAULT NULL,
-  PRIMARY KEY (`IDUser`),
-  UNIQUE KEY `indexLogin` (`login`)
+  `aceitou_termo` tinyint(4) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -463,4 +545,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-06  8:12:07
+-- Dump completed on 2019-01-08 13:57:21

@@ -8,9 +8,8 @@ class Modulos extends BaseCrud
     var $titulo = 'Módulos';
     var $tabela = 'titulo,status';
     var $campos_busca = 'titulo';
-    var $acoes_extras = array(
-        array("url" => "admin/modulos/associar_cursos", "title" => "Relacionar com Cursos", "class" => "btn-info"),
-    );
+    var $acoes_extras = array();
+    var $acoes_controller = array(array("url" => "admin/modulos/novo/4", "title" => "Novo", "class" => "btn btn-xs btn-info btn btn-warning"));
 
 
     public function __construct() 
@@ -18,7 +17,17 @@ class Modulos extends BaseCrud
 
         parent::__construct();
         //verify_permiss_redirect('departamentos');
-        $this->data['menu_active'] = 'aulas';
+        $this->data['menu_active'] = 'modulos';
+    }
+
+
+
+    public function _pre_form(&$model) 
+    {
+      $model->fields['curso_id']['type'] = 'hidden';
+      $model->fields['curso_id']['label'] = '';
+      $model->fields['curso_id']['value'] = $this->uri->segment(4);
+
     }
 
     
@@ -30,7 +39,15 @@ class Modulos extends BaseCrud
 
     }
 
+    public function _filter_pre_listar(&$where, &$like) 
+    {
+        
+        $where['curso_id'] = $this->uri->segment(4);
+
     
+    }
+
+
 
 	public function associar_cursos($modulo_id, $ok=false){
         $this->load->model('cursos_model','cursos');
@@ -50,7 +67,7 @@ class Modulos extends BaseCrud
         unset($where['modulo_id']);
         $this->data['cursos'] = $this->cursos->get_where($where)->result();
 
-    $this->load->view('admin/associar_cursos',$this->data);
+        $this->load->view('admin/associar_cursos',$this->data);
     }
 
     public function add_cursos(){

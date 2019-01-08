@@ -19,7 +19,14 @@ class Cursos extends BaseCrud
         $this->data['menu_active'] = 'cursos';
     }
 
+
+    public function _filter_pre_listar(&$where, &$like) 
+    {
+
+        $this->acoes_extras = array(array('url'=>'admin/modulos/listar','title'=>'Adicionar Módulos','class'=>'btn btn-xs btn-info btn btn-warning'));
+
     
+    }
 
     public function _filter_pre_read(&$data) 
     {

@@ -43,7 +43,7 @@
         <script>var base = '<?php echo base_url() ?>';</script>
 
 </head>
-<body>
+<body class="<?php echo $this->uri->segment(2);?>">
 <div class="sidebar" data-color="purple" data-image="/assets/admin/img/sidebar-5.jpg">
 
     <!--
@@ -77,7 +77,7 @@
                 </a>
             </li>
             <li>
-                <a href="user.html">
+                <a href="<?php echo site_url('admin/alunos') ?>">
                     <i class="pe-7s-user"></i>
                     <p>Alunos</p>
                 </a>
@@ -88,7 +88,7 @@
                     <p>Cursos</p>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="<?php echo site_url('admin/modulos') ?>">
                     <i class="pe-7s-note2"></i>
                     <p>Módulos</p>
@@ -99,8 +99,8 @@
                     <i class="pe-7s-note2"></i>
                     <p>Aulas</p>
                 </a>
-            </li>
-            <li>
+            </li>-->
+            <li> 
                 <a href="<?php echo site_url('admin/salas') ?>">
                     <i class="pe-7s-home"></i>
                     <p>Salas</p>
