@@ -113,7 +113,7 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo site_url('admin/agendamentos') ?>">
+                <a href="<?php echo site_url('admin/agendamento') ?>">
                     <i class="pe-7s-date"></i>
                     <p>Agendamentos</p>
                 </a>

@@ -181,6 +181,8 @@ class MY_Model extends CI_Model{
         if (isset($args['empty']))
           $values[null] = $args['empty'];
         foreach ($result->result() as $item) {
+          var_dump($v);
+          exit();
           $values[trim($item->$v['from']['key'])] = $item->$v['from']['value'];
         }
         $args['values'] = $values;
