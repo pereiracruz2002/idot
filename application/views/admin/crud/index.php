@@ -6,17 +6,22 @@
                 <?php if (in_array('C', $crud)): ?>
                     <a href="<?= $url ?>/novo" class="btn btn-primary"><span>Novo</span></a>
                 <?php endif ?>
+                <?php if (isset($acoes_controller)): ?>
+                    <?php foreach ($acoes_controller as $acao_extra): ?>
+                        <a href="<?= site_url($acao_extra['url']); ?>" title="<?= $acao_extra['title']; ?>" class="btn <?= $acao_extra['class']; ?> btn-sm"><?= $acao_extra['title']; ?></a>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </h2>
 
             <?php if (isset($crud)): ?>
                 <?php if (in_array('C', $crud)): ?>
                             <!--<a href="<?= $url ?>/novo" class="btn btn-primary btn-sm">Cadastrar Novo</a>-->
                 <?php endif ?>
-                <?php if (isset($acoes_controller)): ?>
+                <?php /* if (isset($acoes_controller)): ?>
                     <?php foreach ($acoes_controller as $acao_extra): ?>
                         <a href="<?= site_url($acao_extra['url']); ?>" title="<?= $acao_extra['title']; ?>" class="btn <?= $acao_extra['class']; ?> btn-sm"><?= $acao_extra['title']; ?></a>
                     <?php endforeach; ?>
-                <?php endif; ?>
+                <?php endif;*/ ?>
             <?php endif; ?>
         </div>
 

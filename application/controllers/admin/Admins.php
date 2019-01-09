@@ -40,4 +40,10 @@ class Admins extends BaseCrud
             return true;
         }
     }
+
+    public function _filter_pos_save($data, $id) 
+    {
+        redirect('admin/admins');
+
+    }
 }

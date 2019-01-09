@@ -77,6 +77,12 @@ class Professor extends BaseCrud {
         }
     }
 
+  public function _filter_pos_save($data, $id) 
+  {
+        redirect('admin/professor');
+
+  }
+
   // function _filter_pre_save(&$_data){
   //   if($this->upload_foto)
   //     $_data['foto'] = $this->upload_foto;

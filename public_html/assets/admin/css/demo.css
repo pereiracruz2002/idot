@@ -60,6 +60,14 @@
     text-align: center;
 }
 
-.modulos .btn-primary{
+.modulos a.btn-primary{
     display: none;
+}
+
+.btn-custom {
+    border-color: #3472F7;
+    color: #3472F7;
+    border-width: 2px;
+    line-height: 1.5;
+    padding: 10px 25px;
 }

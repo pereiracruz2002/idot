@@ -9,7 +9,7 @@ class Modulos extends BaseCrud
     var $tabela = 'titulo,status';
     var $campos_busca = 'titulo';
     var $acoes_extras = array();
-    var $acoes_controller = array(array("url" => "admin/modulos/novo/4", "title" => "Novo", "class" => "btn btn-xs btn-info btn btn-warning"));
+    var $acoes_controller = array();
 
 
     public function __construct() 
@@ -24,6 +24,8 @@ class Modulos extends BaseCrud
 
     public function _pre_form(&$model) 
     {
+      
+
       $model->fields['curso_id']['type'] = 'hidden';
       $model->fields['curso_id']['label'] = '';
       $model->fields['curso_id']['value'] = $this->uri->segment(4);
@@ -41,10 +43,20 @@ class Modulos extends BaseCrud
 
     public function _filter_pre_listar(&$where, &$like) 
     {
-        
+        $url = "admin/modulos/novo/". $this->uri->segment(4);
+       $this->acoes_controller = array(array("url" => $url, "title" => "Novo", "class" => "btn-custom"));
         $where['curso_id'] = $this->uri->segment(4);
 
     
+    }
+
+    public function _filter_pos_save($data, $id) 
+    {
+
+        $url = 'admin/modulos/listar/'.$data['curso_id'];
+
+        redirect($url);
+
     }
 
 

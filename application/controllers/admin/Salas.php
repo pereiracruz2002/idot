@@ -44,7 +44,7 @@ class Salas extends BaseCrud
 
     public function _filter_pos_save($data, $id) 
     {
-        
+        redirect('admin/salas');
 
     }
 
@@ -68,6 +68,8 @@ class Salas extends BaseCrud
 
         $this->load->view('admin/associar_modulos',$this->data);
     }
+
+
 
     public function add_modulos(){
         $this->load->model('aula_modulos_model','aula_modulos');

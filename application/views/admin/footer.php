@@ -29,20 +29,20 @@
     <script src="/assets/admin/js/util.js"></script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        // $(document).ready(function(){
 
-            demo.initChartist();
+        //     demo.initChartist();
 
-            $.notify({
-                icon: 'pe-7s-gift',
-                message: "Bem Vindo ao painel do sistema <b>IDOT</b>"
+        //     $.notify({
+        //         icon: 'pe-7s-gift',
+        //         message: "Bem Vindo ao painel do sistema <b>IDOT</b>"
 
-            },{
-                type: 'info',
-                timer: 4000
-            });
+        //     },{
+        //         type: 'info',
+        //         timer: 4000
+        //     });
 
-        });
+        // });
     </script>
 <?php
 if (isset($jsFiles)):
