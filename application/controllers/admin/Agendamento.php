@@ -93,6 +93,8 @@ class Agendamento extends BaseCrud
 
     }
 
+    
+
 	public function notificacoes($departamento_id) 
 	{
         $this->load->model('departamentos_model','departamentos');
