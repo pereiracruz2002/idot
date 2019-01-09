@@ -6,9 +6,13 @@ class Agendamento extends BaseCrud
     var $base_url = 'admin/agendamento';
     var $actions = 'CRUD';
     var $titulo = 'Agendamento';
-    var $tabela = 'data,vagas';
+    var $tabela = 'data,vagas,curso';
     var $campos_busca = 'data';
     var $acoes_extras = array();
+    var $joins = array(
+         'cursos' => 'cursos.cursos_id=agendamento.curso_id',
+    );
+    var $selects = 'agendamento.*,cursos.titulo as curso';
 
 
     public function __construct() 
@@ -19,19 +23,53 @@ class Agendamento extends BaseCrud
         $this->data['menu_active'] = 'agendamento';
     }
 
+     public function _filter_pre_listar(&$where, &$where_ativo)
+     {
 
-    public function _filter_pre_listar(&$where, &$like) 
-    {
-
-        $this->acoes_extras = array(array('url'=>'admin/modulos/listar','title'=>'Adicionar Módulos','class'=>'btn btn-xs btn-info btn btn-warning'));
-
-    
+        $this->model->fields['curso'] = array(
+          'label' => 'Curso',
+          'type' => 'text',
+          'class' => '',
+        );
     }
+    
 
     public function _filter_pre_read(&$data) 
     {
 
        
+
+    }
+
+    public function _pre_form(&$model, &$data) 
+    {
+        $this->load->model('cursos_model','cursos');
+        $where = array('status'=>'ativo');
+        $cursos = $this->cursos->get_where($where)->result();
+        foreach ($cursos as $key => $value) {
+            $model->fields['curso_id']['values'][$value->cursos_id] = $value->titulo;
+        }
+
+        $this->load->model('professor_model','professores');
+        $where = array('status'=>'ativo');
+        $professores = $this->professores->get_where($where)->result();
+        foreach ($professores as $key => $value) {
+            $model->fields['professor_id']['values'][$value->id_professor] = $value->nome;
+        }
+
+        $this->load->model('salas_model','salas');
+        $where = array('status'=>'ativo');
+        $salas = $this->salas->get_where($where)->result();
+        foreach ($salas as $key => $value) {
+            $model->fields['sala_id']['values'][$value->salas_id] = $value->titulo;
+        }
+
+        $this->load->model('modulos_model','modulos');
+        $where = array('status'=>'ativo');
+        $modulos = $this->modulos->get_where($where)->result();
+        foreach ($modulos as $key => $value) {
+            $model->fields['modulo_id']['values'][$value->modulos_id] = $value->titulo;
+        }
 
     }
 
@@ -51,7 +89,7 @@ class Agendamento extends BaseCrud
 
     public function _filter_pos_save($data, $id) 
     {
-        
+        redirect('admin/agendamento');
 
     }
 

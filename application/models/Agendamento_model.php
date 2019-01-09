@@ -15,11 +15,11 @@ class Agendamento_model extends My_Model
 
         'vagas' => array(
             'type' => 'text',
-            'label' => 'Descrição',
+            'label' => 'Vagas',
             'class' => '',
             'rules' => 'required',
             'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-6">',
+            'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
         ),
 
@@ -31,7 +31,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
-            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
+            'values' => array(),
         ),
         'curso_id' => array(
             'type' => 'select',
@@ -41,7 +41,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
-            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
+            'values' => array(),
         ),
         'modulo_id' => array(
             'type' => 'select',
@@ -51,7 +51,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
-            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
+            'values' => array(),
         ),
         'sala_id' => array(
             'type' => 'select',
@@ -61,7 +61,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
-            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
+            'values' => array(),
         ),
 
         'sala_id' => array(
@@ -73,7 +73,7 @@ class Agendamento_model extends My_Model
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
             'values' => array(),
-            'from' => array('model' => 'salas', 'value' => 'titulo', 'where' => array('status' => 'ativo'))
+            // 'from' => array('model' => 'cursos', 'value' => 'titulo', 'where' => array('status' => 'ativo'))
         ),    
     );
 }

@@ -8,7 +8,7 @@ class Login extends CI_Controller
         
         $this->load->model('admin_model','admin');
         $this->load->model('professor_model','professor');
-        $this->load->model('alunos_model','aluno');
+        $this->load->model('alunos_model','alunos');
 
         if($this->input->posts()){
             //$senha = password_hash('senha', PASSWORD_DEFAULT); 
@@ -27,8 +27,6 @@ class Login extends CI_Controller
                     }
 
                 }
-
-
                 
             }
         }
