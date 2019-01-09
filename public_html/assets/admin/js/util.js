@@ -44,4 +44,18 @@ $(document).ready(function () {
         else
             caret.removeClass('caret-up').removeClass('fa-caret-up').addClass('fa-caret-down').addClass('caret-down');
     });
+
+    $('#segmentos').change(function(){
+        var elm = $(this);
+        $('#ramos').html('<option value="">Ramo</option>');
+        var retornoramos = function(result){
+            var html = '<option value="">Ramo</option>';
+            $.each(result, function(key, value){
+                html += '<option value="'+value.IDRamo+'">'+value.descricao+'</option>';
+            });
+            $('#ramos').html(html);
+        }
+        $.getJSON(base_url+"admin/modulos/return_modulos_by_curso/"+elm.val(), retornoramos);
+
+    });
 });

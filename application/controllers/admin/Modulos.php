@@ -59,6 +59,18 @@ class Modulos extends BaseCrud
 
     }
 
+    public function return_modulos_by_curso($curso_id){
+        $this->load->model('modulos_model','modulos');
+
+        $where = array('curso_id'=>$curso_id);
+        $this->db->select('modulos_id, titulo');
+        $this->db->order_by("titulo", 'ASC');
+        $result = $this->modulos->get_where($where)->result();
+        $json = json_encode($result);
+        $this->output->set_header('content-type: application/json');
+        $this->output->set_output($json);
+    }
+
 
 
 	public function associar_cursos($modulo_id, $ok=false){
