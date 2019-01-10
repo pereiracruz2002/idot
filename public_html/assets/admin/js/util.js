@@ -45,17 +45,18 @@ $(document).ready(function () {
             caret.removeClass('caret-up').removeClass('fa-caret-up').addClass('fa-caret-down').addClass('caret-down');
     });
 
-    $('#segmentos').change(function(){
+    $('select[name=curso_id]').change(function(){
+        console.log('aqui')
         var elm = $(this);
-        $('#ramos').html('<option value="">Ramo</option>');
+         $('select[name=modulo_id]').html('<option value="">Modulos</option>');
         var retornoramos = function(result){
-            var html = '<option value="">Ramo</option>';
+            var html = '<option value="">Modulos</option>';
             $.each(result, function(key, value){
-                html += '<option value="'+value.IDRamo+'">'+value.descricao+'</option>';
+                html += '<option value="'+value.modulo_id+'">'+value.titulo+'</option>';
             });
-            $('#ramos').html(html);
+            $('select[name=modulo_id]').html(html);
         }
-        $.getJSON(base_url+"admin/modulos/return_modulos_by_curso/"+elm.val(), retornoramos);
+        $.getJSON(base_url+"/modulos/return_modulos_by_curso/"+elm.val(), retornoramos);
 
     });
 });

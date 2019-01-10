@@ -11,7 +11,7 @@ class Alunos extends BaseCrud {
     var $campos_busca = 'nome';
     var $upload_foto = "";
     var $acoes_extras = array(
-        array("url" => "admin/alunos/associar_cursos", "title" => "Relacionar com Aulas", "class" => "btn-info"),
+        array("url" => "admin/alunos/associar_cursos", "title" => "Relacionar com Cursos", "class" => "btn-info"),
     );
 
   public function __construct() 
@@ -83,49 +83,47 @@ class Alunos extends BaseCrud {
 
 
   public function associar_cursos($aluno_id, $ok=false){
-        $this->load->model('alunos_model','alunos');
-        $this->load->model('alunos_aulas_model','alunos_aulas');
+        $this->load->model('cursos_model','cursos');
+        $this->load->model('aluno_cursos_model','aluno_cursos');
 
         $where['aluno_id'] = $aluno_id;
 
         $this->data['permissoes'] = array();
-        $this->db->select('aulas.*');
-        $this->db->join('aulas','aulas.aulas_id=alunos_aulas.aula_id');
-        $permissoes = $this->alunos_aulas->get_where($where)->result();
+        $this->db->select('cursos.*');
+        $this->db->join('cursos','cursos.cursos_id=aluno_cursos.curso_id');
+        $permissoes = $this->aluno_cursos->get_where($where)->result();
         foreach ($permissoes as $item) {
-            $this->data['permissoes'][] = $item->aulas_id;
+            $this->data['permissoes'][] = $item->cursos_id;
         }
    
         $this->data['aluno_id'] = $aluno_id;
         unset($where['aluno_id']);
-        $this->data['aulas'] = $this->aulas->get_where($where)->result();
+        $this->data['cursos'] = $this->cursos->get_where($where)->result();
 
-        $this->load->view('admin/associar_cursos',$this->data);
+        $this->load->view('admin/associar_alunos_cursos',$this->data);
     }
 
 
 
-    public function add_modulos(){
-        $this->load->model('aula_modulos_model','aula_modulos');
+    public function add_cursos(){
+        $this->load->model('aluno_cursos_model','aluno_cursos');
 
         if($this->input->posts()){
             $nivel_permissoes = $save_depto = array();
-            $aula_id = $this->input->post('aula_id');
-            $this->db->delete('aula_modulos', array('aula_id' => $aula_id));
-
-
+            $aluno_id = $this->input->post('aluno_id');
+            $this->db->delete('aluno_cursos', array('aluno_id' => $aluno_id));
            
-            if($this->input->post('modulos') and !empty($this->input->post('modulos'))){
-                foreach ($this->input->post('modulos') as $modulo) {
-                    $save_modulos[] = array('modulo_id' => $modulo, 'aula_id' => $aula_id);
+            if($this->input->post('cursos') and !empty($this->input->post('cursos'))){
+                foreach ($this->input->post('cursos') as $curso) {
+                    $save_cursos[] = array('curso_id' => $curso, 'aluno_id' => $aluno_id);
                 }
             }
             
-            if($save_modulos){
-                $this->db->insert_batch('aula_modulos', $save_modulos);
+            if($save_cursos){
+                $this->db->insert_batch('aluno_cursos', $save_cursos);
             }
         }
-        redirect('admin/aulas/associar_modulos/'.$aula_id.'/ok');
+        redirect('admin/alunos');
     }
 
 }

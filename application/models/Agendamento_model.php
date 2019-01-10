@@ -25,7 +25,7 @@ class Agendamento_model extends My_Model
 
         'professor_id' => array(
             'type' => 'select',
-            'label' => 'Status',
+            'label' => 'Professor',
             'class' => '',
             'rules' => 'required',
             'label_class' => 'col-md-2',

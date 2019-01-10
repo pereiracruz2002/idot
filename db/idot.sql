@@ -88,7 +88,7 @@ CREATE TABLE `alunos` (
   `data_cadastro` varchar(45) DEFAULT NULL,
   `endereco` varchar(255) DEFAULT NULL,
   `turma` varchar(45) DEFAULT NULL,
-  `historico_endereco` text,
+  `historico_turma` text,
   `last_login` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`alunos_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
