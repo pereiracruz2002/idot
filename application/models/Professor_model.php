@@ -12,7 +12,7 @@ class Professor_model extends My_Model{
             	'prepend' => '<div class="col-md-3">',
             	'append' => '</div>',
 			),
-		   "texto"=> array("type" => "text",
+		   "texto"=> array("type" => "textarea",
 				"label" => "Mini-Currículo",
 				'extra' => array('class'=>'mytextarea'),
 				"rules" => "required",
