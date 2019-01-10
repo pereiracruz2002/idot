@@ -98,6 +98,7 @@ class Alunos_model extends My_Model{
             if ($cadastro->senha == md5($senha)) {
             //if(password_verify($senha,$cadastro->senha)){
                 unset($cadastro->senha);
+                $cadastro->tipo = 'professor';
                 $this->session->set_userdata('aluno', $cadastro);
                 $this->session->unset_userdata('cliente');
                 $this->update(array('last_login' => date('Y-m-d H:i:s')), $cadastro->admin_id);

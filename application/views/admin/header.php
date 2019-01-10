@@ -55,7 +55,6 @@
 
     <div class="sidebar-wrapper">
         
-
         <ul class="nav">
             <li class="active">
                 <a href="<?php echo site_url('admin/painel') ?>">
@@ -63,7 +62,7 @@
                     <p>Painel</p>
                 </a>
             </li>
-            
+            <?php if($this->session->userdata('admin')->tipo=="admin"):?>
             <li>
                 <a href="<?php echo site_url('admin/admins') ?>">
                     <i class="pe-7s-user"></i>
@@ -88,18 +87,6 @@
                     <p>Cursos</p>
                 </a>
             </li>
-            <!-- <li>
-                <a href="<?php echo site_url('admin/modulos') ?>">
-                    <i class="pe-7s-note2"></i>
-                    <p>Módulos</p>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo site_url('admin/aulas') ?>">
-                    <i class="pe-7s-note2"></i>
-                    <p>Aulas</p>
-                </a>
-            </li>-->
             <li> 
                 <a href="<?php echo site_url('admin/salas') ?>">
                     <i class="pe-7s-home"></i>
@@ -118,6 +105,21 @@
                     <p>Agendamentos</p>
                 </a>
             </li>
+            <?php elseif ($this->session->userdata('admin')->tipo=="professor"):?>
+                <li>
+                    <a href="<?php echo site_url('admin/agendamento') ?>">
+                        <i class="pe-7s-date"></i>
+                        <p>Meus Agendamentos</p>
+                    </a>
+                </li>
+            <?php else:?>
+                <li>
+                <a href="<?php echo site_url('admin/agendamento') ?>">
+                    <i class="pe-7s-date"></i>
+                    <p>Agendamentos</p>
+                </a>
+            </li>
+            <?php endif;?>
         </ul>
     </div>
 </div>

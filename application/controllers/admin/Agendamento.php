@@ -26,6 +26,15 @@ class Agendamento extends BaseCrud
      public function _filter_pre_listar(&$where, &$where_ativo)
      {
 
+
+        if($this->session->userdata('admin')->tipo=="professor"){
+            $where['professor_id'] = $this->session->userdata('admin')->id_professor;
+
+            $this->actions = 'R';
+            $this->acoes_extras = array(array('url'=>'admin/agendamento/ver_inscritos','title'=>'Ver Alunos','class'=>'btn btn-xs btn-info btn btn-warning'),array('url'=>'admin/agendamento/mudar_status','title'=>'Aula Concluida','class'=>'btn btn-xs btn-info btn btn-warning'));
+
+        }
+
         $this->model->fields['curso'] = array(
           'label' => 'Curso',
           'type' => 'text',
@@ -37,12 +46,36 @@ class Agendamento extends BaseCrud
     public function _filter_pre_read(&$data) 
     {
 
+        if(isset($data[0]->data))
+            $data[0]->data = formata_data($data[0]->data);
        
 
     }
 
+    public function ver_inscritos($agenda_id){
+        $this->load->model('cursos_model','cursos');
+        $this->db->select('cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,aluno_cursos.aluno_id')
+        ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
+        ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
+        ->join('agendamento', 'agendamento.curso_id=cursos.cursos_id')
+        ->join('modulos','modulos.curso_id=cursos.cursos_id')
+        ->join('professor','professor.id_professor=agendamento.professor_id');
+
+         $where['professor_id'] = $this->session->userdata('admin')->id_professor;
+         $where['agenda_id'] = $agenda_id;
+
+        $this->data['itens'] = $this->cursos->get_where($where)->result();
+        $this->load->view('admin/aulas_alunos', $this->data);
+    }
+
+ 
+
     public function _pre_form(&$model, &$data) 
     {
+
+        if(isset($data[0]['values']['data']))
+            $data[0]['values']['data'] = formata_data($data[0]['values']['data']);
+
         $this->load->model('cursos_model','cursos');
         $where = array('status'=>'ativo');
         $cursos = $this->cursos->get_where($where)->result();
