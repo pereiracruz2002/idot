@@ -35,7 +35,7 @@ class Professor extends BaseCrud {
   {
         $where['login'] = $login;
         if($this->uri->segment(3) == 'editar'){
-            $where['admin_id !='] = $this->uri->segment(4);
+            $where['id_professor !='] = $this->uri->segment(4);
         }
         $cadastro = $this->model->get_where($where)->row();
         if($cadastro){

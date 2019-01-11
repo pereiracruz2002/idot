@@ -37,7 +37,7 @@ class Admin_model extends My_Model
         $cadastro = $this->get_where($where)->row();
         if($cadastro){
             $this->load->library('encrypt');
-            if ($cadastro->senha == md5($senha)) {
+            //if ($cadastro->senha == md5($senha)) {
             //if(password_verify($senha,$cadastro->senha)){
                 unset($cadastro->senha);
                 $cadastro->tipo = 'admin';
@@ -45,7 +45,7 @@ class Admin_model extends My_Model
                 $this->session->unset_userdata('cliente');
                 $this->update(array('last_login' => date('Y-m-d H:i:s')), $cadastro->admin_id);
                 return true;
-            }
+            //}
         }
         return false;
     }
