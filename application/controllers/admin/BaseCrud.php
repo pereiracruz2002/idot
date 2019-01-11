@@ -197,7 +197,7 @@ class BaseCrud extends CI_Controller {
             $config['uri_segment'] = 4;
         }
         $this->_call_filter_pre_listar($where_ativo, $where);
-        $order = array($this->model->table . "." . $this->model->id_col => "desc");
+        $order = array($this->model->table . "." . $this->model->id_col => "asc");
 
         $results = $this->model->search($where, $this->uri->segment($config['uri_segment']), $config['per_page'], $this->selects, $this->joins, $where_ativo, $order, $this->group);
         /*echo '<pre>';

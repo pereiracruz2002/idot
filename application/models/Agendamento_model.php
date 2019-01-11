@@ -41,6 +41,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
+            'empty' => '--Selecine um status--',
             'values' => array(),
         ),
         'modulo_id' => array(

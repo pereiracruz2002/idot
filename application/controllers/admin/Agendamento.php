@@ -6,13 +6,14 @@ class Agendamento extends BaseCrud
     var $base_url = 'admin/agendamento';
     var $actions = 'CRUD';
     var $titulo = 'Agendamento';
-    var $tabela = 'data,vagas,curso';
+    var $tabela = 'data,vagas,curso,modulo';
     var $campos_busca = 'data';
     var $acoes_extras = array();
     var $joins = array(
          'cursos' => 'cursos.cursos_id=agendamento.curso_id',
+         'modulos'=> 'modulos.modulos_id=agendamento.modulo_id'
     );
-    var $selects = 'agendamento.*,cursos.titulo as curso';
+    var $selects = 'agendamento.*,cursos.titulo as curso, modulos.titulo as modulo';
 
 
     public function __construct() 
@@ -37,6 +38,12 @@ class Agendamento extends BaseCrud
 
         $this->model->fields['curso'] = array(
           'label' => 'Curso',
+          'type' => 'text',
+          'class' => '',
+        );
+
+        $this->model->fields['modulo'] = array(
+          'label' => 'Módulo',
           'type' => 'text',
           'class' => '',
         );
@@ -73,8 +80,6 @@ class Agendamento extends BaseCrud
     public function _pre_form(&$model, &$data) 
     {
 
-        if(isset($data[0]['values']['data']))
-            $data[0]['values']['data'] = formata_data($data[0]['values']['data']);
 
         $this->load->model('cursos_model','cursos');
         $where = array('status'=>'ativo');
@@ -99,6 +104,7 @@ class Agendamento extends BaseCrud
 
         $this->load->model('modulos_model','modulos');
         $where = array('status'=>'ativo');
+        $where = array('curso_id'=>$cursos[0]->cursos_id);
         $modulos = $this->modulos->get_where($where)->result();
         foreach ($modulos as $key => $value) {
             $model->fields['modulo_id']['values'][$value->modulos_id] = $value->titulo;

@@ -30,17 +30,7 @@ class Salas extends BaseCrud
 
     
 
-    
-    public function _filter_pre_delete($id) 
-    {
-        $where['empresa_id'] = $this->session->userdata('admin')->empresa_id;
-        $user = $this->model->get_where($where)->row();
-        if($user){
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     public function _filter_pos_save($data, $id) 
     {
