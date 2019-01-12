@@ -1,5 +1,5 @@
 <?php if (!$this->input->is_ajax_request()) include_once(dirname(__FILE__) . '/../header.php'); ?>
-<div class="main-panel">
+<div class="content">
     <div id="main-container">
 
         <div class="col-md-12">	

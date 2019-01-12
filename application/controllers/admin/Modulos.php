@@ -6,7 +6,7 @@ class Modulos extends BaseCrud
     var $base_url = 'admin/modulos';
     var $actions = 'CRUD';
     var $titulo = 'Módulos';
-    var $tabela = 'titulo,status';
+    var $tabela = 'titulo,descricao,status';
     var $campos_busca = 'titulo';
     var $acoes_extras = array();
     var $acoes_controller = array();

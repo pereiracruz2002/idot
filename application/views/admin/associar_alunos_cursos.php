@@ -1,7 +1,5 @@
 <?php if (!$this->input->is_ajax_request()) include_once(dirname(__FILE__) . '/header.php'); ?>
-
-
-<div class="main-panel">
+<div class="content">
     <div class="row">
         <div class="panel-heading">
             <h3 class="headline m-top-md"><a href="<?php echo site_url($this->base_url.'/listar') ?>" class="btn btn-warning btn-sm">Voltar</a> Associar Cursos<span class="line"></span></h3>

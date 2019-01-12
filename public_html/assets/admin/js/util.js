@@ -46,11 +46,10 @@ $(document).ready(function () {
     });
 
     $('select[name=curso_id]').change(function(){
-        console.log('aqui')
         var elm = $(this);
-         $('select[name=modulo_id]').html('<option value="">Modulos</option>');
+         $('select[name=modulo_id]').html('<option value="">--Selecione--</option>');
         var retornoramos = function(result){
-            var html = '<option value="">Modulos</option>';
+            var html = '<option value="">--Selecione--</option>';
             $.each(result, function(key, value){
                 html += '<option value="'+value.modulo_id+'">'+value.titulo+'</option>';
             });

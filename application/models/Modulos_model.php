@@ -19,7 +19,7 @@ class Modulos_model extends My_Model
         ),
 
         'descricao' => array(
-            'type' => 'text',
+            'type' => 'textarea',
             'label' => 'Descrição',
             'class' => '',
             'extra' => array('class'=>'mytextarea'),
