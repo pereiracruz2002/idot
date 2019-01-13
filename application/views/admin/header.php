@@ -112,11 +112,12 @@
                         <p>Meus Agendamentos</p>
                     </a>
                 </li>
+
             <?php else:?>
                 <li>
                 <a href="<?php echo site_url('admin/agendamento') ?>">
                     <i class="pe-7s-date"></i>
-                    <p>Agendamentos</p>
+                    <p>Meus Agendamentos</p>
                 </a>
             </li>
             <?php endif;?>

@@ -36,6 +36,18 @@ class Agendamento extends BaseCrud
                     array('url'=>'admin/agendamento/ver_inscritos','title'=>'Ver Alunos','class'=>'btn btn-xs btn-info btn btn-warning'),
                     array('url'=>'admin/agendamento/mudar_status','title'=>'Fechar Aula','class'=>'btn btn-xs btn-info btn btn-warning change_status'));
 
+        }elseif($this->session->userdata('admin')->tipo=="aluno"){
+            $this->actions = 'R';
+            $this->joins = array('cursos' => 'cursos.cursos_id=agendamento.curso_id',
+             'modulos'=> 'modulos.modulos_id=agendamento.modulo_id',
+             'aluno_cursos'=>'aluno_cursos.curso_id=cursos.cursos_id',
+             'alunos'=>'alunos.alunos_id=aluno_cursos.aluno_id');
+               
+            $where['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
+
+            $this->acoes_extras = array(
+                array('url'=>'admin/agendamento/rever_aula','title'=>'Rever Aula','class'=>'btn btn-xs btn-info btn btn-warning rever_aula'),
+                array('url'=>'admin/agendamento/repor_aula','title'=>'Repor Aula','class'=>'btn btn-xs btn-info btn btn-warning repor_aula'));
         }
 
         $this->model->fields['status'] = array(
