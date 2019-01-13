@@ -34,7 +34,7 @@ $(document).ready(function () {
     });
 
 
-     $('body').on('click', '.confirmar_presenca', function (e) {
+    $('body').on('click', '.confirmar_presenca', function (e) {
         e.preventDefault();
         var _self = $(this);
         var decisao = confirm("Tem certeza que deseja confirmar presença do aluno?");
@@ -44,6 +44,18 @@ $(document).ready(function () {
             if ($('.alert-success').length == 0)
                 $('.m-top-md').after('<div class="alert alert-success"><p>Registrado a presença do aluno!</p></div>');
             window.location= base_url+'agendamento/ver_inscritos/'+uri;
+        }
+    });
+
+     $('body').on('click', '.change_status', function (e) {
+        e.preventDefault();
+        var _self = $(this);
+        var decisao = confirm("Tem certeza que deseja confirmar essa aula como finalizada?");
+        if (decisao) {
+            $.get(_self.attr('href'));
+            if ($('.alert-success').length == 0)
+                $('.m-top-md').after('<div class="alert alert-success"><p>Status da aula alterado com sucesso!</p></div>');
+            window.location= base_url+'/agendamento';
         }
     });
 

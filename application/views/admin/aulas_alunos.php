@@ -27,12 +27,16 @@
                                 <td><?= formata_data($row->data) ?></td>
 
                                 <td class="acoes">
-                                    <?php if(is_null($row->presenca_id)):?>
-                                        <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
-                                    <?php else:?>
-                                        <p><i class="fa fa-eye"></i>Presente</p>
-                                        
-                                    <?php endif;?>
+                                    <?php if($row->status_agendamento=="aberto"){
+
+                                        if(is_null($row->presenca_id)):?>
+                                            <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
+                                        <?php else:?>
+                                            <p><i class="pe-7s-check">Presente</i></p>
+                                        <?php endif;?>
+                                    <?php }else{?>
+                                             <p><i class="pe-7s-close-circle">Ausente</i></p>
+                                    <?php } ?>
                                 </td>
                             </tr>
                         <?php endforeach ?>

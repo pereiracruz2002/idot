@@ -6,7 +6,7 @@ class Agendamento extends BaseCrud
     var $base_url = 'admin/agendamento';
     var $actions = 'CRUD';
     var $titulo = 'Agendamento';
-    var $tabela = 'data,vagas,curso,modulo';
+    var $tabela = 'data,vagas,curso,modulo,status';
     var $campos_busca = 'data';
     var $acoes_extras = array();
     var $joins = array(
@@ -32,9 +32,17 @@ class Agendamento extends BaseCrud
             $where['professor_id'] = $this->session->userdata('admin')->id_professor;
 
             $this->actions = 'R';
-            $this->acoes_extras = array(array('url'=>'admin/agendamento/ver_inscritos','title'=>'Ver Alunos','class'=>'btn btn-xs btn-info btn btn-warning'),array('url'=>'admin/agendamento/mudar_status','title'=>'Fechar Aula','class'=>'btn btn-xs btn-info btn btn-warning'));
+            $this->acoes_extras = array(
+                    array('url'=>'admin/agendamento/ver_inscritos','title'=>'Ver Alunos','class'=>'btn btn-xs btn-info btn btn-warning'),
+                    array('url'=>'admin/agendamento/mudar_status','title'=>'Fechar Aula','class'=>'btn btn-xs btn-info btn btn-warning change_status'));
 
         }
+
+        $this->model->fields['status'] = array(
+          'label' => 'Status da Aula',
+          'type' => 'text',
+          'class' => '',
+        );
 
         $this->model->fields['curso'] = array(
           'label' => 'Curso',
@@ -65,7 +73,7 @@ class Agendamento extends BaseCrud
 
     public function ver_inscritos($agenda_id){
         $this->load->model('cursos_model','cursos');
-        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id,presenca.presenca_id')
+        $this->db->select('agendamento.agenda_id,agendamento.status as status_agendamento,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id,presenca.presenca_id')
         ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
         ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
         ->join('presenca','presenca.aluno_id=alunos.alunos_id','left')
@@ -90,6 +98,17 @@ class Agendamento extends BaseCrud
         }else{
             echo $this->db->last_query();
             $this->output->set_output("erro ao inserir uma presença");
+        }
+    }
+
+    public function mudar_status($agenda_id){
+        $this->db->set('status', 'fechado');
+        $this->db->where('agenda_id', $agenda_id);
+        if($this->db->update('agendamento')){
+            $this->output->set_output("ok");
+        }else{
+            echo $this->db->last_query();
+            $this->output->set_output("erro ao atualizar o agendamento");  
         }
     }
 
