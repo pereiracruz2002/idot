@@ -45,9 +45,9 @@ class Agendamento extends BaseCrud
                
             $where['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
 
-            $this->acoes_extras = array(
-                array('url'=>'admin/agendamento/rever_aula','title'=>'Rever Aula','class'=>'btn btn-xs btn-info btn btn-warning rever_aula'),
-                array('url'=>'admin/agendamento/repor_aula','title'=>'Repor Aula','class'=>'btn btn-xs btn-info btn btn-warning repor_aula'));
+            // $this->acoes_extras = array(
+            //     array('url'=>'admin/agendamento/rever_aula','title'=>'Rever Aula','class'=>'btn btn-xs btn-info btn btn-warning rever_aula'),
+            //     array('url'=>'admin/agendamento/repor_aula','title'=>'Repor Aula','class'=>'btn btn-xs btn-info btn btn-warning repor_aula'));
         }
 
         $this->model->fields['status'] = array(
@@ -72,12 +72,29 @@ class Agendamento extends BaseCrud
 
     public function _filter_pre_read(&$data) 
     {
+
+        //var_dump($data);
         $i = 0;
         foreach ($data as $key) {
             foreach ($key as $chave => $valor) {
                 if($chave=="data"){
                     $key->data = formata_data($key->data);
                 }
+                if($this->session->userdata('admin')->tipo=="aluno"){
+
+                }
+                // if($chave=='status'){
+                //     echo $key->data;
+                //     echo "<br />";
+                //     if($key->data=="aberto"){
+                //          $this->acoes_extras = array();
+
+                //     }else{
+                //         $this->acoes_extras = array(
+                //             array('url'=>'admin/agendamento/rever_aula','title'=>'Rever Aula','class'=>'btn btn-xs btn-info btn btn-warning rever_aula'),
+                //             array('url'=>'admin/agendamento/repor_aula','title'=>'Repor Aula','class'=>'btn btn-xs btn-info btn btn-warning repor_aula'));
+                //     }
+                // }
             }
         }
 
@@ -85,10 +102,10 @@ class Agendamento extends BaseCrud
 
     public function ver_inscritos($agenda_id){
         $this->load->model('cursos_model','cursos');
-        $this->db->select('agendamento.agenda_id,agendamento.status as status_agendamento,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id,presenca.presenca_id')
+        $this->db->select('agendamento.agenda_id,agendamento.status as status_agendamento,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id')
         ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
         ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
-        ->join('presenca','presenca.aluno_id=alunos.alunos_id','left')
+        //->join('presenca','presenca.aluno_id=alunos.alunos_id','left')
         ->join('agendamento', 'agendamento.curso_id=cursos.cursos_id')
         ->join('modulos','modulos.curso_id=cursos.cursos_id')
         ->join('professor','professor.id_professor=agendamento.professor_id');
@@ -99,12 +116,65 @@ class Agendamento extends BaseCrud
          $where['agendamento.agenda_id'] = $agenda_id;
 
         $this->data['itens'] = $this->cursos->get_where($where)->result();
+        $this->load->model('presenca_model','presenca');
+        $array_presenca = array();
+        $this->db->select('agenda_id,presente');
+        foreach($this->data['itens'] as $itens){
+            $where_presenca['aluno_id'] = $itens->aluno_id;
+            $where_presenca['agenda_id'] = $itens->agenda_id;
+            $result = $this->presenca->get_where($where_presenca)->row();
+            if($result){
+                $array_presenca[$result->agenda_id] = $result->presente;
+            }
+
+        }
+        $this->data['presenca'] = $array_presenca;
+
         $this->load->view('admin/aulas_alunos', $this->data);
     }
 
-    public function checar_presenca($aluno_id, $agenda_id){
+     public function ver_minha_agenda(){
+        $this->load->model('cursos_model','cursos');
+        $this->db->select('agendamento.agenda_id,agendamento.status as status_agendamento,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id')
+        ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
+        ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
+        //->join('presenca','presenca.aluno_id=alunos.alunos_id','left')
+        ->join('agendamento', 'agendamento.curso_id=cursos.cursos_id')
+        ->join('modulos','modulos.curso_id=cursos.cursos_id')
+        ->join('professor','professor.id_professor=agendamento.professor_id');
+
+        $this->db->group_by("agendamento.agenda_id");
+
+         $where['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
+         //$where['agendamento.agenda_id'] = $agenda_id;
+
+        $this->data['itens'] = $this->cursos->get_where($where)->result();
+   
+        $this->load->model('presenca_model','presenca');
+        $array_presenca = array();
+        $this->db->select('agenda_id,presente');
+        foreach($this->data['itens'] as $itens){
+            $where_presenca['aluno_id'] = $itens->aluno_id;
+            $where_presenca['agenda_id'] = $itens->agenda_id;
+            $result = $this->presenca->get_where($where_presenca)->row();
+            if($result){
+                $array_presenca[$result->agenda_id] = $result->presente;
+            }
+
+        }
+        $this->data['presenca'] = $array_presenca;
+
+        $this->load->view('admin/aulas_alunos', $this->data);
+    }
+
+    public function checar_presenca($aluno_id, $agenda_id, $presente){
         $data['aluno_id'] = $aluno_id;
         $data['agenda_id'] = $agenda_id;
+        if($presente == 1){
+            $data['presente'] = 'sim';
+        }else{
+            $data['presente'] = 'nao';
+        }
         if($this->db->insert('presenca',$data)){
             $this->output->set_output("ok");
         }else{
@@ -122,6 +192,10 @@ class Agendamento extends BaseCrud
             echo $this->db->last_query();
             $this->output->set_output("erro ao atualizar o agendamento");  
         }
+    }
+
+    public function rever_aula($agenda_id){
+
     }
 
  

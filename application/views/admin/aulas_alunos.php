@@ -27,19 +27,32 @@
                                 <td><?= formata_data($row->data) ?></td>
 
                                 <td class="acoes">
-                                    <?php if($row->status_agendamento=="aberto"){
-
-                                        if(is_null($row->presenca_id)):?>
-                                            <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
-                                        <?php else:?>
-                                            <p><i class="pe-7s-check">Presente</i></p>
-                                        <?php endif;?>
-                                    <?php }else{?>
-                                             <p><i class="pe-7s-close-circle">Ausente</i></p>
+                                    <?php 
+                                    if($this->session->userdata('admin')->tipo=="professor"){
+                                        if(!array_key_exists($row->agenda_id, $presenca)){
+                                        //if($row->status_agendamento=="aberto"){?>
+                                                <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
+                                                <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/2" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Ausencia</a>
+                                        <?php }else{?>
+                                            <?php if($presenca[$row->agenda_id]=='sim'):?>
+                                                <p><i class="pe-7s-check">Presente</i></p>
+                                            <?php else:?>
+                                                 <p><i class="pe-7s-close-circle">Ausente</i></p>
+                                            <?php endif;?>
+                                        <?php } ?>
+                                    <?php }else{ ?>
+                                            <?php if(array_key_exists($row->agenda_id, $presenca)){
+                                                if($presenca[$row->agenda_id]=='sim'):?>
+                                                <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Revisao</a>
+                                              <?php else:?>
+                                                <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Reposicao</a>
+                                              <?php endif; ?>
+                                            
                                     <?php } ?>
+                                <?php } ?>
                                 </td>
                             </tr>
-                        <?php endforeach ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>

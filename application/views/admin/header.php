@@ -54,7 +54,6 @@
     -->
 
     <div class="sidebar-wrapper">
-        
         <ul class="nav">
             <li class="active">
                 <a href="<?php echo site_url('admin/painel') ?>">
@@ -115,7 +114,7 @@
 
             <?php else:?>
                 <li>
-                <a href="<?php echo site_url('admin/agendamento') ?>">
+                <a href="<?php echo site_url('admin/agendamento/ver_minha_agenda') ?>">
                     <i class="pe-7s-date"></i>
                     <p>Meus Agendamentos</p>
                 </a>
