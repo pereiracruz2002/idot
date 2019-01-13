@@ -34,6 +34,20 @@ $(document).ready(function () {
     });
 
 
+     $('body').on('click', '.confirmar_presenca', function (e) {
+        e.preventDefault();
+        var _self = $(this);
+        var decisao = confirm("Tem certeza que deseja confirmar presença do aluno?");
+        if (decisao) {
+            $.get(_self.attr('data-confirm'));
+            uri = _self.attr('href')
+            if ($('.alert-success').length == 0)
+                $('.m-top-md').after('<div class="alert alert-success"><p>Registrado a presença do aluno!</p></div>');
+            window.location= base_url+'agendamento/ver_inscritos/'+uri;
+        }
+    });
+
+
     $("div.panel-show-hide").click(function () {
         var heading = $(this);
         var caret = heading.find("i");
@@ -51,7 +65,7 @@ $(document).ready(function () {
         var retornoramos = function(result){
             var html = '<option value="">--Selecione--</option>';
             $.each(result, function(key, value){
-                html += '<option value="'+value.modulo_id+'">'+value.titulo+'</option>';
+                html += '<option value="'+value.modulos_id+'">'+value.titulo+'</option>';
             });
             $('select[name=modulo_id]').html(html);
         }

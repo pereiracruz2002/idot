@@ -32,7 +32,7 @@ class Agendamento extends BaseCrud
             $where['professor_id'] = $this->session->userdata('admin')->id_professor;
 
             $this->actions = 'R';
-            $this->acoes_extras = array(array('url'=>'admin/agendamento/ver_inscritos','title'=>'Ver Alunos','class'=>'btn btn-xs btn-info btn btn-warning'),array('url'=>'admin/agendamento/mudar_status','title'=>'Aula Concluida','class'=>'btn btn-xs btn-info btn btn-warning'));
+            $this->acoes_extras = array(array('url'=>'admin/agendamento/ver_inscritos','title'=>'Ver Alunos','class'=>'btn btn-xs btn-info btn btn-warning'),array('url'=>'admin/agendamento/mudar_status','title'=>'Fechar Aula','class'=>'btn btn-xs btn-info btn btn-warning'));
 
         }
 
@@ -52,27 +52,45 @@ class Agendamento extends BaseCrud
 
     public function _filter_pre_read(&$data) 
     {
-
-        if(isset($data[0]->data))
-            $data[0]->data = formata_data($data[0]->data);
-       
+        $i = 0;
+        foreach ($data as $key) {
+            foreach ($key as $chave => $valor) {
+                if($chave=="data"){
+                    $key->data = formata_data($key->data);
+                }
+            }
+        }
 
     }
 
     public function ver_inscritos($agenda_id){
         $this->load->model('cursos_model','cursos');
-        $this->db->select('cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,aluno_cursos.aluno_id')
+        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id,presenca.presenca_id')
         ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
         ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
+        ->join('presenca','presenca.aluno_id=alunos.alunos_id','left')
         ->join('agendamento', 'agendamento.curso_id=cursos.cursos_id')
         ->join('modulos','modulos.curso_id=cursos.cursos_id')
         ->join('professor','professor.id_professor=agendamento.professor_id');
 
+        $this->db->group_by("agendamento.agenda_id");
+
          $where['professor_id'] = $this->session->userdata('admin')->id_professor;
-         $where['agenda_id'] = $agenda_id;
+         $where['agendamento.agenda_id'] = $agenda_id;
 
         $this->data['itens'] = $this->cursos->get_where($where)->result();
         $this->load->view('admin/aulas_alunos', $this->data);
+    }
+
+    public function checar_presenca($aluno_id, $agenda_id){
+        $data['aluno_id'] = $aluno_id;
+        $data['agenda_id'] = $agenda_id;
+        if($this->db->insert('presenca',$data)){
+            $this->output->set_output("ok");
+        }else{
+            echo $this->db->last_query();
+            $this->output->set_output("erro ao inserir uma presença");
+        }
     }
 
  

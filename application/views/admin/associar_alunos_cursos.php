@@ -9,7 +9,7 @@
         </div>
         <div class="panel table-responsive">
             <div class="panel-body">
-                <form action="/admin/alunos/add_cursos" method="post" class="form-horizontal no-margin form-border" enctype="multipart/form-data">
+                <form action="<?php echo site_url(); ?>/admin/alunos/add_cursos" method="post" class="form-horizontal no-margin form-border" enctype="multipart/form-data">
                     <h3>Associar Curso</h3> 
                     <p>Associe os cursos que este módulo será associado.</p>
                     <div class="row">
