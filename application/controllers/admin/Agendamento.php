@@ -101,34 +101,43 @@ class Agendamento extends BaseCrud
     }
 
     public function ver_inscritos($agenda_id){
-        $this->load->model('cursos_model','cursos');
-        $this->db->select('agendamento.agenda_id,agendamento.status as status_agendamento,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id')
-        ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
-        ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
-        //->join('presenca','presenca.aluno_id=alunos.alunos_id','left')
-        ->join('agendamento', 'agendamento.curso_id=cursos.cursos_id')
-        ->join('modulos','modulos.curso_id=cursos.cursos_id')
-        ->join('professor','professor.id_professor=agendamento.professor_id');
+        $this->load->model('agendamento_model','agendamento');
+        //$this->load->model('cursos_model','cursos');
+        // $this->db->select('agendamento.agenda_id,agendamento.status as status_agendamento,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id')
+        // ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
+        // ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
+        // ->join('presenca','presenca.aluno_id=alunos.alunos_id')
+        // ->join('agendamento', 'agendamento.curso_id=cursos.cursos_id')
+        // ->join('modulos','modulos.curso_id=cursos.cursos_id')
+        // ->join('professor','professor.id_professor=agendamento.professor_id');
 
-        $this->db->group_by("agendamento.agenda_id");
+        //$this->db->group_by("agendamento.agenda_id");
+
+        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso,modulos.titulo as modulo,alunos.nome,alunos.alunos_id as aluno_id,presenca.presente as presenca')
+        ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
+        ->join('alunos','alunos.alunos_id=presenca.aluno_id')
+        ->join('cursos','cursos.cursos_id=agendamento.curso_id')
+        ->join('modulos','modulos.modulos_id=agendamento.modulo_id')
+        ->join('professor','professor.id_professor=agendamento.professor_id');
 
          $where['professor_id'] = $this->session->userdata('admin')->id_professor;
          $where['agendamento.agenda_id'] = $agenda_id;
 
-        $this->data['itens'] = $this->cursos->get_where($where)->result();
-        $this->load->model('presenca_model','presenca');
-        $array_presenca = array();
-        $this->db->select('agenda_id,presente');
-        foreach($this->data['itens'] as $itens){
-            $where_presenca['aluno_id'] = $itens->aluno_id;
-            $where_presenca['agenda_id'] = $itens->agenda_id;
-            $result = $this->presenca->get_where($where_presenca)->row();
-            if($result){
-                $array_presenca[$result->agenda_id] = $result->presente;
-            }
+        $this->data['itens'] = $this->agendamento->get_where($where)->result();
 
-        }
-        $this->data['presenca'] = $array_presenca;
+        // $this->load->model('presenca_model','presenca');
+        // $array_presenca = array();
+        // $this->db->select('agenda_id,presente');
+        // foreach($this->data['itens'] as $itens){
+        //     $where_presenca['aluno_id'] = $itens->aluno_id;
+        //     $where_presenca['agenda_id'] = $itens->agenda_id;
+        //     $result = $this->presenca->get_where($where_presenca)->row();
+        //     if($result){
+        //         $array_presenca[$result->agenda_id] = $result->presente;
+        //     }
+
+        // }
+        // $this->data['presenca'] = $array_presenca;
 
         $this->load->view('admin/aulas_alunos', $this->data);
     }
@@ -251,6 +260,39 @@ class Agendamento extends BaseCrud
 
     public function _filter_pos_save($data, $id) 
     {
+        var_dump($data);
+        $this->load->model('aluno_cursos_model','aluno_cursos');
+        $this->load->model('presenca_model','presenca');
+
+
+        $this->db->select('aluno_cursos.aluno_id, alunos.nome')
+        ->join('alunos','alunos.alunos_id =aluno_cursos.aluno_id');
+
+         $where['aluno_cursos.curso_id'] = $data['curso_id'];
+
+         $alunos = $this->aluno_cursos->get_where($where)->result();
+
+
+         if($alunos){
+            foreach($alunos as $aluno){
+                $this->db->select('presenca.aluno_id')
+                 ->join('agendamento','agendamento.agenda_id =presenca.agenda_id')
+                 ->join('modulos','modulos.modulos_id=agendamento.modulo_id');
+
+                 $where_presenca['presenca.aluno_id'] = $aluno->aluno_id;
+                 $where_presenca['agendamento.modulo_id'] = $data['modulo_id'];
+
+                 $presenca = $this->presenca->get_where($where_presenca)->result();
+                 if(count($presenca) == 0){
+                    $dados['aluno_id'] = $aluno->aluno_id;
+                    $dados['agenda_id'] = $id;
+                    $this->db->insert('presenca',$dados);
+                 }
+            }
+         }
+
+    
+
         redirect('admin/agendamento');
 
     }
