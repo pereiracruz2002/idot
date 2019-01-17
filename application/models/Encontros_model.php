@@ -1,18 +1,13 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Cursos_model extends My_Model
+class Encontros_model extends My_Model
 {
-	var $id_col = 'cursos_id';
+	var $id_col = 'encontros_id';
     var $fields = array(  
-        'nivel' => array(
-            'type' => 'select',
-            'label' => 'Nível',
-            'class' => '',
-            'rules' => 'required',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-3">',
-            'append' => '</div>',
-            'values' => array('1' => 'Nível 1', '2' => 'Nível 2-3','4' => 'Nível 4','5' => 'Nível 5')
-        ), 
+        'modulo_id' => array(
+            'type' => 'hidden',
+            'label' => '',
+        ),
+
         'titulo' => array(
             'type' => 'text',
             'label' => 'Título',
@@ -24,7 +19,7 @@ class Cursos_model extends My_Model
         ),
 
         'descricao' => array(
-            'type' => 'text',
+            'type' => 'textarea',
             'label' => 'Descrição',
             'class' => '',
             'extra' => array('class'=>'mytextarea'),
@@ -34,7 +29,6 @@ class Cursos_model extends My_Model
             'append' => '</div>',
         ),
 
-        
 
         'status' => array(
             'type' => 'select',

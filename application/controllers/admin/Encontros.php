@@ -1,18 +1,15 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 require_once('BaseCrud.php');
-class Modulos extends BaseCrud
+class Encontros extends BaseCrud
 {
-    var $modelname = 'modulos';
-    var $base_url = 'admin/modulos';
+    var $modelname = 'encontros';
+    var $base_url = 'admin/encontros';
     var $actions = 'CRUD';
-    var $titulo = 'Módulos';
-    var $tabela = 'titulo,curso,descricao,encontros,status';
+    var $titulo = 'Encontros';
+    var $tabela = 'titulo,descricao,status';
     var $campos_busca = 'titulo';
     var $acoes_extras = array();
     var $acoes_controller = array();
-    var $selects = "modulos.*, cursos.titulo as curso, GROUP_CONCAT(encontros.titulo,',') as encontros";
-    var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id', 'encontros'=>array('encontros.modulo_id=modulos.modulos_id','left') );
-    var $group= array('modulos.modulos_id');
 
 
     public function __construct() 
@@ -20,7 +17,7 @@ class Modulos extends BaseCrud
 
         parent::__construct();
         //verify_permiss_redirect('departamentos');
-        $this->data['menu_active'] = 'modulos';
+        $this->data['menu_active'] = 'encontros';
     }
 
 
@@ -29,9 +26,10 @@ class Modulos extends BaseCrud
     {
       
 
-      $model->fields['curso_id']['type'] = 'hidden';
-      $model->fields['curso_id']['label'] = '';
-      $model->fields['curso_id']['value'] = $this->uri->segment(4);
+
+      $model->fields['modulo_id']['type'] = 'hidden';
+      $model->fields['modulo_id']['label'] = '';
+      $model->fields['modulo_id']['value'] = $this->uri->segment(4);
 
     }
 
@@ -40,64 +38,31 @@ class Modulos extends BaseCrud
     public function _filter_pre_read(&$data) 
     {
         
-        // $this->db->select('cursos.nivel');
-        // $this->load->model('cursos_model','cursos');
-        // foreach($data as $d){
-        //     $where = array('cursos_id'=>$d->curso_id);
-        //     $result = $this->cursos->get_where($where)->row(); 
-        //     if($result->nivel==2){
-        //         $url = "admin/encontros/novo";
-        //         $this->acoes_extras = array(array('url'=>$url,'title'=>'Adicionar Encontros','class'=>'btn btn-xs btn-info btn btn-warning'));
-        //     }
-        // }
         
       
-       
 
     }
 
     public function _filter_pre_listar(&$where, &$like) 
     {
-
-        $this->model->fields['curso'] = array(
-          'label' => 'Curso',
-          'type' => 'text',
-          'class' => '',
-        );
-
-        $this->model->fields['encontros'] = array(
-          'label' => 'Encontros',
-          'type' => 'text',
-          'class' => '',
-        );
-
-        $url = "admin/modulos/novo/". $this->uri->segment(4);
+        $url = "admin/encontros/novo/". $this->uri->segment(4);
        $this->acoes_controller = array(array("url" => $url, "title" => "Novo", "class" => "btn-custom"));
-        $where['curso_id'] = $this->uri->segment(4);
+        $where['modulo_id'] = $this->uri->segment(4);
 
-
-
-        $this->db->select('cursos.nivel');
-        $this->load->model('cursos_model','cursos');
-        $where = array('cursos_id'=>$this->uri->segment(4));
-        $result = $this->cursos->get_where($where)->row(); 
-        if($result->nivel==2){
-            $url = "admin/encontros/listar";
-            $this->acoes_extras = array(array('url'=>$url,'title'=>'Adicionar Encontros','class'=>'btn btn-xs btn-info btn btn-warning'));
-        }else{
-            $this->tabela = 'titulo,curso,descricao,status';
-        }
+    
     }
 
     public function _filter_pos_save($data, $id) 
     {
 
-        $url = 'admin/modulos/listar/'.$data['curso_id'];
+        $url = 'admin/encontros/listar/'.$data['modulo_id'];
+
 
         redirect($url);
 
     }
 
+    /*
     public function return_modulos_by_curso($curso_id){
         $this->load->model('modulos_model','modulos');
 
@@ -155,5 +120,6 @@ class Modulos extends BaseCrud
         }
         redirect('admin/modulos/associar_cursos/'.$modulo_id.'/ok');
     }
+    */
 
 }

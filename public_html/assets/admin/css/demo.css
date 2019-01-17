@@ -60,7 +60,7 @@
     text-align: center;
 }
 
-.modulos a.btn-primary{
+.modulos a.btn-primary , .encontros a.btn-primary{
     display: none;
 }
 
