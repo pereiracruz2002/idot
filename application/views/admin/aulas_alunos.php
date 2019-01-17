@@ -15,6 +15,7 @@
                             <th>Curso</th>
                             <th>Módulo</th>
                             <th>Data</th>
+                            <th>Tipo Aula</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -25,7 +26,7 @@
                                 <td><?= $row->curso ?></td>
                                 <td><?= $row->modulo ?></td>
                                 <td><?= formata_data($row->data) ?></td>
-
+                                <td><?= $row->tipo ?></td>
                                 <td class="acoes">
                                     <?php 
                                     if($this->session->userdata('admin')->tipo=="professor"){

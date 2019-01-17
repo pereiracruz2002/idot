@@ -113,7 +113,7 @@ class Agendamento extends BaseCrud
 
         //$this->db->group_by("agendamento.agenda_id");
 
-        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso,modulos.titulo as modulo,alunos.nome,alunos.alunos_id as aluno_id,presenca.presente as presenca')
+        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso,modulos.titulo as modulo,alunos.nome,alunos.alunos_id as aluno_id,presenca.presente as presenca, presenca.tipo as tipo')
         ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
         ->join('alunos','alunos.alunos_id=presenca.aluno_id')
         ->join('cursos','cursos.cursos_id=agendamento.curso_id')
