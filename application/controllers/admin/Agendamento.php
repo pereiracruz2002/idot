@@ -120,6 +120,8 @@ class Agendamento extends BaseCrud
         ->join('modulos','modulos.modulos_id=agendamento.modulo_id')
         ->join('professor','professor.id_professor=agendamento.professor_id');
 
+        //$this->db->group_by("agendamento.agenda_id");
+
          $where['professor_id'] = $this->session->userdata('admin')->id_professor;
          $where['agendamento.agenda_id'] = $agenda_id;
 
@@ -193,16 +195,25 @@ class Agendamento extends BaseCrud
         $data['aluno_id'] = $aluno_id;
         $data['agenda_id'] = $agenda_id;
         if($presente == 1){
-            $data['presente'] = 'sim';
+             $this->db->set('presente', 'sim');
         }else{
-            $data['presente'] = 'nao';
+             $this->db->set('presente', 'nao');
         }
-        if($this->db->insert('presenca',$data)){
+
+        $this->db->set('presente', 'sim');
+        $this->db->where($data);
+        if($this->db->update('presenca')){
             $this->output->set_output("ok");
         }else{
-            echo $this->db->last_query();
-            $this->output->set_output("erro ao inserir uma presença");
+           $this->output->set_output("erro ao inserir uma presença"); 
         }
+
+        // if($this->db->insert('presenca',$data)){
+        //     $this->output->set_output("ok");
+        // }else{
+        //     echo $this->db->last_query();
+        //     $this->output->set_output("erro ao inserir uma presença");
+        // }
     }
 
     public function mudar_status($agenda_id){
