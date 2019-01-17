@@ -54,6 +54,18 @@ class Agendamento_model extends My_Model
             'append' => '</div>',
             'values' => array(),
         ),
+
+        'encontro_id' => array(
+            'type' => 'select',
+            'label' => 'Encontros',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2 hide',
+            'prepend' => '<div class="col-md-3 hide">',
+            'append' => '</div>',
+            'values' => array(),
+            
+        ),
         'sala_id' => array(
             'type' => 'select',
             'label' => 'Salas',

@@ -10,7 +10,7 @@ class Modulos extends BaseCrud
     var $campos_busca = 'titulo';
     var $acoes_extras = array();
     var $acoes_controller = array();
-    var $selects = "modulos.*, cursos.titulo as curso, GROUP_CONCAT(encontros.titulo,',') as encontros";
+    var $selects = "modulos.*, cursos.titulo as curso, GROUP_CONCAT(encontros.titulo,' ') as encontros";
     var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id', 'encontros'=>array('encontros.modulo_id=modulos.modulos_id','left') );
     var $group= array('modulos.modulos_id');
 

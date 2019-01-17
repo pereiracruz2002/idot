@@ -229,6 +229,7 @@ class Agendamento extends BaseCrud
         $this->load->model('cursos_model','cursos');
         $where = array('status'=>'ativo');
         $cursos = $this->cursos->get_where($where)->result();
+        $model->fields['curso_id']['values'][''] = '--Selecione um Curso--';
         foreach ($cursos as $key => $value) {
             $model->fields['curso_id']['values'][$value->cursos_id] = $value->titulo;
         }
@@ -250,10 +251,11 @@ class Agendamento extends BaseCrud
         $this->load->model('modulos_model','modulos');
         $where = array('status'=>'ativo');
         $where = array('curso_id'=>$cursos[0]->cursos_id);
-        $modulos = $this->modulos->get_where($where)->result();
-        foreach ($modulos as $key => $value) {
-            $model->fields['modulo_id']['values'][$value->modulos_id] = $value->titulo;
-        }
+        $model->fields['modulo_id']['values'][''] = '--Selecione um Módulo--';
+        // $modulos = $this->modulos->get_where($where)->result();
+        // foreach ($modulos as $key => $value) {
+        //     $model->fields['modulo_id']['values'][$value->modulos_id] = $value->titulo;
+        // }
 
     }
 

@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    //$('select[name=encontro_id]').parent().parent().hide();
+
     tinymce.init({
         selector: '.mytextarea',
         powerpaste_word_import: 'prompt',
@@ -82,6 +84,30 @@ $(document).ready(function () {
             $('select[name=modulo_id]').html(html);
         }
         $.getJSON(base_url+"/modulos/return_modulos_by_curso/"+elm.val(), retornoramos);
+
+    });
+
+
+    $('select[name=modulo_id]').change(function(){
+        var elm = $(this);
+        //$('select[name=modulo_id]').html('<option value="">--Selecione--</option>');
+        var retornoramos = function(result){
+            
+            if(result[0].nivel==2){
+                $('select[name=encontro_id]').parent().removeClass('hide');
+                $('select[name=encontro_id]').parent().parent().find( "label" ).removeClass('hide');
+                var html = '<option value="">--Selecione--</option>';
+                $.each(result, function(key, value){
+                    html += '<option value="'+value.encontros_id+'">'+value.titulo+'</option>';
+                });
+                $('select[name=encontro_id]').html(html);
+            }else{
+                $('select[name=encontro_id]').parent().hide();
+                $('select[name=encontro_id]').parent().parent().hide(); 
+            }
+            
+        }
+        $.getJSON(base_url+"/encontros/return_encontros_by_modulos/"+elm.val(), retornoramos);
 
     });
 });

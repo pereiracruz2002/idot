@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 14-Jan-2019 às 08:50
+-- Generation Time: 17-Jan-2019 às 15:55
 -- Versão do servidor: 5.6.41-84.1
 -- PHP Version: 5.6.30
 
@@ -41,9 +41,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `login`, `senha`, `email`, `last_login`) VALUES
-(6, 'flavio', '$2y$10$gvUe27njyCTKRxvtWNlqbOCRhI4aEp.HnbD.mpwVw4qNDjmy0/F0e', '', '2019-01-07 18:04:31'),
-(11, 'robson', '65cc2c8205a05d7379fa3a6386f710e1', '', '2019-01-11 11:20:32'),
-(12, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '2019-01-13 19:26:15');
+(12, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '2019-01-17 09:30:51'),
+(13, 'Robson', '81dc9bdb52d04dc20036dbd8313ed055', '', '2019-01-16 18:20:46');
 
 -- --------------------------------------------------------
 
@@ -58,6 +57,7 @@ CREATE TABLE `agendamento` (
   `professor_id` int(11) NOT NULL,
   `curso_id` int(11) NOT NULL,
   `modulo_id` int(11) NOT NULL,
+  `encontro_id` int(11) DEFAULT NULL,
   `sala_id` int(11) NOT NULL,
   `status` enum('aberto','fechado') NOT NULL DEFAULT 'aberto'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -66,14 +66,16 @@ CREATE TABLE `agendamento` (
 -- Extraindo dados da tabela `agendamento`
 --
 
-INSERT INTO `agendamento` (`agenda_id`, `data`, `vagas`, `professor_id`, `curso_id`, `modulo_id`, `sala_id`, `status`) VALUES
-(1, '2018-10-12', 4, 2, 9, 4, 1, 'aberto'),
-(2, '2019-01-12', 3, 3, 10, 9, 1, 'aberto'),
-(3, '2019-01-12', 3, 4, 11, 0, 1, 'aberto'),
-(4, '2019-01-15', 1, 4, 10, 31, 2, 'aberto'),
-(5, '2019-01-19', 3, 4, 11, 33, 1, 'aberto'),
-(6, '2019-01-25', 4, 5, 10, 31, 2, 'aberto'),
-(7, '2019-01-19', 3, 6, 10, 24, 2, 'aberto');
+INSERT INTO `agendamento` (`agenda_id`, `data`, `vagas`, `professor_id`, `curso_id`, `modulo_id`, `encontro_id`, `sala_id`, `status`) VALUES
+(1, '2018-10-12', 4, 2, 9, 4, NULL, 1, 'aberto'),
+(2, '2019-01-12', 3, 3, 10, 9, NULL, 1, 'aberto'),
+(3, '2019-01-12', 3, 4, 11, 0, NULL, 1, 'aberto'),
+(4, '2019-01-15', 1, 4, 10, 31, NULL, 2, 'fechado'),
+(5, '2019-01-19', 3, 4, 11, 33, NULL, 1, 'aberto'),
+(6, '2019-01-25', 4, 5, 10, 31, NULL, 2, 'aberto'),
+(7, '2019-01-19', 3, 6, 10, 24, NULL, 2, 'aberto'),
+(8, '2019-01-26', 4, 5, 10, 24, NULL, 1, 'aberto'),
+(10, '2019-01-19', 3, 7, 12, 36, NULL, 1, 'aberto');
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,7 @@ CREATE TABLE `alunos` (
 --
 
 INSERT INTO `alunos` (`alunos_id`, `nome`, `email`, `matricula`, `login`, `senha`, `data_cadastro`, `endereco`, `turma`, `historico_turma`, `last_login`) VALUES
-(4, 'Eduardo', 'eduardo@uol.com.br', '001', 'eduardo', '4badaee57fed5610012a296273158f5f', '2019-01-13', 'Rua PIO XI', '001', '1', '2019-01-13 19:21:54');
+(6, 'Flavio', 'flavio@uol.com.br', '001', 'flavio', '65cc2c8205a05d7379fa3a6386f710e1', '2019-01-16', 'Rua Estados Unidos 123', '001', 'x', '2019-01-17 09:32:22');
 
 -- --------------------------------------------------------
 
@@ -121,7 +123,9 @@ CREATE TABLE `aluno_cursos` (
 INSERT INTO `aluno_cursos` (`aluno_cursos_id`, `aluno_id`, `curso_id`) VALUES
 (5, 2, 10),
 (6, 3, 10),
-(7, 4, 10);
+(7, 4, 10),
+(8, 5, 10),
+(11, 6, 12);
 
 -- --------------------------------------------------------
 
@@ -172,18 +176,19 @@ INSERT INTO `aula_modulos` (`aula_modulos_id`, `aula_id`, `modulo_id`) VALUES
 
 CREATE TABLE `cursos` (
   `cursos_id` int(11) NOT NULL,
-  `titulo` varchar(45) DEFAULT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `descricao` text
+  `descricao` text,
+  `nivel` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `cursos`
 --
 
-INSERT INTO `cursos` (`cursos_id`, `titulo`, `status`, `descricao`) VALUES
-(10, 'Sistemas musculoesquelético e neural', 'ativo', '<p><strong style=\"box-sizing: border-box; color: #3f3e3e; font-family: open_sansregular;\">O CURSO:</strong><span style=\"color: #3f3e3e; font-family: open_sansregular;\">&nbsp;compreende 16 encontros te&oacute;rico-pr&aacute;ticos, entre eles est&aacute;gios supervisionados para que os alunos possam estudar juntos com nossos professores e monitores de est&aacute;gio, sendo realizados aos finais de semana.</span></p>'),
-(11, 'Sistema tônico-postural e vias de comunicação', 'ativo', '<p><strong style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">O CURSO: &nbsp;Compreende 20 m&oacute;dulos que s&atilde;o realizados em 10 encontros te&oacute;rico-pr&aacute;ticos.&nbsp;</strong></p>');
+INSERT INTO `cursos` (`cursos_id`, `titulo`, `status`, `descricao`, `nivel`) VALUES
+(12, 'Sistemas musculoesquelético e neural', 'ativo', '<p>&lt;strong style=\\</p>', 2),
+(13, 'Sistema tônico-postural e vias de comunicação', 'ativo', '<p>&lt;strong style=\\</p>', NULL);
 
 -- --------------------------------------------------------
 
@@ -622,6 +627,27 @@ INSERT INTO `empresas` (`empresa_id`, `nome`, `tipo_cadastro`, `cnpj_cpf`, `tele
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `encontros`
+--
+
+CREATE TABLE `encontros` (
+  `encontros_id` int(11) NOT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `modulo_id` int(11) DEFAULT NULL,
+  `descricao` text,
+  `status` enum('ativo','inativo') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `encontros`
+--
+
+INSERT INTO `encontros` (`encontros_id`, `titulo`, `modulo_id`, `descricao`, `status`) VALUES
+(1, 'Encontro 1', 36, '<p>Encontro 1</p>', 'ativo');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `modulos`
 --
 
@@ -669,7 +695,13 @@ INSERT INTO `modulos` (`modulos_id`, `titulo`, `curso_id`, `descricao`, `status`
 (32, '• MÓDULO IX', 10, '<p><span style=\"color: #3f3e3e; font-family: open_sansregular;\">- &nbsp;Est&aacute;gio Supervisionado III</span></p>', 'ativo'),
 (33, '1. SISTEMA TÔNICO-POSTURAL E VIAS DE COMUNICA', 11, '<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\"><strong style=\"box-sizing: border-box;\">&bull; ENCONTRO I</strong></p><div style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\"><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Introdu&ccedil;&atilde;o a posturologia</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Sistema t&ocirc;nico-postural</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Avalia&ccedil;&atilde;o postural</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Captor podal</p>Oficina de confec&ccedil;&atilde;o de palmilhas&nbsp;</div>', 'ativo'),
 (34, '• ENCONTRO I', 11, '<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Introdu&ccedil;&atilde;o a posturologia</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Sistema t&ocirc;nico-postural</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Avalia&ccedil;&atilde;o postural</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Captor podal</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\"><span style=\"color: #3f3e3e; font-family: open_sansregular;\">Oficina de confec&ccedil;&atilde;o de palmilhas&nbsp;</span></p>', 'ativo'),
-(35, '• ENCONTRO II', 11, '<div style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Captor ocular</div><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Aparelho manducat&oacute;rio</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Obst&aacute;culos: cicatrizes, microgalvanismos</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Correla&ccedil;&otilde;es cl&iacute;nicas</p>', 'ativo');
+(35, '• ENCONTRO II', 11, '<div style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Captor ocular</div><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Aparelho manducat&oacute;rio</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Obst&aacute;culos: cicatrizes, microgalvanismos</p><p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">Correla&ccedil;&otilde;es cl&iacute;nicas</p>', 'ativo'),
+(36, 'MÓDULO I', 12, '<p><span style=\"color: #3f3e3e; font-family: open_sansregular;\">- Introdu&ccedil;&atilde;o a Osteopatia</span></p>', 'ativo'),
+(37, 'MÓDULO II', 12, '<p><span style=\"font-size: 11.0pt; line-height: 107%; font-family: \'Calibri\',sans-serif; mso-ascii-theme-font: minor-latin; mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-hansi-theme-font: minor-latin; mso-bidi-font-family: \'Times New Roman\'; mso-bidi-theme-font: minor-bidi; mso-ansi-language: PT-BR; mso-fareast-language: EN-US; mso-bidi-language: AR-SA;\">Segmento lombar</span></p>', 'ativo'),
+(38, 'MÓDULO III', 12, '<p class=\"MsoNormal\">Est&aacute;gio Supervisionado I</p>', 'ativo'),
+(43, '1. SISTEMA TÔNICO-POSTURAL E VIAS DE COMUNICA', 13, '<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\"><strong style=\"box-sizing: border-box;\">&bull; ENCONTRO I</strong></p>\r\n<div style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Introdu&ccedil;&atilde;o a posturologia</p>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Sistema t&ocirc;nico-postural</p>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Avalia&ccedil;&atilde;o postural</p>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Captor podal</p>\r\nOficina de confec&ccedil;&atilde;o de palmilhas&nbsp;</div>', 'ativo'),
+(45, 'x', 13, '<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\"><strong style=\"box-sizing: border-box;\">&bull; ENCONTRO II</strong></p>\r\n<div style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">\r\n<div style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Captor ocular</div>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Aparelho manducat&oacute;rio</p>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Obst&aacute;culos: cicatrizes, microgalvanismos</p>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-style: inherit; font-family: inherit; vertical-align: baseline;\">Correla&ccedil;&otilde;es cl&iacute;nicas</p>\r\n</div>', 'ativo'),
+(46, '2. SISTEMAS VISCERAL E VASCULAR', 13, '<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\"><strong style=\"box-sizing: border-box;\">&bull; ENCONTRO I</strong><br style=\"box-sizing: border-box;\" />- Introdu&ccedil;&atilde;o</p>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">- Diagn&oacute;stico Osteop&aacute;tico Visceral</p>\r\n<p style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e;\">- Perit&ocirc;nio e v&aacute;lvulas Gastrointestinais.</p>', 'ativo');
 
 -- --------------------------------------------------------
 
@@ -943,7 +975,11 @@ CREATE TABLE `presenca` (
 INSERT INTO `presenca` (`presenca_id`, `aluno_id`, `agenda_id`, `presente`, `tipo`) VALUES
 (13, 4, '6', 'sim', 'normal'),
 (14, 4, '4', 'sim', 'normal'),
-(15, 4, '4', 'sim', 'normal');
+(15, 4, '4', 'sim', 'normal'),
+(16, 4, '8', NULL, 'normal'),
+(17, 5, '8', NULL, 'normal'),
+(18, 6, '10', NULL, 'normal'),
+(19, 6, '10', 'sim', 'normal');
 
 -- --------------------------------------------------------
 
@@ -969,9 +1005,7 @@ CREATE TABLE `professor` (
 --
 
 INSERT INTO `professor` (`id_professor`, `email`, `nome`, `texto`, `foto`, `ativo`, `login`, `senha`, `status`, `last_login`) VALUES
-(4, 'marcio@idotsp.com.br', 'marcio', '<p>Fisioterapeuta formada pela Unesp de Mar&iacute;lia e Mestre em Desenvolvimento Humano e Tecnologias pela Unesp de Rio Claro. Resolvi que faria mestrado pela minha habilidade em transmitir conhecimentos e por gostar de me atualizar na &aacute;rea das ci&ecirc;ncias da sa&uacute;de.<br />Al&eacute;m de motar aula expositiva, gosto de criar m&eacute;todos para que meus alunos guardem as informa&ccedil;&otilde;es da aula dada. Al&eacute;m disso sempre procuro atualidades sobre o assunto das aulas.</p>\r\n<p>\" id=\"textarea5c3b76a2da8b2\" &gt;</p>\r\n<p>Fisioterapeuta formado pela Unesp de Mar&iacute;lia e Mestre em Desenvolvimento Humano e Tecnologias pela Unesp de Rio Claro. Resolvi que faria mestrado pela minha habilidade em transmitir conhecimentos e por gostar de me atualizar na &aacute;rea das ci&ecirc;ncias da sa&uacute;de.<br />Al&eacute;m de motar aula expositiva, gosto de criar m&eacute;todos para que meus alunos guardem as informa&ccedil;&otilde;es da aula dada. Al&eacute;m disso sempre procuro atualidades sobre o assunto das aulas.\" id=\"textarea5c38d21b3c2af\" &gt;</p>\r\n<p><span style=\"color: #444444; font-family: OpenSans, sans-serif; font-size: 16px;\">Fisioterapeuta formada pela Unesp de Mar&iacute;lia e Mestre em Desenvolvimento Humano e Tecnologias pela Unesp de Rio Claro. Resolvi que faria mestrado pela minha habilidade em transmitir conhecimentos e por gostar de me atualizar na &aacute;rea das ci&ecirc;ncias da sa&uacute;de.</span><br style=\"box-sizing: border-box; -webkit-tap-highlight-color: transparent; color: #444444; font-family: OpenSans, sans-serif; font-size: 16px;\" /><span style=\"color: #444444; font-family: OpenSans, sans-serif; font-size: 16px;\">Al&eacute;m de motar aula expositiva, gosto de criar m&eacute;todos para que meus alunos guardem as informa&ccedil;&otilde;es da aula dada. Al&eacute;m disso sempre procuro atualidades sobre o assunto das aulas.</span></p>', NULL, 1, 'marcio', '65cc2c8205a05d7379fa3a6386f710e1', 'ativo', '2019-01-13 19:24:16'),
-(5, 'pasquale@pasqualeinfo.com.br', 'Pasquale', '<p><span style=\"line-height: 18.2px;\">Pasquale Cipro Neto, conhecido popularmente como Professor Pasquale, &eacute; um professor de l&iacute;ngua portuguesa. Pasquale foi o idealizador do programa da TV Cultura Nossa L&iacute;ngua Portuguesa e colunista do jornal Folha de S.Paulo at&eacute; dezembro de 2016.</span></p>', NULL, 1, 'pasquale', '30ed55b89373c25492993b3d004440ff', 'ativo', '2019-01-13 17:13:51'),
-(6, 'cortella@idotsp.com.br', 'Mario Sergio Cortella', '<p>&nbsp;(<a title=\"\\&quot;Londrina\\&quot;\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Londrina\\&quot;\">Londrina</a>,&nbsp;<a title=\"\\&quot;5\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/5_de_mar%C3%A7o\\&quot;\">5 de mar&ccedil;o</a>&nbsp;de&nbsp;<a title=\"\\&quot;1954\\&quot;\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/1954\\&quot;\">1954</a>) &eacute; um&nbsp;<a title=\"\\&quot;Fil&oacute;sofo\\&quot;\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Fil%C3%B3sofo\\&quot;\">fil&oacute;sofo</a>,&nbsp;<a title=\"\\&quot;Escritor\\&quot;\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Escritor\\&quot;\">escritor</a>,&nbsp;<a title=\"\\&quot;Educador\\&quot;\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Educador\\&quot;\">educador</a>,&nbsp;<a class=\"\\&quot;mw-redirect\\&quot;\" title=\"\\&quot;Palestrante\\&quot;\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Palestrante\\&quot;\">palestrante</a>&nbsp;e&nbsp;<a class=\"\\&quot;mw-redirect\\&quot;\" title=\"\\&quot;Professor\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Professor_universit%C3%A1rio\\&quot;\">professor universit&aacute;rio</a>&nbsp;brasileiro, mais conhecido por divulgar, com outros intelectuais como&nbsp;<a title=\"\\&quot;\\&quot;\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Cl%C3%B3vis_de_Barros_Filho\\&quot;\">Cl&oacute;vis de Barros Filho</a>,&nbsp;<a title=\"\\&quot;Leandro\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Leandro_Karnal\\&quot;\">Leandro Karnal</a>,&nbsp;<a title=\"\\&quot;Renato\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Renato_Janine_Ribeiro\\&quot;\">Renato Janine Ribeiro</a>&nbsp;e&nbsp;<a title=\"\\&quot;Luiz\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Luiz_Felipe_Pond%C3%A9\\&quot;\">Luiz Felipe Pond&eacute;</a>, quest&otilde;es sociais ligadas &agrave; filosofia na sociedade contempor&acirc;nea. &Eacute; autor de v&aacute;rios livros, entre os quais est&aacute;&nbsp;<em><a title=\"\\&quot;Por\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Por_que_Fazemos_o_que_Fazemos%3F\\&quot;\">Por que Fazemos o que Fazemos?</a></em>, no qual ele analisa a vida profissional na&nbsp;<a title=\"\\&quot;Idade\" href=\"\\&quot;https:/pt.wikipedia.org/wiki/Idade_Contempor%C3%A2nea\\&quot;\">contemporaneidade</a>.\" id=\"textarea5c3be510892c8\" &gt;</p>\r\n<p><span style=\"color: #222222; font-family: sans-serif;\">&nbsp;(</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Londrina\" href=\"https://pt.wikipedia.org/wiki/Londrina\">Londrina</a><span style=\"color: #222222; font-family: sans-serif;\">,&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"5 de mar&ccedil;o\" href=\"https://pt.wikipedia.org/wiki/5_de_mar%C3%A7o\">5 de mar&ccedil;o</a><span style=\"color: #222222; font-family: sans-serif;\">&nbsp;de&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"1954\" href=\"https://pt.wikipedia.org/wiki/1954\">1954</a><span style=\"color: #222222; font-family: sans-serif;\">) &eacute; um&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Fil&oacute;sofo\" href=\"https://pt.wikipedia.org/wiki/Fil%C3%B3sofo\">fil&oacute;sofo</a><span style=\"color: #222222; font-family: sans-serif;\">,&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Escritor\" href=\"https://pt.wikipedia.org/wiki/Escritor\">escritor</a><span style=\"color: #222222; font-family: sans-serif;\">,&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Educador\" href=\"https://pt.wikipedia.org/wiki/Educador\">educador</a><span style=\"color: #222222; font-family: sans-serif;\">,&nbsp;</span><a class=\"mw-redirect\" style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Palestrante\" href=\"https://pt.wikipedia.org/wiki/Palestrante\">palestrante</a><span style=\"color: #222222; font-family: sans-serif;\">&nbsp;e&nbsp;</span><a class=\"mw-redirect\" style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Professor universit&aacute;rio\" href=\"https://pt.wikipedia.org/wiki/Professor_universit%C3%A1rio\">professor universit&aacute;rio</a><span style=\"color: #222222; font-family: sans-serif;\">&nbsp;brasileiro, mais conhecido por divulgar, com outros intelectuais como&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"\" href=\"https://pt.wikipedia.org/wiki/Cl%C3%B3vis_de_Barros_Filho\">Cl&oacute;vis de Barros Filho</a><span style=\"color: #222222; font-family: sans-serif;\">,&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Leandro Karnal\" href=\"https://pt.wikipedia.org/wiki/Leandro_Karnal\">Leandro Karnal</a><span style=\"color: #222222; font-family: sans-serif;\">,&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Renato Janine Ribeiro\" href=\"https://pt.wikipedia.org/wiki/Renato_Janine_Ribeiro\">Renato Janine Ribeiro</a><span style=\"color: #222222; font-family: sans-serif;\">&nbsp;e&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Luiz Felipe Pond&eacute;\" href=\"https://pt.wikipedia.org/wiki/Luiz_Felipe_Pond%C3%A9\">Luiz Felipe Pond&eacute;</a><span style=\"color: #222222; font-family: sans-serif;\">, quest&otilde;es sociais ligadas &agrave; filosofia na sociedade contempor&acirc;nea. &Eacute; autor de v&aacute;rios livros, entre os quais est&aacute;&nbsp;</span><em style=\"color: #222222; font-family: sans-serif;\"><a style=\"text-decoration-line: none; color: #0b0080; background: none;\" title=\"Por que Fazemos o que Fazemos?\" href=\"https://pt.wikipedia.org/wiki/Por_que_Fazemos_o_que_Fazemos%3F\">Por que Fazemos o que Fazemos?</a></em><span style=\"color: #222222; font-family: sans-serif;\">, no qual ele analisa a vida profissional na&nbsp;</span><a style=\"text-decoration-line: none; color: #0b0080; background-image: none; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; font-family: sans-serif;\" title=\"Idade Contempor&acirc;nea\" href=\"https://pt.wikipedia.org/wiki/Idade_Contempor%C3%A2nea\">contemporaneidade</a><span style=\"color: #222222; font-family: sans-serif;\">.</span></p>', NULL, 1, 'cortella', '65cc2c8205a05d7379fa3a6386f710e1', 'ativo', '2019-01-13 19:25:51');
+(7, 'eduardo@idotsp.com.br', 'Eduardo', '<p><strong style=\"margin: 0px; padding: 0px; font-family: \'Open Sans\', Arial, sans-serif; text-align: justify;\">Lorem Ipsum</strong><span style=\"font-family: \'Open Sans\', Arial, sans-serif; text-align: justify;\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</span></p>', NULL, 1, 'eduardo', '81dc9bdb52d04dc20036dbd8313ed055', 'ativo', '2019-01-17 11:35:37');
 
 -- --------------------------------------------------------
 
@@ -1011,7 +1045,13 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('719eb41c3d2eabf9f0738d992ff881c74d0646cc', '177.221.61.20', 1547430289, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373433303238393b);
+('711ddacbd5fed12ebe4c34ca46fbb33e2afc19fa', '191.162.248.1', 1547727358, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373732373335313b61646d696e7c4f3a383a22737464436c617373223a353a7b733a383a2261646d696e5f6964223b733a323a223132223b733a353a226c6f67696e223b733a353a2261646d696e223b733a353a22656d61696c223b733a303a22223b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30312d31362031383a32303a3538223b733a343a227469706f223b733a353a2261646d696e223b7d),
+('280486186be5f65af4aa0717ea0beb8083b1a381', '191.162.248.1', 1547728343, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373732383334333b61646d696e7c4f3a383a22737464436c617373223a353a7b733a383a2261646d696e5f6964223b733a323a223132223b733a353a226c6f67696e223b733a353a2261646d696e223b733a353a22656d61696c223b733a303a22223b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30312d31372030363a31353a3537223b733a343a227469706f223b733a353a2261646d696e223b7d),
+('5ef58a2012f3f330782526922a771a46442c7272', '177.221.61.20', 1547730073, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373733303037333b),
+('3e42f0a9291a0ba418b40652af6a124bb4f5d3b6', '177.221.61.20', 1547739045, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373733393034353b),
+('21b6df8c97156c0763bf0c6fddce2e2cee451256', '54.183.108.90', 1547744203, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373734343230333b),
+('c4592829736f2034a800eb5f8dcb3bacb2722ab9', '177.221.61.20', 1547746071, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373734363037313b),
+('e9bb21900283b8a0955012aca3c0c61aeb51ce6f', '177.221.61.20', 1547746548, 0x5f5f63695f6c6173745f726567656e65726174657c693a313534373734363534383b);
 
 -- --------------------------------------------------------
 
@@ -1101,6 +1141,12 @@ ALTER TABLE `empresas`
   ADD KEY `fk_empresas_planos1_idx` (`plano_id`);
 
 --
+-- Indexes for table `encontros`
+--
+ALTER TABLE `encontros`
+  ADD PRIMARY KEY (`encontros_id`);
+
+--
 -- Indexes for table `modulos`
 --
 ALTER TABLE `modulos`
@@ -1176,25 +1222,25 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `agendamento`
 --
 ALTER TABLE `agendamento`
-  MODIFY `agenda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `agenda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `alunos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `alunos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `aluno_cursos`
 --
 ALTER TABLE `aluno_cursos`
-  MODIFY `aluno_cursos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `aluno_cursos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `aulas`
@@ -1212,7 +1258,7 @@ ALTER TABLE `aula_modulos`
 -- AUTO_INCREMENT for table `cursos`
 --
 ALTER TABLE `cursos`
-  MODIFY `cursos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `cursos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `departamentos`
@@ -1227,10 +1273,16 @@ ALTER TABLE `empresas`
   MODIFY `empresa_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
+-- AUTO_INCREMENT for table `encontros`
+--
+ALTER TABLE `encontros`
+  MODIFY `encontros_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `modulos`
 --
 ALTER TABLE `modulos`
-  MODIFY `modulos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `modulos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `modulo_cursos`
@@ -1266,13 +1318,13 @@ ALTER TABLE `planos`
 -- AUTO_INCREMENT for table `presenca`
 --
 ALTER TABLE `presenca`
-  MODIFY `presenca_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `presenca_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `professor`
 --
 ALTER TABLE `professor`
-  MODIFY `id_professor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_professor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `salas`

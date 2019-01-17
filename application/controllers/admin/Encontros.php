@@ -62,6 +62,19 @@ class Encontros extends BaseCrud
 
     }
 
+    public function return_encontros_by_modulos($modulo){
+        $this->load->model('encontros_model','encontros');
+        $where = array('modulo_id'=>$modulo);
+        $this->db->select('encontros_id, encontros.titulo,nivel');
+        $this->db->order_by("encontros.titulo", 'ASC');
+        $this->db->join('modulos','modulos.modulos_id=encontros.modulo_id');
+        $this->db->join('cursos','cursos.cursos_id=modulos.curso_id');
+        $result = $this->encontros->get_where($where)->result();
+        $json = json_encode($result);
+        $this->output->set_header('content-type: application/json');
+        $this->output->set_output($json);
+    }
+
     /*
     public function return_modulos_by_curso($curso_id){
         $this->load->model('modulos_model','modulos');
