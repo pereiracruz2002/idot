@@ -8,7 +8,7 @@ class Cursos extends BaseCrud
     var $titulo = 'Cursos';
     var $tabela = 'titulo,status';
     var $campos_busca = 'titulo';
-    var $acoes_extras = array();
+    //var $acoes_extras = array(array('url'=>'admin/modulos/listar','title'=>'Adicionar Módulos','class'=>'btn btn-xs btn-info btn btn-warning'));
 
 
     public function __construct() 
@@ -20,18 +20,41 @@ class Cursos extends BaseCrud
     }
 
 
+    public function listar(){
+        $this->load->model('cursos_model','cursos');
+        $where = array('cursos.status'=>'ativo');
+        $this->data['itens'] = $this->cursos->get_where($where)->result();
+       $this->load->view('admin/listar_cursos',$this->data);
+    }
+
     public function _filter_pre_listar(&$where, &$like) 
     {
 
-        $this->acoes_extras = array(array('url'=>'admin/modulos/listar','title'=>'Adicionar Módulos','class'=>'btn btn-xs btn-info btn btn-warning'));
+        // $this->db->select('cursos.nivel');
+        // $this->load->model('cursos_model','cursos');
+        // $where = array('cursos_id >'=>10);
+        // $result = $this->cursos->get_where($where)->row(); 
+        // var_dump($result->nivel);
+        //  if($result->nivel==2){
+
+        //     $url = "admin/encontros/listar";
+        //     $this->acoes_extras = array(array('url'=>$url,'title'=>'Adicionar Encontros','class'=>'btn btn-xs btn-info btn btn-warning'));
+            
+        // }else{
+        //     $this->acoes_extras = array(array('url'=>'admin/modulos/listar','title'=>'Adicionar Módulos','class'=>'btn btn-xs btn-info btn btn-warning'));
+        // }
+    
+        // var_dump($this->acoes_extras);
+        
 
     
     }
 
     public function _filter_pre_read(&$data) 
     {
+        // foreach ($data as $key) {
 
-       
+ 
 
     }
 

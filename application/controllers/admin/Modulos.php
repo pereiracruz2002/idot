@@ -6,12 +6,13 @@ class Modulos extends BaseCrud
     var $base_url = 'admin/modulos';
     var $actions = 'CRUD';
     var $titulo = 'Módulos';
-    var $tabela = 'titulo,curso,descricao,encontros,status';
+    var $tabela = 'titulo,curso,status';
     var $campos_busca = 'titulo';
     var $acoes_extras = array();
     var $acoes_controller = array();
-    var $selects = "modulos.*, cursos.titulo as curso, GROUP_CONCAT(encontros.titulo,' ') as encontros";
-    var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id', 'encontros'=>array('encontros.modulo_id=modulos.modulos_id','left') );
+    var $selects = "modulos.*, cursos.titulo as curso";
+    var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id'); 
+    // var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id', 'encontros'=>array('encontros.modulo_id=modulos.modulos_id','left') );
     var $group= array('modulos.modulos_id');
 
 
@@ -81,12 +82,12 @@ class Modulos extends BaseCrud
         $this->load->model('cursos_model','cursos');
         $where = array('cursos_id'=>$this->uri->segment(4));
         $result = $this->cursos->get_where($where)->row(); 
-        if($result->nivel==2){
-            $url = "admin/encontros/listar";
-            $this->acoes_extras = array(array('url'=>$url,'title'=>'Adicionar Encontros','class'=>'btn btn-xs btn-info btn btn-warning'));
-        }else{
-            $this->tabela = 'titulo,curso,descricao,status';
-        }
+        // if($result->nivel==2){
+        //     $url = "admin/encontros/listar";
+        //     $this->acoes_extras = array(array('url'=>$url,'title'=>'Adicionar Encontros','class'=>'btn btn-xs btn-info btn btn-warning'));
+        // }else{
+        //     $this->tabela = 'titulo,curso,descricao,status';
+        // }
     }
 
     public function _filter_pos_save($data, $id) 
