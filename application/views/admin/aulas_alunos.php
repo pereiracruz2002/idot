@@ -2,7 +2,7 @@
 <div class="content">
     <div class="row">
         <div class="panel-heading">
-            <h2>Alunos Inscritos</h2>
+            <h2>Meus Agendamentos</h2>
         </div>
 
         <div class="panel-body">
@@ -20,7 +20,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($itens as $row): ?>
+                        <?php 
+                        foreach ($itens as $row): ?>
                             <tr>
                                 <td><?= $row->nome ?></td>
                                 <td><?= $row->curso ?></td>
@@ -32,8 +33,8 @@
                                     if($this->session->userdata('admin')->tipo=="professor"){
                                         if(empty($row->presenca)){
                                         ?>
-                                                <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
-                                                <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/2" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Ausencia</a>
+                                            <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
+                                            <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/2" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Ausencia</a>
                                         <?php }else{?>
                                             <?php if($row->presenca=='sim'):?>
                                                 <p><i class="pe-7s-check">Presente</i></p>
@@ -41,15 +42,26 @@
                                                  <p><i class="pe-7s-close-circle">Ausente</i></p>
                                             <?php endif;?>
                                         <?php } ?>
-                                    <?php }else{ ?>
-                                            <?php 
-                                                if(!empty($row->presenca)){
+                                    <?php }else{ 
+                                        
+                                            if(!is_null($row->presenca)){
+
                                                     if($row->presenca=='sim'):?>
-                                                    <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Revisao</a>
+                                                    <p><i class="pe-7s-check">Presente</i></p>
                                                   <?php else:?>
-                                                    <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Reposicao</a>
+                                                    <p><i class="pe-7s-close-circle">Ausente</i></p>
                                                   <?php endif; ?>
-                                                <?php } ?>
+                                            <?php }else{ ?>
+                                                <?php if($row->tipo=='confirmar'):?>
+                                                    <?php if($aulas[$row->modulos_id]=='sim'):?>
+                                                        <a class="btn btn-xs btn-info btn btn-info confirmar" href="<?php echo site_url(); ?>/admin/agendamento/reagendamento/<?php echo $row->presenca_id ?>/revisao" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/reagendamento/<?php echo $row->presenca_id ?>/reposicao"><i class="fa fa-eye"></i>Confirmar Revisao</a>
+                                                    <?php else: ?>
+                                                        <a class="btn btn-xs btn-info btn btn-info confirmar" href="<?php echo site_url(); ?>/admin/agendamento/reagendamento/<?php echo $row->presenca_id ?>/reposicao" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/reagendamento/<?php echo $row->presenca_id ?>/revisao"><i class="fa fa-eye"></i>Confirmar Reposicao</a>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            <?php }?>
+                                        
+                                                
                                             
                                 <?php } ?>
                                 </td>

@@ -61,6 +61,18 @@ $(document).ready(function () {
         }
     });
 
+    $('body').on('click', '.confirmar', function (e) {
+        e.preventDefault();
+        var _self = $(this);
+        var decisao = confirm("Tem certeza que deseja confirmar esse agendamento da aula?");
+        if (decisao) {
+            $.get(_self.attr('href'));
+            if ($('.alert-success').length == 0)
+                $('.m-top-md').after('<div class="alert alert-success"><p>Revisao da aula confirmada!</p></div>');
+            window.location= base_url+'/agendamento/ver_minha_agenda';
+        }
+    });
+
 
     $("div.panel-show-hide").click(function () {
         var heading = $(this);

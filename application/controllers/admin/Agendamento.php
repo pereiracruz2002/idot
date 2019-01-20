@@ -124,8 +124,12 @@ class Agendamento extends BaseCrud
 
          $where['professor_id'] = $this->session->userdata('admin')->id_professor;
          $where['agendamento.agenda_id'] = $agenda_id;
+         $where['presenca.tipo !='] = 'confirmar';
 
         $this->data['itens'] = $this->agendamento->get_where($where)->result();
+
+
+
 
         // $this->load->model('presenca_model','presenca');
         // $array_presenca = array();
@@ -160,7 +164,7 @@ class Agendamento extends BaseCrud
          //$where['agendamento.agenda_id'] = $agenda_id;
         $this->load->model('agendamento_model','agendamento');
 
-        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso,modulos.titulo as modulo,alunos.nome,alunos.alunos_id as aluno_id,presenca.presente as presenca')
+        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso,modulos.titulo as modulo,modulos.modulos_id,alunos.nome,alunos.alunos_id as aluno_id,presenca.presente as presenca, presenca.presenca_id,presenca.tipo')
         ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
         ->join('alunos','alunos.alunos_id=presenca.aluno_id')
         ->join('cursos','cursos.cursos_id=agendamento.curso_id')
@@ -171,6 +175,32 @@ class Agendamento extends BaseCrud
 
 
         $this->data['itens'] = $this->agendamento->get_where($where)->result();
+
+        $aulas = array();
+        foreach($this->data['itens'] as $itens){
+            $this->db->select('presenca.presente as presente, presenca.presenca_id, modulos.modulos_id')
+            ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
+            ->join('alunos','alunos.alunos_id=presenca.aluno_id')
+            ->join('modulos','modulos.modulos_id=agendamento.modulo_id');
+            $where_alunos['agendamento.agenda_id'] = $itens->agenda_id;
+            $where_alunos['agendamento.modulo_id'] = $itens->modulos_id;
+            $where_alunos['presenca.tipo'] = 'normal';
+            $where_alunos['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
+
+            $resultados = $this->agendamento->get_where($where_alunos)->result(); 
+
+            foreach($resultados as $resultado){
+                $aulas[$resultado->modulos_id] = $resultado->presente;
+            } 
+            
+        }
+
+        
+        $this->data['aulas'] = $aulas;
+      ;
+
+    
+        
 
         //$this->data['itens'] = $this->cursos->get_where($where)->result();
    
@@ -200,7 +230,6 @@ class Agendamento extends BaseCrud
              $this->db->set('presente', 'nao');
         }
 
-        $this->db->set('presente', 'sim');
         $this->db->where($data);
         if($this->db->update('presenca')){
             $this->output->set_output("ok");
@@ -227,8 +256,15 @@ class Agendamento extends BaseCrud
         }
     }
 
-    public function rever_aula($agenda_id){
-
+    public function reagendamento($presenca_id, $tipo){
+        $this->db->set('tipo', $tipo);
+        $this->db->where('presenca_id', $presenca_id);
+        if($this->db->update('presenca')){
+            $this->output->set_output("ok");
+        }else{
+            echo $this->db->last_query();
+            $this->output->set_output("erro ao atualizar a presenca");  
+        }
     }
 
  
@@ -262,7 +298,15 @@ class Agendamento extends BaseCrud
         $this->load->model('modulos_model','modulos');
         $where = array('status'=>'ativo');
         $where = array('curso_id'=>$cursos[0]->cursos_id);
-        $model->fields['modulo_id']['values'][''] = '--Selecione um Módulo--';
+        if($cursos[0]->nivel==2){
+            $model->fields['modulo_id']['values'][''] = '--Selecione um Encontro--';
+             $model->fields['modulo_id']['label'] = 'Encontros';
+        }else{
+            $model->fields['modulo_id']['values'][''] = '--Selecione um Módulo--';
+             $model->fields['modulo_id']['label'] = 'Módulos';
+        }
+        
+        
         // $modulos = $this->modulos->get_where($where)->result();
         // foreach ($modulos as $key => $value) {
         //     $model->fields['modulo_id']['values'][$value->modulos_id] = $value->titulo;
@@ -313,6 +357,11 @@ class Agendamento extends BaseCrud
                      if(count($presenca) == 0){
                         $dados['aluno_id'] = $aluno->aluno_id;
                         $dados['agenda_id'] = $id;
+                        $this->db->insert('presenca',$dados);
+                     }elseif(count($presenca ==1)){
+                        $dados['aluno_id'] = $aluno->aluno_id;
+                        $dados['agenda_id'] = $id;
+                        $dados['tipo'] ='confirmar';
                         $this->db->insert('presenca',$dados);
                      }
                 }
