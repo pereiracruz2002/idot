@@ -80,26 +80,29 @@
                                 <p class="category">Mensagem recebidas</p>
                             </div>
                             <div class="content">
-                                <?php if(count($notificacoes)> 0):?>
-                                <div class="table-full-width">
-                                    <table class="table">
-                                        <tbody>
-                                            <?php foreach($notificacoes as $notificacao):?>
-                                            <tr>
-                                                <td>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" value="" data-toggle="checkbox">
-                                                    </label>
-                                                </td>
+                                <?php if(isset($notificacoes)):?>
+                                    <?php if(count($notificacoes)> 0):?>
+                                    <div class="table-full-width">
+                                        <table class="table">
+                                            <tbody>
+                                                <?php foreach($notificacoes as $notificacao):?>
+                                                <tr>
+                                                    <td>
+                                                        <label class="checkbox">
+                                                            <input type="checkbox" value="" data-toggle="checkbox">
+                                                        </label>
+                                                    </td>
+                                                    
+                                                    <td><?php echo $notificacao->mensagem;?></td>
                                                 
-                                                <td><?php echo $notificacao->mensagem;?></td>
-                                            
-                                            </tr>
-                                            <?php endforeach;?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                </tr>
+                                                <?php endforeach;?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <?php endif;?>
                                 <?php endif;?>
+
 
                                 <div class="footer">
                                     <hr>

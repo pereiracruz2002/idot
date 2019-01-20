@@ -14,7 +14,7 @@ class Painel extends CI_Controller
         $where['tipo'] = $this->session->userdata('admin')->tipo;
         $where['visualizado'] ='nao';
         if($where['tipo']=="admin"){
-            $where['id'] = $where['admin_id'] = $this->session->userdata('admin')->admin_id;
+            $where['id'] = $this->session->userdata('admin')->admin_id;
         }elseif($where['tipo']=="professor"){
             $where['id'] = $this->session->userdata('admin')->id_professor;
         }else{

@@ -46,7 +46,7 @@ class Agendamento_model extends My_Model
         ),
         'modulo_id' => array(
             'type' => 'select',
-            'label' => 'Módulos',
+            'label' => 'Módulos/Encontros',
             'class' => '',
             'rules' => 'required',
             'label_class' => 'col-md-2',

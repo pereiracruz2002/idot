@@ -124,7 +124,8 @@ class Agendamento extends BaseCrud
 
          $where['professor_id'] = $this->session->userdata('admin')->id_professor;
          $where['agendamento.agenda_id'] = $agenda_id;
-         $where['presenca.tipo !='] = 'confirmar';
+         //$where['presenca.tipo !='] = 'confirmar';
+         $this->db->where_in("presenca.tipo", array('normal','reposicao','revisao'));
 
         $this->data['itens'] = $this->agendamento->get_where($where)->result();
 

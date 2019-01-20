@@ -72,7 +72,7 @@ class Encontros extends BaseCrud
           'class' => '',
         );
 
-        $url = "admin/modulos/novo/". $this->uri->segment(4);
+        $url = "admin/encontros/novo/". $this->uri->segment(4);
        $this->acoes_controller = array(array("url" => $url, "title" => "Novo", "class" => "btn-custom"));
         $where['curso_id'] = $this->uri->segment(4);
 
