@@ -351,7 +351,7 @@ class Agendamento extends BaseCrud
             $alunos = $this->aluno_cursos->get_where($where)->result();
 
 
-            $this->avisos->save_aviso($data['professor_id'],'professor',$msg,'Novo aviso de aula');
+            
 
 
              if($alunos){
@@ -376,6 +376,8 @@ class Agendamento extends BaseCrud
                      }
                 }
              }
+
+             $this->avisos->save_aviso($data['professor_id'],'professor',$msg,'Novo aviso de aula');
         }
 
         redirect('admin/agendamento');

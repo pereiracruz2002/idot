@@ -107,7 +107,7 @@
                                 <div class="footer">
                                     <hr>
                                     <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                       <!-- <i class="fa fa-history"></i> Updated 3 minutes ago-->
                                     </div>
                                 </div>
                             </div>
