@@ -333,15 +333,24 @@ class Agendamento extends BaseCrud
         
         $this->load->model('aluno_cursos_model','aluno_cursos');
         $this->load->model('presenca_model','presenca');
+        $this->load->model('avisos_model','avisos');
+
 
         if($this->uri->segment(3) != 'editar'){
 
             $this->db->select('aluno_cursos.aluno_id, alunos.nome')
-                ->join('alunos','alunos.alunos_id =aluno_cursos.aluno_id');
+            ->join('alunos','alunos.alunos_id =aluno_cursos.aluno_id');
 
             $where['aluno_cursos.curso_id'] = $data['curso_id'];
 
+            $msg = "Agendamento de nova aula";
+
+            
+
             $alunos = $this->aluno_cursos->get_where($where)->result();
+
+
+            $this->avisos->save_aviso($data['professor_id'],'professor',$msg,'Novo aviso de aula');
 
 
              if($alunos){
