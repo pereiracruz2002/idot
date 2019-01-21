@@ -74,6 +74,7 @@ class Cursos extends BaseCrud
 
     public function _filter_pos_save($data, $id) 
     {
+        
         redirect('admin/cursos');
 
     }

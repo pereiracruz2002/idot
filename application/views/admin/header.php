@@ -93,7 +93,7 @@
                 </a>
             </li>
             <li>
-                <a href="notifications.html">
+                <a href="<?php echo site_url('admin/avisos') ?>">
                     <i class="pe-7s-bell"></i>
                     <p>Notificações</p>
                 </a>

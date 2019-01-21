@@ -3,13 +3,70 @@ class Avisos_model extends My_Model
 {
 	var $id_col = 'avisos_id';
 
+    var $fields = array(  
+        'tipo' => array(
+            'type' => 'select',
+            'label' => 'Status',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array('professor' => 'Professor', 'admin' => 'Admin','aluno'=>'Aluno')
+        ), 
+        'mensagem' => array(
+            'type' => 'textarea',
+            'label' => 'Mensagem',
+            'class' => '',
+            'extra' => array('class'=>'mytextarea'),
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-6">',
+            'append' => '</div>',
+        ),
+        'visualizado' => array(
+            'type' => 'select',
+            'label' => 'Status',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array('sim' => 'Sim', 'nao' => 'Não')
+        ),
+        'data' => array(
+            'type' => 'date',
+            'label' => 'Data',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+        ),
+
+        'id' => array(
+            'type' => 'select',
+            'label' => 'Remetente',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array()
+        ),
+    );
+
 
 	public function __construct() 
     {
         parent::__construct();
     }
 
-    public function save_aviso($id,$tipo,$msg,$motivo,$envia_email=FALSE){
+
+
+
+
+    public function save_aviso($id=FALSE,$tipo,$msg,$motivo,$envia_email=FALSE){
     	$dados['tipo'] = $tipo;
         $dados['mensagem'] = $msg;
         $dados['id'] = $id;

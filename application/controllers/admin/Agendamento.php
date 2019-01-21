@@ -258,9 +258,36 @@ class Agendamento extends BaseCrud
     }
 
     public function reagendamento($presenca_id, $tipo){
+
+        $this->load->model('presenca_model','presenca');
+        $this->load->model('avisos_model','avisos');
+
+        $this->db->select('alunos.nome,alunos.email,alunos.matricula, cursos.titulo as curso, agendamento.data as data_agenda')
+                 ->join('alunos','alunos.alunos_id=presenca.aluno_id')
+                 ->join('agendamento','agendamento.agenda_id=presenca.agenda_id')
+                 ->join('cursos','cursos.cursos_id=agendamento.curso_id');
+
+        $where['presenca.presenca_id'] = $presenca_id;
+
+        $resultado = $this->presenca->get_where($where)->row(); 
+
+        
+
+        if($tipo=="reposicao"){
+            $txt_tipo = "Reposição";
+        }else{
+           $txt_tipo = "Revisão"; 
+        }        
+
+        $msg = "Aluno:".$resultado->nome." email:".$resultado->email." (matrícula:". $resultado->matricula."), confirmou a ".$txt_tipo." para o dia ". formata_data($resultado->data_agenda) ." do curso ". $resultado->curso ;
+
+
         $this->db->set('tipo', $tipo);
         $this->db->where('presenca_id', $presenca_id);
         if($this->db->update('presenca')){
+
+            $this->avisos->save_aviso(FALSE,'admin',$msg,"Confirmação  de {$txt_tipo}");
+
             $this->output->set_output("ok");
         }else{
             echo $this->db->last_query();
@@ -344,7 +371,9 @@ class Agendamento extends BaseCrud
 
             $where['aluno_cursos.curso_id'] = $data['curso_id'];
 
-            $msg = "Agendamento de nova aula";
+
+
+            $msg = "Há uma nova aula agendada para você no dia ".formata_data($data['data']);
 
             
 
@@ -368,11 +397,20 @@ class Agendamento extends BaseCrud
                         $dados['aluno_id'] = $aluno->aluno_id;
                         $dados['agenda_id'] = $id;
                         $this->db->insert('presenca',$dados);
+
+                        $this->avisos->save_aviso($aluno->aluno_id,'aluno',$msg,'Novo aviso de aula');
+
+
+
                      }elseif(count($presenca ==1)){
                         $dados['aluno_id'] = $aluno->aluno_id;
                         $dados['agenda_id'] = $id;
                         $dados['tipo'] ='confirmar';
                         $this->db->insert('presenca',$dados);
+
+                        $msg = "Há uma aula agendada para o dia ".formata_data($data->$data) ." caso queira assistir, por favor confirme sua presença";
+
+                        $this->avisos->save_aviso($aluno->aluno_id,'aluno',$msg,'Novo aviso de aula');
                      }
                 }
              }
