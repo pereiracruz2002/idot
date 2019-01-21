@@ -261,8 +261,9 @@ class Agendamento extends BaseCrud
 
         $this->load->model('presenca_model','presenca');
         $this->load->model('avisos_model','avisos');
+        $this->load->model('agendamento_model','agendamento');
 
-        $this->db->select('alunos.nome,alunos.email,alunos.matricula, cursos.titulo as curso, agendamento.data as data_agenda')
+        $this->db->select('alunos.nome,alunos.email,alunos.matricula, cursos.titulo as curso, agendamento.data as data_agenda,presenca.agenda_id')
                  ->join('alunos','alunos.alunos_id=presenca.aluno_id')
                  ->join('agendamento','agendamento.agenda_id=presenca.agenda_id')
                  ->join('cursos','cursos.cursos_id=agendamento.curso_id');
@@ -282,16 +283,38 @@ class Agendamento extends BaseCrud
         $msg = "Aluno:".$resultado->nome." email:".$resultado->email." (matrícula:". $resultado->matricula."), confirmou a ".$txt_tipo." para o dia ". formata_data($resultado->data_agenda) ." do curso ". $resultado->curso ;
 
 
-        $this->db->set('tipo', $tipo);
-        $this->db->where('presenca_id', $presenca_id);
-        if($this->db->update('presenca')){
+        $this->db->select('count(*) as vagas');
+        $this->db->where_in("presenca.tipo", array('reposicao','revisao'));
 
-            $this->avisos->save_aviso(FALSE,'admin',$msg,"Confirmação  de {$txt_tipo}");
+        $where_vagas['agenda_id'] = $resultado->agenda_id;
+        $qtd_reposicao = $this->presenca->get_where($where_vagas)->row();
+        
+        $vagas_prenchidas = $qtd_reposicao->vagas;
 
-            $this->output->set_output("ok");
+        $this->db->select('agendamento.vagas');
+        $vagas_agenda = $this->agendamento->get_where(array('agenda_id'=>$resultado->agenda_id))->row();
+        echo $this->db->last_query();
+        $vagas_disponivel = $vagas_agenda->vagas;
+
+        echo "VAgas".$vagas;
+        echo "<br />";
+        echo "Vagas disponíveis";
+        echo $vagas_disponivel;
+
+        if($vagas_prenchidas == $vagas_disponivel){
+            $this->output->set_output("O número de vagas disponível já encerrou");
         }else{
-            echo $this->db->last_query();
-            $this->output->set_output("erro ao atualizar a presenca");  
+            $this->db->set('tipo', $tipo);
+            $this->db->where('presenca_id', $presenca_id);
+            if($this->db->update('presenca')){
+
+                $this->avisos->save_aviso(FALSE,'admin',$msg,"Confirmação  de {$txt_tipo}");
+
+                $this->output->set_output("ok");
+            }else{
+                echo $this->db->last_query();
+                $this->output->set_output("erro ao atualizar a presenca");  
+            }
         }
     }
 
