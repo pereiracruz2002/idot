@@ -10,7 +10,7 @@ class Alunos extends BaseCrud {
     var $tabela = 'nome,curso';
     var $campos_busca = 'nome';
     var $upload_foto = "";
-    var $group = array('aluno_id'=>'aluno_id');
+    //var $group = array('aluno_id'=>'aluno_id');
     var $joins = array('aluno_cursos' => array('aluno_cursos.aluno_id=alunos.alunos_id','left'),
          'cursos'=> array('cursos.cursos_id=aluno_cursos.curso_id','left')
     );

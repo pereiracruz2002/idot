@@ -91,7 +91,7 @@ class Avisos_model extends My_Model
 	        $this->email->from(EMAIL_FROM, $motivo);
 	        $this->email->to((ENVIRONMENT == 'development' ? EMAIL_DEV : $email->email));
 	        $this->email->subject($motivo);
-	        $this->email->message($this->load->view("admin/geral", $dados, TRUE));
+	        $this->email->message($msg);
             $this->email->send();
 	        // if ($this->email->send()) {
 	        //         $this->data['success_forgot'] = "Email enviado com sucesso";

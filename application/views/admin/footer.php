@@ -4,7 +4,7 @@
     <script src="/assets/admin/js/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="/assets/admin/js/bootstrap.min.js" type="text/javascript"></script>
     <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 
     <!--  Checkbox, Radio & Switch Plugins -->
     <script src="/assets/admin/js/bootstrap-checkbox-radio-switch.js"></script>
@@ -43,6 +43,10 @@
         //     });
 
         // });
+        $(document).ready(function () { 
+            var $seuCampoCpf = $(".matricula");
+                $seuCampoCpf.mask('00/00/0000-000', {reverse: true});
+        });
     </script>
 <?php
 if (isset($jsFiles)):

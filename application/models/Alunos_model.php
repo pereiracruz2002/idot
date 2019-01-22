@@ -22,12 +22,13 @@ class Alunos_model extends My_Model{
 			),
 		   'matricula' => array(
 	            'type' => 'text',
-	            'label' => 'Matrícula',
+	            'label' => 'Matrícula <br />(dd/mm/aaaa-0000)',
 	            'class' => '',
 	            'rules' => '',
 	            'label_class' => 'col-md-2',
 	            'prepend' => '<div class="col-md-3">',
 	            'append' => '</div>',
+                'extra'=> array('class'=>'matricula')
         	),
 
 		   'login' => array(
@@ -49,15 +50,15 @@ class Alunos_model extends My_Model{
             'append' => '</div>',
         ),
 
-        'data_cadastro' => array(
-            'type' => 'date',
-            'label' => 'Data de Cadastro',
-            'class' => '',
-            'rules' => '',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-3">',
-            'append' => '</div>',
-        ),
+        // 'data_cadastro' => array(
+        //     'type' => 'date',
+        //     'label' => 'Data de Cadastro',
+        //     'class' => '',
+        //     'rules' => '',
+        //     'label_class' => 'col-md-2',
+        //     'prepend' => '<div class="col-md-3">',
+        //     'append' => '</div>',
+        // ),
         'endereco' => array(
             'type' => 'text',
             'label' => 'Endereço',
