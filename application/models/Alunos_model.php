@@ -68,24 +68,75 @@ class Alunos_model extends My_Model{
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
         ),
-        'turma' => array(
+        'cep' => array(
             'type' => 'text',
-            'label' => 'Turma',
+            'label' => 'CEP',
+            'class' => '',
+            'rules' => '',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'extra'=> array('class'=>'cep')
+        ),
+        'bairro' => array(
+            'type' => 'text',
+            'label' => 'Bairro',
             'class' => '',
             'rules' => '',
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
         ),
-
-        'historico_turma' => array(
+        'complemento' => array(
             'type' => 'text',
+            'label' => 'Complemento',
+            'class' => '',
+            'rules' => '',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+        ),
+        'telefone' => array(
+            'type' => 'text',
+            'label' => 'Telefone',
+            'class' => '',
+            'rules' => '',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'extra'=> array('class'=>'telefone')
+        ),
+        'celular' => array(
+            'type' => 'text',
+            'label' => 'Celular',
+            'class' => 'celular',
+            'rules' => '',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'extra'=> array('class'=>'celular')
+        ),
+        'turma' => array(
+            'type' => 'select',
+            'label' => 'Turma',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array()
+        ),
+
+        
+        'historico_turma' => array(
+            'type' => 'select',
             'label' => 'Histórico de Turma',
             'class' => '',
             'rules' => '',
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
+            'values' => array('1' => 'Nível 1', '2' => 'Nível 2-3','4' => 'Nível 4','5' => 'Nível 5')
         ),
 
 	);

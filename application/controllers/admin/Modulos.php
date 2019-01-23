@@ -6,7 +6,7 @@ class Modulos extends BaseCrud
     var $base_url = 'admin/modulos';
     var $actions = 'CRUD';
     var $titulo = 'Módulos';
-    var $tabela = 'titulo,curso,status';
+    var $tabela = 'curso,titulo,status';
     var $campos_busca = 'titulo';
     var $acoes_extras = array();
     var $acoes_controller = array();
@@ -29,6 +29,7 @@ class Modulos extends BaseCrud
     public function _pre_form(&$model) 
     {
       
+      unset($model->fields['submodulo']);
 
       $model->fields['curso_id']['type'] = 'hidden';
       $model->fields['curso_id']['label'] = '';

@@ -45,7 +45,16 @@
         // });
         $(document).ready(function () { 
             var $seuCampoCpf = $(".matricula");
-                $seuCampoCpf.mask('00/00/0000-000', {reverse: true});
+                $seuCampoCpf.mask('00/00/0000-000', {reverse: false});
+
+            var $seuCampoCep = $(".cep");
+                $seuCampoCep.mask('00000-000', {reverse: false});
+
+            var $seuCampoTelefone = $(".telefone");
+                $seuCampoTelefone.mask('(00)0000-0000', {reverse: false});
+
+            var $seuCampoCelular = $(".celular");
+                $seuCampoCelular.mask('(00)90000-0000', {reverse: false});
         });
     </script>
 <?php

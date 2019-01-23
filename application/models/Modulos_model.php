@@ -8,6 +8,21 @@ class Modulos_model extends My_Model
             'label' => '',
         ),
 
+        'submodulo' => array(
+            'type' => 'select',
+            'label' => 'Submódulo',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array('SISTEMA TÔNICO-POSTURAL E VIAS DE COMUNICAÇÃO' => 'SISTEMA TÔNICO-POSTURAL E VIAS DE COMUNICAÇÃO', 'SISTEMAS VISCERAL E VASCULAR
+
+' => 'SISTEMAS VISCERAL E VASCULAR
+
+')
+        ),
+
         'titulo' => array(
             'type' => 'text',
             'label' => 'Título',

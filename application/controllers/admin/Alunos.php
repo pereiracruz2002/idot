@@ -46,6 +46,13 @@ class Alunos extends BaseCrud {
         );
     }
 
+    public function _pre_form(&$model, &$data) 
+    {
+      for ($i=1; $i <=50; $i++) {
+            $model->fields['turma']['values'][$i] = $i;
+        }
+    }
+
 
 
   function upload_foto(){

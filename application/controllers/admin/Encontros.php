@@ -6,7 +6,7 @@ class Encontros extends BaseCrud
     var $base_url = 'admin/encontros';
     var $actions = 'CRUD';
     var $titulo = 'Encontros';
-    var $tabela = 'titulo,curso,status';
+    var $tabela = 'curso,submodulo,titulo,status';
     var $campos_busca = 'titulo';
     var $acoes_extras = array();
     var $acoes_controller = array();
@@ -29,6 +29,7 @@ class Encontros extends BaseCrud
     public function _pre_form(&$model) 
     {
       
+      $model->fields['titulo']['label'] = 'Encontros';
 
       $model->fields['curso_id']['type'] = 'hidden';
       $model->fields['curso_id']['label'] = '';
