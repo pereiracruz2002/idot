@@ -28,6 +28,16 @@ class Encontros extends BaseCrud
 
     public function _pre_form(&$model) 
     {
+
+
+        $this->load->model('submodulo_model','submodulo');
+        $where['submodulos_id >'] =0;
+
+        $cursos = $this->submodulo->get_where($where)->result();
+        
+        foreach ($cursos as $key => $value) {
+            $model->fields['submodulo']['values'][$value->submodulos_id] = $value->titulo;
+        }  
       
       $model->fields['titulo']['label'] = 'Encontros';
 

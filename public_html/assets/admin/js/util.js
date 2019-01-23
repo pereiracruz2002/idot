@@ -90,13 +90,43 @@ $(document).ready(function () {
          $('select[name=modulo_id]').html('<option value="">--Selecione--</option>');
         var retornoramos = function(result){
             var html = '<option value="">--Selecione--</option>';
+            var nivel = 1;
             $.each(result, function(key, value){
-                html += '<option value="'+value.modulos_id+'">'+value.titulo+'</option>';
+                nivel = value.nivel;
+                if(value.nivel!=2){
+                    html += '<option value="'+value.modulos_id+'">'+value.titulo+'</option>';
+                }else{
+                     html += '<option value="'+value.submodulo+'">'+value.submodulo+'</option>';  
+                }
             });
-            $('select[name=modulo_id]').html(html);
+            if(nivel!=2){
+                $('select[name=encontro_id]').parent().hide();
+                $('select[name=encontro_id]').parent().parent().hide();
+                $('select[name=modulo_id]').html(html);  
+            }else{
+                $('select[name=encontro_id]').parent().removeClass('hide');
+                $('select[name=encontro_id]').parent().parent().find( "label" ).removeClass('hide');
+                $('select[name=encontro_id]').html(html); 
+            }
+            
         }
         $.getJSON(base_url+"/modulos/return_modulos_by_curso/"+elm.val(), retornoramos);
 
+    });
+
+
+    $('select[name=encontro_id]').change(function(){
+        var elm = $(this);
+        var retornoramos = function(result){
+            var html = '<option value="">--Selecione--</option>';
+            
+            $.each(result, function(key, value){
+                html += '<option value="'+value.modulos_id+'">'+value.titulo+'</option>';
+    
+            });
+            $('select[name=modulo_id]').html(html);  
+        }
+        $.getJSON(base_url+"/modulos/return_modulos_by_submodulo/"+elm.val(), retornoramos);
     });
 
 

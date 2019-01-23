@@ -10,17 +10,13 @@ class Modulos_model extends My_Model
 
         'submodulo' => array(
             'type' => 'select',
-            'label' => 'Submódulo',
+            'label' => '',
             'class' => '',
             'rules' => 'required',
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
-            'values' => array('SISTEMA TÔNICO-POSTURAL E VIAS DE COMUNICAÇÃO' => 'SISTEMA TÔNICO-POSTURAL E VIAS DE COMUNICAÇÃO', 'SISTEMAS VISCERAL E VASCULAR
-
-' => 'SISTEMAS VISCERAL E VASCULAR
-
-')
+            'values' => array()
         ),
 
         'titulo' => array(

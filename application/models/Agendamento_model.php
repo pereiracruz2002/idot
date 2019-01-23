@@ -44,6 +44,19 @@ class Agendamento_model extends My_Model
             'empty' => '--Selecine um status--',
             'values' => array(),
         ),
+
+        'encontro_id' => array(
+            'type' => 'select',
+            'label' => 'Submodulo',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2 hide',
+            'prepend' => '<div class="col-md-3 hide">',
+            'append' => '</div>',
+            'values' => array(),
+            
+        ),
+
         'modulo_id' => array(
             'type' => 'select',
             'label' => 'Módulos/Encontros',
@@ -55,17 +68,7 @@ class Agendamento_model extends My_Model
             'values' => array(),
         ),
 
-        'encontro_id' => array(
-            'type' => 'select',
-            'label' => 'Encontros',
-            'class' => '',
-            'rules' => 'required',
-            'label_class' => 'col-md-2 hide',
-            'prepend' => '<div class="col-md-3 hide">',
-            'append' => '</div>',
-            'values' => array(),
-            
-        ),
+        
         'sala_id' => array(
             'type' => 'select',
             'label' => 'Salas',
