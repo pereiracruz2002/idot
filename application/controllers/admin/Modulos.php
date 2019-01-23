@@ -118,12 +118,12 @@ class Modulos extends BaseCrud
 
 
     public function return_modulos_by_submodulo($submodulo){
-        $this->load->model('modulos_model','modulos');
-        $where = array('modulos.submodulo'=>$submodulo);
-        $this->db->select('modulos_id,cursos.titulo,submodulo,cursos.nivel')
-        ->join('cursos','cursos.cursos_id=modulos.curso_id');
+        $this->load->model('submodulos_model','submodulos');
+
+        $where = array('submodulos.submodulos_id'=>$submodulo);
+        $this->db->select('submodulos.*');
         $this->db->order_by("titulo", 'ASC');
-        $result = $this->modulos->get_where($where)->result();
+        $result = $this->submodulos->get_where($where)->result();
         $json = json_encode($result);
         $this->output->set_header('content-type: application/json');
         $this->output->set_output($json);
