@@ -86,7 +86,9 @@ $(document).ready(function () {
     });
 
     $('select[name=curso_id]').change(function(){
+
         var elm = $(this);
+        
          $('select[name=modulo_id]').html('<option value="">--Selecione--</option>');
         var retornoramos = function(result){
             var html = '<option value="">--Selecione--</option>';
@@ -96,17 +98,18 @@ $(document).ready(function () {
                 if(value.nivel!=2){
                     html += '<option value="'+value.modulos_id+'">'+value.titulo+'</option>';
                 }else{
-                     html += '<option value="'+value.submodulo+'">'+value.submodulo+'</option>';  
+                     html += '<option value="'+value.submodulo+'">'+value.titulo_sub+'</option>';  
                 }
             });
             if(nivel!=2){
-                $('select[name=encontro_id]').parent().hide();
-                $('select[name=encontro_id]').parent().parent().hide();
+                $('select[name=submodulo_id]').parent().addClass('hide');
+                $('select[name=submodulo_id]').parent().parent().find( "label" ).addClass('hide');
                 $('select[name=modulo_id]').html(html);  
             }else{
-                $('select[name=encontro_id]').parent().removeClass('hide');
-                $('select[name=encontro_id]').parent().parent().find( "label" ).removeClass('hide');
-                $('select[name=encontro_id]').html(html); 
+                console.log('aki')
+                $('select[name=submodulo_id]').parent().removeClass('hide');
+                $('select[name=submodulo_id]').parent().parent().find( "label" ).removeClass('hide');
+                $('select[name=submodulo_id]').html(html); 
             }
             
         }
@@ -115,7 +118,7 @@ $(document).ready(function () {
     });
 
 
-    $('select[name=encontro_id]').change(function(){
+    $('select[name=submodulo_id]').change(function(){
         var elm = $(this);
         var retornoramos = function(result){
             var html = '<option value="">--Selecione--</option>';
@@ -130,26 +133,26 @@ $(document).ready(function () {
     });
 
 
-    $('select[name=modulo_id]').change(function(){
-        var elm = $(this);
-        //$('select[name=modulo_id]').html('<option value="">--Selecione--</option>');
-        var retornoramos = function(result){
+    // $('select[name=modulo_id]').change(function(){
+    //     var elm = $(this);
+    //     //$('select[name=modulo_id]').html('<option value="">--Selecione--</option>');
+    //     var retornoramos = function(result){
             
-            if(result[0].nivel==2){
-                $('select[name=encontro_id]').parent().removeClass('hide');
-                $('select[name=encontro_id]').parent().parent().find( "label" ).removeClass('hide');
-                var html = '<option value="">--Selecione--</option>';
-                $.each(result, function(key, value){
-                    html += '<option value="'+value.encontros_id+'">'+value.titulo+'</option>';
-                });
-                $('select[name=encontro_id]').html(html);
-            }else{
-                $('select[name=encontro_id]').parent().hide();
-                $('select[name=encontro_id]').parent().parent().hide(); 
-            }
+    //         if(result[0].nivel==2){
+    //             $('select[name=encontro_id]').parent().removeClass('hide');
+    //             $('select[name=encontro_id]').parent().parent().find( "label" ).removeClass('hide');
+    //             var html = '<option value="">--Selecione--</option>';
+    //             $.each(result, function(key, value){
+    //                 html += '<option value="'+value.encontros_id+'">'+value.titulo+'</option>';
+    //             });
+    //             $('select[name=encontro_id]').html(html);
+    //         }else{
+    //             $('select[name=encontro_id]').parent().hide();
+    //             $('select[name=encontro_id]').parent().parent().hide(); 
+    //         }
             
-        }
-        $.getJSON(base_url+"/encontros/return_encontros_by_modulos/"+elm.val(), retornoramos);
+    //     }
+    //     $.getJSON(base_url+"/encontros/return_encontros_by_modulos/"+elm.val(), retornoramos);
 
-    });
+    // });
 });

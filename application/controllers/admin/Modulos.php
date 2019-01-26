@@ -37,6 +37,12 @@ class Modulos extends BaseCrud
 
     }
 
+
+    public function _pre_save($data){
+        var_dump($data);
+        exit();
+    }
+
     
 
     public function _filter_pre_read(&$data) 
@@ -107,10 +113,13 @@ class Modulos extends BaseCrud
 
 
         $where = array('curso_id'=>$curso_id);
-        $this->db->select('modulos_id,cursos.titulo,submodulo,cursos.nivel')
-        ->join('cursos','cursos.cursos_id=modulos.curso_id');
+        $this->db->select('modulos_id,modulos.titulo,submodulo.titulo as titulo_sub,submodulo,cursos.nivel')
+        ->join('cursos','cursos.cursos_id=modulos.curso_id')
+        ->join('submodulo','submodulos_id=modulos.submodulo','left');
+        $this->db->group_by('modulos.submodulo');
         $this->db->order_by("titulo", 'ASC');
         $result = $this->modulos->get_where($where)->result();
+;
         $json = json_encode($result);
         $this->output->set_header('content-type: application/json');
         $this->output->set_output($json);
@@ -118,12 +127,12 @@ class Modulos extends BaseCrud
 
 
     public function return_modulos_by_submodulo($submodulo){
-        $this->load->model('submodulos_model','submodulos');
+        $this->load->model('modulos_model','modulos');
 
-        $where = array('submodulos.submodulos_id'=>$submodulo);
-        $this->db->select('submodulos.*');
+        $where = array('modulos.submodulo'=>$submodulo);
+        $this->db->select('modulos.titulo,modulos.modulos_id');
         $this->db->order_by("titulo", 'ASC');
-        $result = $this->submodulos->get_where($where)->result();
+        $result = $this->modulos->get_where($where)->result();
         $json = json_encode($result);
         $this->output->set_header('content-type: application/json');
         $this->output->set_output($json);

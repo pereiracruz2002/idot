@@ -6,14 +6,15 @@ class Encontros extends BaseCrud
     var $base_url = 'admin/encontros';
     var $actions = 'CRUD';
     var $titulo = 'Encontros';
-    var $tabela = 'curso,submodulo,titulo,status';
+    var $tabela = 'titulo_sub,modulos';
     var $campos_busca = 'titulo';
-    var $acoes_extras = array();
     var $acoes_controller = array();
-    var $selects = "modulos.*, cursos.titulo as curso";
-    var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id'); 
+    var $acoes_extras = array();
+    var $selects = "modulos.*,submodulo.titulo as titulo_sub, cursos.titulo as curso, GROUP_CONCAT(modulos.titulo SEPARATOR ', ') as modulos,GROUP_CONCAT(modulos.modulos_id SEPARATOR ', ') as modulos_ids,GROUP_CONCAT(modulos.status SEPARATOR ', ') as modulos_status";
+    var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id','submodulo'=>'submodulos_id=modulos.submodulo'); 
     // var $joins = array('cursos' => 'cursos.cursos_id=modulos.curso_id', 'encontros'=>array('encontros.modulo_id=modulos.modulos_id','left') );
-    var $group= array('modulos.modulos_id');
+    var $group= array('modulos.submodulo');
+    //var $acoes_extras = array(array('url'=>'novo','title'=>'Adicionar Encontros','class'=>'btn btn-xs btn-info btn btn-warning'));
 
 
     public function __construct() 
@@ -29,15 +30,29 @@ class Encontros extends BaseCrud
     public function _pre_form(&$model) 
     {
 
+        if($this->uri->segment(5)){
 
-        $this->load->model('submodulo_model','submodulo');
-        $where['submodulos_id >'] =0;
+            $this->load->model('modulos_model','modulos');
 
-        $cursos = $this->submodulo->get_where($where)->result();
+            $where = array('modulos_id'=>$this->uri->segment(5));
+            $this->db->select('submodulo');
+            $result = $this->modulos->get_where($where)->row();
+
+            $model->fields['submodulo']['type'] = 'hidden';
+            $model->fields['submodulo']['value'] = $result->submodulo;
+
+        }else{
+            $this->load->model('submodulo_model','submodulo');
+            $where['submodulos_id >'] =0;
+
+            $cursos = $this->submodulo->get_where($where)->result();
         
-        foreach ($cursos as $key => $value) {
-            $model->fields['submodulo']['values'][$value->submodulos_id] = $value->titulo;
-        }  
+            foreach ($cursos as $key => $value) {
+                $model->fields['submodulo']['values'][$value->submodulos_id] = $value->titulo;
+            }  
+        }
+
+        
       
       $model->fields['titulo']['label'] = 'Encontros';
 
@@ -51,7 +66,30 @@ class Encontros extends BaseCrud
 
     public function _filter_pre_read(&$data) 
     {
-        
+
+        foreach($data as $chave => $campos){
+            if(isset($campos->modulos)){
+                $modulos_explode = explode(',', $campos->modulos);
+                $modulos_ids_explode = explode(',',$data[$chave]->modulos_ids);
+                $modulos_status_explode = explode(',',$data[$chave]->modulos_status);
+                $string_btn_editar = '<ul class="list-unstyled">';
+                foreach($modulos_explode as $chave_explode => $explode){
+                    $string_btn_editar.= '<li style="margin-top:5px;">'.$explode.'<a style="margin-left:10px; margin-right:10px;" class="btn btn-xs btn-info btn btn-warning" title="Editar este registro" href="'.site_url().'/admin/encontros/editar/'.$modulos_ids_explode[$chave_explode].'">Editar</a>  <a class="btn btn-xs btn btn-danger delete" href="#" title="Deletar este registro" data-remove="'.site_url().'/admin/encontros/deletar/'.$modulos_ids_explode[$chave_explode].'"><i class="fa fa-times-circle"></i> Deletar</a><span style="margin-left:5px;">'.$modulos_status_explode[$chave_explode].'</span>';
+                }
+
+                $string_btn_editar.= '</ul>';
+
+
+                $data[$chave]->modulos = $string_btn_editar;
+               
+            }
+          
+        }
+
+    
+
+        $url = "admin/encontros/novo/". $this->uri->segment(4);
+        $this->acoes_extras = array(array('url'=>$url,'title'=>'+ Encontros','class'=>'btn btn-xs btn-info btn btn-info'));
         // $this->db->select('cursos.nivel');
         // $this->load->model('cursos_model','cursos');
         // foreach($data as $d){
@@ -73,6 +111,18 @@ class Encontros extends BaseCrud
 
         $this->model->fields['curso'] = array(
           'label' => 'Curso',
+          'type' => 'text',
+          'class' => '',
+        );
+
+        $this->model->fields['titulo_sub'] = array(
+          'label' => 'Subnível',
+          'type' => 'text',
+          'class' => '',
+        );
+
+        $this->model->fields['modulos'] = array(
+          'label' => 'Encontros',
           'type' => 'text',
           'class' => '',
         );

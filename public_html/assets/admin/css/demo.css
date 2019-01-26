@@ -71,3 +71,7 @@
     line-height: 1.5;
     padding: 10px 25px;
 }
+
+.encontros .acoes .btn-warning, .encontros .acoes .btn-danger{
+    display: none;
+}

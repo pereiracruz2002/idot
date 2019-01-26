@@ -116,28 +116,8 @@ class Alunos_model extends My_Model{
             'append' => '</div>',
             'extra'=> array('class'=>'celular')
         ),
-        'turma' => array(
-            'type' => 'select',
-            'label' => 'Turma',
-            'class' => '',
-            'rules' => 'required',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-3">',
-            'append' => '</div>',
-            'values' => array()
-        ),
-
         
-        'historico_turma' => array(
-            'type' => 'select',
-            'label' => 'Histórico de Turma',
-            'class' => '',
-            'rules' => '',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-3">',
-            'append' => '</div>',
-            'values' => array('1' => 'Nível 1', '2' => 'Nível 2-3','4' => 'Nível 4','5' => 'Nível 5')
-        ),
+        
 
 	);
 

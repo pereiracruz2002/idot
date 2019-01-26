@@ -16,7 +16,8 @@ class Alunos extends BaseCrud {
     );
     var $selects = 'alunos.*,cursos.titulo as curso';
     var $acoes_extras = array(
-        array("url" => "admin/alunos/associar_cursos", "title" => "Relacionar com Cursos", "class" => "btn-info"),
+        array("url" => "admin/aluno_cursos/novo", "title" => "Relacionar com Cursos", "class" => "btn-info"),
+        //array("url" => "admin/aluno_cursos/index", "title" => "Ver Cursos Relacionados", "class" => "btn-info"),
     );
 
   public function __construct() 
@@ -48,9 +49,7 @@ class Alunos extends BaseCrud {
 
     public function _pre_form(&$model, &$data) 
     {
-      for ($i=1; $i <=50; $i++) {
-            $model->fields['turma']['values'][$i] = $i;
-        }
+      
     }
 
 
