@@ -85,6 +85,20 @@ $(document).ready(function () {
             caret.removeClass('caret-up').removeClass('fa-caret-up').addClass('fa-caret-down').addClass('caret-down');
     });
 
+    $('select[name=historico]').change(function(){
+        var elm = $(this);
+        $('select[name=curso_id]').html('<option value="">--Selecione--</option>');
+        var retornoramos = function(result){
+            var html = '<option value="">--Selecione--</option>';
+            $.each(result, function(key, value){
+                html += '<option value="'+value.cursos_id+'">'+value.titulo+'</option>';
+            });
+            $('select[name=curso_id]').html(html); 
+
+        }
+        $.getJSON(base_url+"/cursos/return_cursos/"+elm.val(), retornoramos);
+    });
+
     $('select[name=curso_id]').change(function(){
 
         var elm = $(this);
@@ -106,7 +120,7 @@ $(document).ready(function () {
                 $('select[name=submodulo_id]').parent().parent().find( "label" ).addClass('hide');
                 $('select[name=modulo_id]').html(html);  
             }else{
-                console.log('aki')
+                
                 $('select[name=submodulo_id]').parent().removeClass('hide');
                 $('select[name=submodulo_id]').parent().parent().find( "label" ).removeClass('hide');
                 $('select[name=submodulo_id]').html(html); 

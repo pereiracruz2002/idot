@@ -79,6 +79,18 @@ class Cursos extends BaseCrud
 
     }
 
+    public function return_cursos($nivel){
+        $this->load->model('cursos_model','cursos');
+        $where = array('nivel'=>$nivel);
+        $this->db->select('cursos.*');
+        $this->db->order_by("titulo", 'ASC');
+        $result = $this->cursos->get_where($where)->result();
+;
+        $json = json_encode($result);
+        $this->output->set_header('content-type: application/json');
+        $this->output->set_output($json);
+    }
+
 	public function notificacoes($departamento_id) 
 	{
         $this->load->model('departamentos_model','departamentos');

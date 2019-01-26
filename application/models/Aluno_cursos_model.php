@@ -35,7 +35,7 @@ class Aluno_cursos_model extends My_Model
 	            'label_class' => 'col-md-2',
 	            'prepend' => '<div class="col-md-3">',
 	            'append' => '</div>',
-	            'values' => array('Nível 1' => 'Nível 1', 'Nível 2-3' => 'Nível 2-3','Nível 4' => 'Nível 4','Nível 5' => 'Nível 5')
+	            'values' => array('1' => 'Nível 1', '2' => 'Nível 2-3','4' => 'Nível 4','5' => 'Nível 5')
 	        ),
 
 	        'curso_id' => array(
