@@ -75,3 +75,7 @@
 .encontros .acoes .btn-warning, .encontros .acoes .btn-danger{
     display: none;
 }
+
+.form-horizontal .checkbox, .radio{
+    display: inline;
+}

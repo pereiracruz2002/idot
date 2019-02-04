@@ -923,7 +923,7 @@ body > .navbar-collapse {
     filter: alpha(opacity=100); }
 
 /*      Checkbox and radio         */
-.checkbox,
+/*.checkbox,
 .radio {
   margin-bottom: 12px;
   padding-left: 32px;
@@ -938,7 +938,7 @@ body > .navbar-collapse {
 .checkbox input,
 .radio input {
   outline: none !important;
-  display: none; }
+  display: none; }*/
 
 .checkbox .icons,
 .radio .icons {

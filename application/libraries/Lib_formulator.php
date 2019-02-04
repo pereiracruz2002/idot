@@ -208,7 +208,7 @@ class Lib_formulator {
         $args['name'] = $args['name'] . "[]";
 
         if (isset($args['label']))
-            $this->inputs[] = '<div class="form-group ' . $div_class . '"><label class="col-sm-3 control-label">' . $args['label'] . '</label>';
+            $this->inputs[] = '<div class="form-group ' . $div_class . '"><label class="col-sm-2 control-label">' . $args['label'] . '</label>';
         else
             $this->inputs[] = '<div class="checks ' . $div_class . '">';
 

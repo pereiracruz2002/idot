@@ -3,39 +3,21 @@ class Agendamento_model extends My_Model
 {
 	var $id_col = 'agenda_id';
     var $fields = array(   
-        'data' => array(
-            'type' => 'date',
-            'label' => 'Data',
-            'class' => '',
-            'rules' => 'required',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-3">',
-            'append' => '</div>',
+
+        'turma' => array(
+                'type' => 'select',
+                'label' => 'Nº da Turma',
+                'class' => '',
+                'rules' => 'required',
+                'label_class' => 'col-md-2',
+                'prepend' => '<div class="col-md-3">',
+                'append' => '</div>',
+                'values' => array()
         ),
 
-        'vagas' => array(
-            'type' => 'text',
-            'label' => 'Vagas',
-            'class' => '',
-            'rules' => 'required',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-3">',
-            'append' => '</div>',
-        ),
-
-        'professor_id' => array(
-            'type' => 'select',
-            'label' => 'Professor',
-            'class' => '',
-            'rules' => 'required',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-3">',
-            'append' => '</div>',
-            'values' => array(),
-        ),
         'curso_id' => array(
             'type' => 'select',
-            'label' => 'Cursos',
+            'label' => 'Nível',
             'class' => '',
             'rules' => 'required',
             'label_class' => 'col-md-2',
@@ -43,18 +25,6 @@ class Agendamento_model extends My_Model
             'append' => '</div>',
             'empty' => '--Selecine um status--',
             'values' => array(),
-        ),
-
-        'encontro_id' => array(
-            'type' => 'select',
-            'label' => 'Submodulo',
-            'class' => '',
-            'rules' => 'required',
-            'label_class' => 'col-md-2 hide',
-            'prepend' => '<div class="col-md-3 hide">',
-            'append' => '</div>',
-            'values' => array(),
-            
         ),
 
         'modulo_id' => array(
@@ -68,7 +38,6 @@ class Agendamento_model extends My_Model
             'values' => array(),
         ),
 
-        
         'sala_id' => array(
             'type' => 'select',
             'label' => 'Salas',
@@ -80,16 +49,70 @@ class Agendamento_model extends My_Model
             'values' => array(),
         ),
 
-        'sala_id' => array(
-            'type' => 'select',
-            'label' => 'Salas',
-            'rules' => 'required',
+
+        'data' => array(
+            'type' => 'date',
+            'label' => 'Data do Curso',
             'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+        ),
+
+
+        'dias_semana' => array(
+            'type' => 'check',
+            'label' => '',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-3',
+            'prepend' => '<div class="col-md-9">',
+            'append' => '</div>',
+            'values' => array('sexta manhã'=>'Sexta Manhã','sexta tarde'=>'Sexta Tarde','sábado manhã'=>'Sábado Manhã','domingo manhã'=>'Domingo Manhã'),
+        ),
+
+
+
+
+        // 'vagas' => array(
+        //     'type' => 'text',
+        //     'label' => 'Vagas',
+        //     'class' => '',
+        //     'rules' => 'required',
+        //     'label_class' => 'col-md-2',
+        //     'prepend' => '<div class="col-md-3">',
+        //     'append' => '</div>',
+        // ),
+
+        'professor_id' => array(
+            'type' => 'select',
+            'label' => 'Professor',
+            'class' => '',
+            'rules' => 'required',
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
             'values' => array(),
-            // 'from' => array('model' => 'cursos', 'value' => 'titulo', 'where' => array('status' => 'ativo'))
-        ),    
+        ),
+        
+
+        'encontro_id' => array(
+            'type' => 'select',
+            'label' => 'Submodulo',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2 hide',
+            'prepend' => '<div class="col-md-3 hide">',
+            'append' => '</div>',
+            'values' => array(),
+            
+        ),
+
+        
+
+        
+        
+        
     );
 }
