@@ -60,12 +60,32 @@ class Agendamento_model extends My_Model
             'append' => '</div>',
         ),
 
+        'data_segunda' => array(
+            'type' => 'date',
+            'label' => '',
+            'class' => '',
+            'rules' => '',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+        ),
+
+        'data_terceira' => array(
+            'type' => 'date',
+            'label' => '',
+            'class' => '',
+            'rules' => '',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+        ),
+
 
         'dias_semana' => array(
             'type' => 'check',
             'label' => '',
             'class' => '',
-            'rules' => 'required',
+            'rules' => '',
             'label_class' => 'col-md-3',
             'prepend' => '<div class="col-md-9">',
             'append' => '</div>',
@@ -107,6 +127,17 @@ class Agendamento_model extends My_Model
             'append' => '</div>',
             'values' => array(),
             
+        ),
+
+         'descricao' => array(
+            'type' => 'text',
+            'label' => 'Descrição',
+            'class' => '',
+            'extra' => array('class'=>'mytextarea'),
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-6">',
+            'append' => '</div>',
         ),
 
         

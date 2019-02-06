@@ -81,7 +81,11 @@
                 </a>
             </li>
             <li>
-                <a href="<?php echo site_url('admin/cursos') ?>">
+                <!-- <a href="<?php echo site_url('admin/cursos') ?>">
+                    <i class="pe-7s-note2"></i>
+                    <p>Cursos</p>
+                </a> -->
+                <a href="<?php echo site_url('admin/agendamento') ?>">
                     <i class="pe-7s-note2"></i>
                     <p>Cursos</p>
                 </a>
@@ -98,12 +102,12 @@
                     <p>Notificações</p>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="<?php echo site_url('admin/agendamento') ?>">
                     <i class="pe-7s-date"></i>
                     <p>Agendamentos</p>
                 </a>
-            </li>
+            </li> -->
             <?php elseif ($this->session->userdata('admin')->tipo=="professor"):?>
                 <li>
                     <a href="<?php echo site_url('admin/agendamento') ?>">

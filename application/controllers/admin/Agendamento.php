@@ -5,15 +5,17 @@ class Agendamento extends BaseCrud
     var $modelname = 'agendamento';
     var $base_url = 'admin/agendamento';
     var $actions = 'CRUD';
-    var $titulo = 'Agendamento';
-    var $tabela = 'data,vagas,curso,modulo,status';
-    var $campos_busca = 'data';
+    var $titulo = 'Curso';
+    var $tabela = 'turma,curso,modulo,data,sala,professor';
+    var $campos_busca = 'curso';
     var $acoes_extras = array();
     var $joins = array(
          'cursos' => 'cursos.cursos_id=agendamento.curso_id',
-         'modulos'=> 'modulos.modulos_id=agendamento.modulo_id'
+         'modulos'=> 'modulos.modulos_id=agendamento.modulo_id',
+         'salas' =>'salas.salas_id=agendamento.sala_id',
+         'professor'=>'professor.id_professor=agendamento.professor_id'
     );
-    var $selects = 'agendamento.*,cursos.titulo as curso, modulos.titulo as modulo';
+    var $selects = 'agendamento.*,cursos.titulo as curso, modulos.titulo as modulo, salas.titulo as sala, professor.nome as professor';
 
 
     public function __construct() 
@@ -22,6 +24,19 @@ class Agendamento extends BaseCrud
         parent::__construct();
         //verify_permiss_redirect('departamentos');
         $this->data['menu_active'] = 'agendamento';
+    }
+
+    public function _filter_pre_save(&$data)
+    {
+        // $days = '';
+        // foreach($data['dias_semana'] as $dias){
+        //     $days = $dias.",";
+        // }
+        // $values = trim($days,",");
+
+        // $data['dias_semana'] = $days;
+
+        $data['dias_semana'] = serialize($data['dias_semana']);
     }
 
      public function _filter_pre_listar(&$where, &$where_ativo)
@@ -57,7 +72,7 @@ class Agendamento extends BaseCrud
         );
 
         $this->model->fields['curso'] = array(
-          'label' => 'Curso',
+          'label' => 'Nível',
           'type' => 'text',
           'class' => '',
         );
@@ -67,18 +82,50 @@ class Agendamento extends BaseCrud
           'type' => 'text',
           'class' => '',
         );
+
+        $this->model->fields['sala'] = array(
+          'label' => 'Salas',
+          'type' => 'text',
+          'class' => '',
+        );
+
+        $this->model->fields['professor'] = array(
+          'label' => 'Professor',
+          'type' => 'text',
+          'class' => '',
+        );
     }
     
 
     public function _filter_pre_read(&$data) 
     {
 
-        //var_dump($data);
+
         $i = 0;
-        foreach ($data as $key) {
+        $data_formatada = '';
+        foreach ($data as $val => $key) {
+
             foreach ($key as $chave => $valor) {
                 if($chave=="data"){
+                    $days_of_week = ' <b>';
+                    foreach(unserialize($data[$val]->dias_semana) as $days){
+                        $days_of_week.=$days.",";
+                    }
+                    $days_of_week = trim($days_of_week,",");
+                    $days_of_week.="</b>";
+
                     $key->data = formata_data($key->data);
+
+                    if($key->data_segunda !=='0000-00-00'){
+                        $key->data.= ', '.formata_data($key->data_segunda);
+                    }
+
+                    if($key->data_terceira !=='0000-00-00'){
+                        $key->data.= ', '.formata_data($key->data_terceira);
+                    }
+
+                    $key->data.=$days_of_week;
+                    
                 }
                 if($this->session->userdata('admin')->tipo=="aluno"){
 
@@ -328,6 +375,12 @@ class Agendamento extends BaseCrud
         $where = array('status'=>'ativo');
         $cursos = $this->cursos->get_where($where)->result();
         $model->fields['curso_id']['values'][''] = '--Selecione um Curso--';
+
+        for ($i=1; $i <=50; $i++) {
+            $model->fields['turma']['values'][$i] = $i;
+        }
+
+
         foreach ($cursos as $key => $value) {
             $model->fields['curso_id']['values'][$value->cursos_id] = $value->titulo;
         }
@@ -431,9 +484,9 @@ class Agendamento extends BaseCrud
                         $dados['tipo'] ='confirmar';
                         $this->db->insert('presenca',$dados);
 
-                        $msg = "Há uma aula agendada para o dia ".formata_data($data->$data) ." caso queira assistir, por favor confirme sua presença";
+                        // $msg = "Há uma aula agendada para o dia ".formata_data($data->$data) ." caso queira assistir, por favor confirme sua presença";
 
-                        $this->avisos->save_aviso($aluno->aluno_id,'aluno',$msg,'Novo aviso de aula');
+                        // $this->avisos->save_aviso($aluno->aluno_id,'aluno',$msg,'Novo aviso de aula');
                      }
                 }
              }
