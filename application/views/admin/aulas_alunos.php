@@ -4,7 +4,26 @@
         <div class="panel-heading">
             <h2>Meus Agendamentos</h2>
         </div>
-
+        <div class="panel-body">
+            <form id="form1" runat="server">
+                <h2 style="font-size:1.2em;"> Escolha os acentos abaixo:</h2>
+               <div id="holder"> 
+                    <ul  id="place">
+                    </ul>    
+                </div>
+                <div style="width:600px;text-align:center;overflow:auto"> 
+                    <ul id="seatDescription">
+                        <li style="background:url('images/available_seat_img.gif') no-repeat scroll 0 0 transparent;">Acento Disponível</li>
+                        <li style="background:url('images/booked_seat_img.gif') no-repeat scroll 0 0 transparent;">Acento Reservado</li>
+                        <li style="background:url('images/selected_seat_img.gif') no-repeat scroll 0 0 transparent;">Selecione o Acento</li>
+                    </ul>        
+                </div>
+                <div style="width:580px;text-align:left;margin:5px">    
+                    <input type="button" id="btnShowNew" value="Mostrar todos os acentos reservados" /><input type="button" id="btnShow" value="Mostrar tudo" />            
+                </div>
+            </form>
+        </div>
+        <?php /* ?>
         <div class="panel-body">
 
             <div class="table-responsive">
@@ -71,6 +90,7 @@
                 </table>
             </div>
         </div><!--/panel-body-->
+        <?php */ ?>
     </div><!--/row-->
 </div>
 <?php include_once(dirname(__FILE__) . '/footer.php'); ?>  
