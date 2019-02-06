@@ -6,7 +6,7 @@ class Aluno_cursos extends BaseCrud
     var $base_url = 'admin/aluno_cursos';
     var $actions = 'CRUD';
     var $titulo = 'Associar Cursos';
-    var $tabela = 'turma,historico,modulo';
+    var $tabela = 'turma,modulo';
     var $campos_busca = 'turma';
     var $joins = array(
          'modulos'=> 'modulos.modulos_id=aluno_cursos.modulo_id'
@@ -68,6 +68,13 @@ class Aluno_cursos extends BaseCrud
         
         for ($i=1; $i <=50; $i++) {
             $model->fields['turma']['values'][$i] = $i;
+        }
+
+        $this->load->model('salas_model','salas');
+        $where = array('status'=>'ativo');
+        $salas = $this->salas->get_where($where)->result();
+        foreach ($salas as $key => $value) {
+            $model->fields['sala_id']['values'][$value->salas_id] = $value->titulo;
         }
        
 
