@@ -15,7 +15,7 @@ class Agendamento extends BaseCrud
          'salas' =>'salas.salas_id=agendamento.sala_id',
          'professor'=>'professor.id_professor=agendamento.professor_id'
     );
-    var $selects = 'agendamento.*,cursos.titulo as curso, modulos.titulo as modulo, salas.titulo as sala, professor.nome as professor';
+    var $selects = 'agendamento.*,cursos.titulo as curso, CONCAT(modulos.titulo," - ",modulos.descricao) as modulo, salas.titulo as sala, professor.nome as professor';
 
 
     public function __construct() 
@@ -106,6 +106,11 @@ class Agendamento extends BaseCrud
         foreach ($data as $val => $key) {
 
             foreach ($key as $chave => $valor) {
+
+                if($chave == "modulo"){
+                    $key->modulo = strip_tags($key->modulo);
+                }
+
                 if($chave=="data"){
                     $days_of_week = ' <b>';
                     foreach(unserialize($data[$val]->dias_semana) as $days){
@@ -197,27 +202,21 @@ class Agendamento extends BaseCrud
     }
 
      public function ver_minha_agenda(){
-        // $this->load->model('cursos_model','cursos');
-        // $this->db->select('agendamento.agenda_id,agendamento.status as status_agendamento,agendamento.data,cursos.titulo as curso, modulos.titulo as modulo, alunos.nome,alunos.alunos_id,aluno_cursos.aluno_id')
-        // ->join('aluno_cursos','aluno_cursos.curso_id = cursos.cursos_id')
-        // ->join('alunos', 'alunos.alunos_id =aluno_cursos.aluno_id')
-        // //->join('presenca','presenca.aluno_id=alunos.alunos_id','left')
-        // ->join('agendamento', 'agendamento.curso_id=cursos.cursos_id')
-        // ->join('modulos','modulos.curso_id=cursos.cursos_id')
-        // ->join('professor','professor.id_professor=agendamento.professor_id');
 
-        //$this->db->group_by("agendamento.agenda_id");
-
-         //$where['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
-         //$where['agendamento.agenda_id'] = $agenda_id;
         $this->load->model('agendamento_model','agendamento');
+        $this->load->model('presenca_model','presenca');
 
-        $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso,modulos.titulo as modulo,modulos.modulos_id,alunos.nome,alunos.alunos_id as aluno_id,presenca.presente as presenca, presenca.presenca_id,presenca.tipo')
+        // $where_mesas = 
+        // $this->data['mesas_ocupadas'] = $this->agendamento->get_where($where)->result();
+
+        $this->db->select('agendamento.agenda_id,agendamento.turma,professor.nome as professor,agendamento.data,agendamento.data_segunda,agendamento.data_terceira,agendamento.sala_id, agendamento.dias_semana,cursos.titulo as curso,CONCAT(modulos.titulo," - ",modulos.descricao) as modulo,modulos.modulos_id,alunos.nome,alunos.alunos_id as aluno_id,alunos.status,presenca.presente as presenca, presenca.presenca_id,presenca.tipo')
         ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
         ->join('alunos','alunos.alunos_id=presenca.aluno_id')
         ->join('cursos','cursos.cursos_id=agendamento.curso_id')
         ->join('modulos','modulos.modulos_id=agendamento.modulo_id')
         ->join('professor','professor.id_professor=agendamento.professor_id');
+
+        $this->db->group_by('cursos.cursos_id');
 
          $where['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
 
@@ -225,8 +224,10 @@ class Agendamento extends BaseCrud
         $this->data['itens'] = $this->agendamento->get_where($where)->result();
 
         $aulas = array();
+        $mesas_ocupadas = array();
         foreach($this->data['itens'] as $itens){
-            $this->db->select('presenca.presente as presente, presenca.presenca_id, modulos.modulos_id')
+
+            $this->db->select('presenca.presente as presente, presenca.presenca_id,presenca.agenda_id, modulos.modulos_id')
             ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
             ->join('alunos','alunos.alunos_id=presenca.aluno_id')
             ->join('modulos','modulos.modulos_id=agendamento.modulo_id');
@@ -235,11 +236,18 @@ class Agendamento extends BaseCrud
             $where_alunos['presenca.tipo'] = 'normal';
             $where_alunos['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
 
+
             $resultados = $this->agendamento->get_where($where_alunos)->result(); 
+
+
 
             foreach($resultados as $resultado){
                 $aulas[$resultado->modulos_id] = $resultado->presente;
+                $this->db->select('presenca.mesa');
+                $mesas_ocupadas[$resultado->agenda_id] = $this->presenca->get_where(array('presenca_id'=>$resultado->presenca_id))->result();
             } 
+
+            $this->data['mesas_ocupadas'] = $mesas_ocupadas;
             
         }
 
@@ -250,36 +258,27 @@ class Agendamento extends BaseCrud
     
         
 
-        //$this->data['itens'] = $this->cursos->get_where($where)->result();
-   
-        //$this->load->model('presenca_model','presenca');
-        // $array_presenca = array();
-        // $this->db->select('agenda_id,presente');
-        // foreach($this->data['itens'] as $itens){
-        //     $where_presenca['aluno_id'] = $itens->aluno_id;
-        //     $where_presenca['agenda_id'] = $itens->agenda_id;
-        //     $result = $this->presenca->get_where($where_presenca)->row();
-        //     if($result){
-        //         $array_presenca[$result->agenda_id] = $result->presente;
-        //     }
-
-        // }
-        // $this->data['presenca'] = $array_presenca;
-
         $this->load->view('admin/aulas_alunos', $this->data);
     }
 
-    public function checar_presenca($aluno_id, $agenda_id, $presente){
+    public function checar_presenca($aluno_id, $agenda_id, $presente, $data_dia, $dias_semana, $mesa){
         $data['aluno_id'] = $aluno_id;
         $data['agenda_id'] = $agenda_id;
         if($presente == 1){
              $this->db->set('presente', 'sim');
+             $this->db->set('mesa',$mesa);
+             $this->db->set('data_dia',$data_dia);
+             $this->db->set('dia_semana',$dias_semana);
         }else{
              $this->db->set('presente', 'nao');
+             $this->db->set('mesa',$mesa);
+             $this->db->set('data_dia',$data_dia);
+             $this->db->set('dia_semana',$dias_semana);
         }
 
         $this->db->where($data);
         if($this->db->update('presenca')){
+
             $this->output->set_output("ok");
         }else{
            $this->output->set_output("erro ao inserir uma presença"); 

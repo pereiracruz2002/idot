@@ -1,8 +1,8 @@
 
 $(function () {
     var settings = {
-        rows: 5,
-        cols: 15,
+        rows: 2,
+        cols: 7,
         rowCssPrefix: 'row-',
         colCssPrefix: 'col-',
         seatWidth: 35,
@@ -34,15 +34,19 @@ $(function () {
     //init();
 
     //Case II: If already booked
-    var bookedSeats = [5, 10, 25];
+
+    //var bookedSeats = [5, 10];
+    console.log(bookedSeats)
     init(bookedSeats);
 
 
     $('.' + settings.seatCss).click(function () {
 	if ($(this).hasClass(settings.selectedSeatCss)){
-		alert('This seat is already reserved');
+		alert('Esse acento esta reservado');
 	}
 	else{
+        console.log($(this).find('a').attr('title'));
+        $('input[type=hidden]').val($(this).find('a').attr('title'))
         $(this).toggleClass(settings.selectingSeatCss);
 		}
     });

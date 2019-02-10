@@ -39,13 +39,17 @@ $(document).ready(function () {
     $('body').on('click', '.confirmar_presenca', function (e) {
         e.preventDefault();
         var _self = $(this);
-        var decisao = confirm("Tem certeza que deseja confirmar presença do aluno?");
+        var data_dia = $('.data_dia:checked').val();
+        var dias_semana = $('.dias_semana:checked').val();
+        var mesa = $('input[type=hidden]').val();
+        var decisao = confirm("Tem certeza que deseja confirmar presença?");
         if (decisao) {
-            $.get(_self.attr('data-confirm'));
+            $.get(_self.attr('data-confirm')+ '/'+data_dia+'/'+dias_semana+'/'+mesa);
             uri = _self.attr('href')
             if ($('.alert-success').length == 0)
                 $('.m-top-md').after('<div class="alert alert-success"><p>Registrado a presença do aluno!</p></div>');
-            window.location= base_url+'agendamento/ver_inscritos/'+uri;
+            //window.location= base_url+'agendamento/ver_inscritos/'+uri;
+            window.location= base_url+'agendamento/ver_minha_agenda/';
         }
     });
 
@@ -110,7 +114,7 @@ $(document).ready(function () {
             $.each(result, function(key, value){
                 nivel = value.nivel;
                 if(value.nivel!=2){
-                    html += '<option value="'+value.modulos_id+'">'+value.titulo+'</option>';
+                    html += '<option value="'+value.modulos_id+'">'+value.titulo+' (' +value.descricao+')</option>';
                 }else{
                      html += '<option value="'+value.submodulo+'">'+value.titulo_sub+'</option>';  
                 }
@@ -143,7 +147,7 @@ $(document).ready(function () {
             $.each(result, function(key, value){
                 nivel = value.nivel;
                 if(value.nivel!=2){
-                    html += '<option value="'+value.modulos_id+'">'+value.titulo+'</option>';
+                    html += '<option value="'+value.modulos_id+'">'+value.titulo+' ('+value.descricao +')</option>';
                 }else{
                      html += '<option value="'+value.submodulo+'">'+value.titulo_sub+'</option>';  
                 }

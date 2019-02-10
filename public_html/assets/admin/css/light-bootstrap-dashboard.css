@@ -940,7 +940,7 @@ body > .navbar-collapse {
   outline: none !important;
   display: none; }*/
 
-.checkbox .icons,
+/*.checkbox .icons,
 .radio .icons {
   color: #DDDDDD;
   display: block;
@@ -954,7 +954,7 @@ body > .navbar-collapse {
   font-size: 20px;
   cursor: pointer;
   -webkit-transition: color 0.2s linear;
-  transition: color 0.2s linear; }
+  transition: color 0.2s linear; }*/
 
 .checkbox .icons .first-icon,
 .radio .icons .first-icon,

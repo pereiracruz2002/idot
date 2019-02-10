@@ -113,7 +113,7 @@ class Modulos extends BaseCrud
 
 
         $where = array('curso_id'=>$curso_id);
-        $this->db->select('modulos_id,modulos.titulo')
+        $this->db->select('modulos_id,modulos.titulo,modulos.descricao')
         ->join('cursos','cursos.cursos_id=modulos.curso_id');
         $this->db->order_by("titulo", 'ASC');
         $result = $this->modulos->get_where($where)->result();

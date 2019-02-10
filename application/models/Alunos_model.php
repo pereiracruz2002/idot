@@ -116,6 +116,17 @@ class Alunos_model extends My_Model{
             'append' => '</div>',
             'extra'=> array('class'=>'celular')
         ),
+        'status' => array(
+            'type' => 'select',
+            'label' => 'Status',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
+        ),
+
         
         
 
