@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.31, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: clini274_idot
 -- ------------------------------------------------------
--- Server version	5.7.25-0ubuntu0.18.04.2
+-- Server version	5.6.31-0ubuntu0.15.10.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -39,7 +39,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (12,'admin','21232f297a57a5a743894a0e4a801fc3','','2019-02-06 13:34:19'),(13,'Robson','81dc9bdb52d04dc20036dbd8313ed055','','2019-01-20 11:11:32');
+INSERT INTO `admin` VALUES (12,'admin','21232f297a57a5a743894a0e4a801fc3','','2019-02-10 11:58:34'),(13,'Robson','81dc9bdb52d04dc20036dbd8313ed055','','2019-01-20 11:11:32');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,7 +66,7 @@ CREATE TABLE `agendamento` (
   `data_segunda` date DEFAULT NULL,
   `data_terceira` date DEFAULT NULL,
   PRIMARY KEY (`agenda_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `agendamento` (
 
 LOCK TABLES `agendamento` WRITE;
 /*!40000 ALTER TABLE `agendamento` DISABLE KEYS */;
-INSERT INTO `agendamento` VALUES (7,'2019-02-15',0,7,12,1,0,1,'aberto','a:3:{i:0;s:11:\"sexta tarde\";i:1;s:14:\"sábado manhã\";i:2;s:14:\"domingo manhã\";}','<p>teste</p>','1','2019-02-16','0000-00-00');
+INSERT INTO `agendamento` VALUES (1,'2019-02-15',0,7,12,1,0,1,'aberto','a:2:{i:0;s:11:\"sexta tarde\";i:1;s:14:\"sábado manhã\";}','<p>teste</p>','1','2019-02-16','0000-00-00');
 /*!40000 ALTER TABLE `agendamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,7 @@ CREATE TABLE `aluno_cursos` (
   `historico` varchar(45) DEFAULT NULL,
   `sala_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`aluno_cursos_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -105,7 +105,7 @@ CREATE TABLE `aluno_cursos` (
 
 LOCK TABLES `aluno_cursos` WRITE;
 /*!40000 ALTER TABLE `aluno_cursos` DISABLE KEYS */;
-INSERT INTO `aluno_cursos` VALUES (4,7,23,7,0,'1','1',NULL),(5,8,24,1,1,'3','2',NULL),(6,9,24,10,1,'1','2',NULL),(7,10,24,10,1,'16','2',NULL);
+INSERT INTO `aluno_cursos` VALUES (1,6,12,1,NULL,'1',NULL,1);
 /*!40000 ALTER TABLE `aluno_cursos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,6 +132,8 @@ CREATE TABLE `alunos` (
   `complemento` varchar(45) DEFAULT NULL,
   `bairro` text,
   `telefone` varchar(45) DEFAULT NULL,
+  `status` enum('ativo','inativo') DEFAULT NULL,
+  `celular` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`alunos_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -142,7 +144,7 @@ CREATE TABLE `alunos` (
 
 LOCK TABLES `alunos` WRITE;
 /*!40000 ALTER TABLE `alunos` DISABLE KEYS */;
-INSERT INTO `alunos` VALUES (6,'Flavio','flavio@uol.com.br','001','flavio','65cc2c8205a05d7379fa3a6386f710e1','2019-01-16','Rua Estados Unidos 123','001','x','2019-01-21 17:41:23',NULL,NULL,NULL,NULL);
+INSERT INTO `alunos` VALUES (6,'Flavio','flavio@uol.com.br','00/1','flavio','65cc2c8205a05d7379fa3a6386f710e1','2019-01-16','Rua Estados Unidos 123','001','x','2019-02-10 11:56:22','','','','','ativo','');
 /*!40000 ALTER TABLE `alunos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +213,7 @@ CREATE TABLE `avisos` (
   `data` date DEFAULT NULL,
   `id` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`avisos_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +222,7 @@ CREATE TABLE `avisos` (
 
 LOCK TABLES `avisos` WRITE;
 /*!40000 ALTER TABLE `avisos` DISABLE KEYS */;
-INSERT INTO `avisos` VALUES (1,'professor','Agendamento de nova aula','nao','2019-01-20','7'),(2,'professor','Agendamento de nova aula','nao','2019-01-21','7'),(3,'professor','Agendamento de nova aula','nao','2019-01-21','7'),(4,'admin','Aluno:Flavio (matrícula:001), confirmou a Revisão para o dia2019-02-28do curso Sistemas musculoesquelético e neural','nao','2019-01-21','0'),(5,'admin','Aluno:Flavio (matrícula:001), confirmou a Revisão para o dia2019-02-28do curso Sistemas musculoesquelético e neural','nao','2019-01-21','0'),(6,'aluno','Há uma nova aula agendada para você no dia //','nao','2019-01-21','6'),(7,'professor','Há uma nova aula agendada para você no dia //','nao','2019-01-21','7'),(8,'aluno','Há uma aula agendada para o dia // caso queira assistir, por favor confirme sua presença','nao','2019-01-21','6'),(9,'professor','Há uma aula agendada para o dia // caso queira assistir, por favor confirme sua presença','nao','2019-01-21','7'),(10,'aluno','Há uma nova aula agendada para você no dia 23/02/2019','nao','2019-01-21','6'),(11,'professor','Há uma nova aula agendada para você no dia 23/02/2019','nao','2019-01-21','7'),(12,'professor','Há uma nova aula agendada para você no dia 15/02/2019','nao','2019-02-06','7');
+INSERT INTO `avisos` VALUES (1,'professor','Agendamento de nova aula','nao','2019-01-20','7'),(2,'professor','Agendamento de nova aula','nao','2019-01-21','7'),(3,'professor','Agendamento de nova aula','nao','2019-01-21','7'),(4,'admin','Aluno:Flavio (matrícula:001), confirmou a Revisão para o dia2019-02-28do curso Sistemas musculoesquelético e neural','nao','2019-01-21','0'),(5,'admin','Aluno:Flavio (matrícula:001), confirmou a Revisão para o dia2019-02-28do curso Sistemas musculoesquelético e neural','nao','2019-01-21','0'),(6,'aluno','Há uma nova aula agendada para você no dia //','nao','2019-01-21','6'),(7,'professor','Há uma nova aula agendada para você no dia //','nao','2019-01-21','7'),(8,'aluno','Há uma aula agendada para o dia // caso queira assistir, por favor confirme sua presença','nao','2019-01-21','6'),(9,'professor','Há uma aula agendada para o dia // caso queira assistir, por favor confirme sua presença','nao','2019-01-21','7'),(10,'aluno','Há uma nova aula agendada para você no dia 23/02/2019','nao','2019-01-21','6'),(11,'professor','Há uma nova aula agendada para você no dia 23/02/2019','nao','2019-01-21','7'),(12,'professor','Há uma nova aula agendada para você no dia 15/02/2019','nao','2019-02-06','7'),(13,'professor','Há uma nova aula agendada para você no dia 16/02/2019','nao','2019-02-09','7'),(14,'aluno','Há uma nova aula agendada para você no dia 28/02/2019','nao','2019-02-10','6'),(15,'professor','Há uma nova aula agendada para você no dia 28/02/2019','nao','2019-02-10','7'),(16,'aluno','Há uma nova aula agendada para você no dia 15/02/2019','nao','2019-02-10','6'),(17,'professor','Há uma nova aula agendada para você no dia 15/02/2019','nao','2019-02-10','7'),(18,'aluno','Há uma nova aula agendada para você no dia 15/02/2019','nao','2019-02-10','6'),(19,'professor','Há uma nova aula agendada para você no dia 15/02/2019','nao','2019-02-10','7');
 /*!40000 ALTER TABLE `avisos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +240,7 @@ CREATE TABLE `cursos` (
   `descricao` text,
   `nivel` int(1) DEFAULT NULL,
   PRIMARY KEY (`cursos_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +249,7 @@ CREATE TABLE `cursos` (
 
 LOCK TABLES `cursos` WRITE;
 /*!40000 ALTER TABLE `cursos` DISABLE KEYS */;
-INSERT INTO `cursos` VALUES (12,'Sistemas musculoesquelético e neural','ativo','<p>teste</p>',1),(13,'Sistema tônico-postural e vias de comunicação','ativo','<p>&nbsp;<strong style=\"box-sizing: border-box; margin: 0px; padding: 0px; border: none; outline: 0px; font-family: open_sansregular; vertical-align: baseline; color: #3f3e3e; line-height: 22.4px;\">O CURSO: &nbsp;Compreende 20 m&oacute;dulos que s&atilde;o realizados em 10 encontros te&oacute;rico-pr&aacute;ticos.&nbsp;</strong></p>',2);
+INSERT INTO `cursos` VALUES (12,'Nível 1  - Sistemas musculoesquelético e neural','ativo','<p><strong style=\"box-sizing: border-box; color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">O CURSO:</strong><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">&nbsp;compreende 16 encontros te&oacute;rico-pr&aacute;ticos, entre eles est&aacute;gios supervisionados para que os alunos possam estudar juntos com nossos professores e monitores de est&aacute;gio, sendo realizados aos finais de semana.</span></p>',1),(13,'Nível 2 - Sistema tônico-postural e vias de comunicação','ativo','<p><strong>&nbsp;</strong>O CURSO: &nbsp;Compreende 20 m&oacute;dulos que s&atilde;o realizados em 10 encontros te&oacute;rico-pr&aacute;ticos.&nbsp;</p>',2),(14,'Nível 3 -Sistema visceral e vascular','ativo','<p><strong>&nbsp;O CURSO: &nbsp;Compreende 20 m&oacute;dulos que s&atilde;o realizados em 10 encontros te&oacute;rico-pr&aacute;ticos.&nbsp;</strong></p>',3),(15,'Nível 4 - Sistema Craniano','ativo','<p>O CURSO: Compreende 12 m&oacute;dulos que s&atilde;o realizados em 6 encontros te&oacute;rico-pr&aacute;ticos.&nbsp;</p>',4),(16,'Nível 5 - Sistema Biológicos','ativo','<p>O CURSO: Compreende 10 m&oacute;dulos que s&atilde;o realizados em 5 encontros.&nbsp;</p>',5);
 /*!40000 ALTER TABLE `cursos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -414,7 +416,7 @@ CREATE TABLE `modulos` (
   `status` varchar(45) DEFAULT NULL,
   `submodulo` int(11) DEFAULT NULL,
   PRIMARY KEY (`modulos_id`,`curso_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -423,7 +425,7 @@ CREATE TABLE `modulos` (
 
 LOCK TABLES `modulos` WRITE;
 /*!40000 ALTER TABLE `modulos` DISABLE KEYS */;
-INSERT INTO `modulos` VALUES (1,' Introdução a Osteopatia',12,'Módulo 1',NULL,NULL),(2,'Segmento lombar',12,'Módulo 2',NULL,NULL);
+INSERT INTO `modulos` VALUES (1,'MÓDULO I',12,'<p>Introdu&ccedil;&atilde;o a Osteopatia</p>','ativo',0),(2,'MÓDULO II',12,'<p>Segmento lombar</p>','ativo',0),(3,'MÓDULO III',12,'<p>&nbsp;Est&aacute;gio Supervisionado I</p>','ativo',0),(4,'MÓDULO IV',12,'<p>Pelve</p>','ativo',0),(5,'MÓDULO V',12,'<p>Sacro e jun&ccedil;&atilde;o lombossacra L5-S1\" id=\"textarea5c5ff6be728ac\" &gt;</p>\r\n<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Sacro e jun&ccedil;&atilde;o lombossacra L5-S1</span></p>','ativo',0),(6,'MÓDULO VI',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Est&aacute;gio Supervisionado II&nbsp;</span></p>','ativo',0),(7,'MÓDULO VII (COMPOSTO)',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Segmento tor&aacute;cico, costelas e jun&ccedil;&atilde;o t&oacute;raco-lombar T12-L1</span></p>','ativo',0),(8,'MÓDULO VIII (COMPOSTO)',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Segmento cervical, primeira costela e jun&ccedil;&atilde;o c&eacute;rvico-tor&aacute;cica C7-T1</span></p>','ativo',0),(9,'MÓDULO IX',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Est&aacute;gio Supervisionado III</span></p>','ativo',0),(10,'MÓDULO X (COMPOSTO)',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Membros superiores</span></p>','ativo',0),(11,'MÓDULO XI (COMPOSTO)',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Mobiliza&ccedil;&atilde;o dos nervos perif&eacute;ricos</span></p>','ativo',0),(12,'Módulo XIII',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Est&aacute;gio Supervisionado IV&nbsp;</span></p>','ativo',0),(13,'Módulo XIV (COMPOSTO)',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Jun&ccedil;&atilde;o occipital, atlas, &aacute;xis e integra&ccedil;&atilde;o dos sistemas</span></p>','ativo',0),(14,'Módulo XV',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Est&aacute;gio Supervisionado V</span></p>','ativo',0),(15,'Módulo XVI',12,'<p><span style=\"color: #3f3e3e; font-family: open_sansregular; line-height: 22.4px;\">Avalia&ccedil;&atilde;o final</span></p>','ativo',0),(16,'ENCONTRO I',13,'Introdução a posturologia\nSistema tônico-postural\nAvaliação postural\nCaptor podal\nOficina de confecção de palmilhas ',NULL,NULL);
 /*!40000 ALTER TABLE `modulos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -543,8 +545,11 @@ CREATE TABLE `presenca` (
   `agenda_id` varchar(45) DEFAULT NULL,
   `presente` enum('sim','nao') DEFAULT NULL,
   `tipo` enum('normal','reposicao','revisao','confirmar') DEFAULT 'normal',
+  `mesa` int(11) DEFAULT NULL,
+  `data_dia` varchar(45) DEFAULT NULL,
+  `dia_semana` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`presenca_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,7 +558,7 @@ CREATE TABLE `presenca` (
 
 LOCK TABLES `presenca` WRITE;
 /*!40000 ALTER TABLE `presenca` DISABLE KEYS */;
-INSERT INTO `presenca` VALUES (1,6,'2','sim','normal'),(2,6,'3',NULL,'revisao'),(3,6,'4',NULL,'normal'),(4,6,'5',NULL,'confirmar'),(5,6,'6',NULL,'normal'),(6,6,'7',NULL,'confirmar');
+INSERT INTO `presenca` VALUES (1,6,'1','sim','normal',14,'sexta%20tarde','sexta%20tarde');
 /*!40000 ALTER TABLE `presenca` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -636,7 +641,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('711ddacbd5fed12ebe4c34ca46fbb33e2afc19fa','191.162.248.1',1547727358,_binary '__ci_last_regenerate|i:1547727351;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-16 18:20:58\";s:4:\"tipo\";s:5:\"admin\";}'),('280486186be5f65af4aa0717ea0beb8083b1a381','191.162.248.1',1547728343,_binary '__ci_last_regenerate|i:1547728343;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-17 06:15:57\";s:4:\"tipo\";s:5:\"admin\";}'),('5ef58a2012f3f330782526922a771a46442c7272','177.221.61.20',1547730073,_binary '__ci_last_regenerate|i:1547730073;'),('3e42f0a9291a0ba418b40652af6a124bb4f5d3b6','177.221.61.20',1547739045,_binary '__ci_last_regenerate|i:1547739045;'),('21b6df8c97156c0763bf0c6fddce2e2cee451256','54.183.108.90',1547744203,_binary '__ci_last_regenerate|i:1547744203;'),('c4592829736f2034a800eb5f8dcb3bacb2722ab9','177.221.61.20',1547746071,_binary '__ci_last_regenerate|i:1547746071;'),('e9bb21900283b8a0955012aca3c0c61aeb51ce6f','177.221.61.20',1547746548,_binary '__ci_last_regenerate|i:1547746548;'),('rmvkcp8nkk4j41mqrub7vbj81aouedt6','127.0.0.1',1547768259,_binary '__ci_last_regenerate|i:1547768198;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-17 09:30:51\";s:4:\"tipo\";s:5:\"admin\";}'),('7v9v63hbtkcrb2154hc412j0hciihk30','127.0.0.1',1547917525,_binary '__ci_last_regenerate|i:1547917524;'),('r165u5hbe1hu0re4en2enfuc0k8dlq59','127.0.0.1',1547923255,_binary '__ci_last_regenerate|i:1547923248;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-17 21:36:47\";s:4:\"tipo\";s:5:\"admin\";}'),('7o5kd17ghvpkcr7qutl3aq3o8a52lkq2','127.0.0.1',1547978024,_binary '__ci_last_regenerate|i:1547978017;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"13\";s:5:\"login\";s:6:\"Robson\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-20 07:53:33\";s:4:\"tipo\";s:5:\"admin\";}'),('n2fa0p7km7sr40tiia4garr40ekjodum','127.0.0.1',1547990010,_binary '__ci_last_regenerate|i:1547989962;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-20 11:09:16\";s:4:\"tipo\";s:5:\"admin\";}'),('emr68ift4tj8c2fbruga4uq3kmnv7agv','127.0.0.1',1547990096,_binary '__ci_last_regenerate|i:1547990096;'),('3kv3ud5r6r745cp6n19b4nqgt3ovvc3h','127.0.0.1',1548011629,_binary '__ci_last_regenerate|i:1548011585;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-20 15:27:15\";s:4:\"tipo\";s:5:\"admin\";}'),('o63ca0kitk3p0df28tkfj8u7t3vbooup','127.0.0.1',1548100488,_binary '__ci_last_regenerate|i:1548100193;admin|O:8:\"stdClass\":11:{s:9:\"alunos_id\";s:1:\"6\";s:4:\"nome\";s:6:\"Flavio\";s:5:\"email\";s:17:\"flavio@uol.com.br\";s:9:\"matricula\";s:3:\"001\";s:5:\"login\";s:6:\"flavio\";s:13:\"data_cadastro\";s:10:\"2019-01-16\";s:8:\"endereco\";s:22:\"Rua Estados Unidos 123\";s:5:\"turma\";s:3:\"001\";s:15:\"historico_turma\";s:1:\"x\";s:10:\"last_login\";s:19:\"2019-01-21 16:55:43\";s:4:\"tipo\";s:5:\"aluno\";}'),('d83sslqujem9q1uoemafj8l7n8kov735','127.0.0.1',1548156603,_binary '__ci_last_regenerate|i:1548156602;'),('4ao0vqn9n2qssklfudgnupv948uqgi19','127.0.0.1',1548157119,_binary '__ci_last_regenerate|i:1548157119;'),('2deuq9qlt4ks14mr9fdj6i6t6o5l6i1n','127.0.0.1',1548253670,_binary '__ci_last_regenerate|i:1548253390;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-23 11:51:44\";s:4:\"tipo\";s:5:\"admin\";}'),('kr73fupt91nauav3ph4gs0lc9gqivkqp','127.0.0.1',1548269682,_binary '__ci_last_regenerate|i:1548269657;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-23 12:12:34\";s:4:\"tipo\";s:5:\"admin\";}'),('j67le8ohdcdpo3krvklf7cqguc21v0et','127.0.0.1',1549476454,_binary '__ci_last_regenerate|i:1549476450;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-23 15:27:07\";s:4:\"tipo\";s:5:\"admin\";}');
+INSERT INTO `sessions` VALUES ('711ddacbd5fed12ebe4c34ca46fbb33e2afc19fa','191.162.248.1',1547727358,'__ci_last_regenerate|i:1547727351;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-16 18:20:58\";s:4:\"tipo\";s:5:\"admin\";}'),('280486186be5f65af4aa0717ea0beb8083b1a381','191.162.248.1',1547728343,'__ci_last_regenerate|i:1547728343;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-17 06:15:57\";s:4:\"tipo\";s:5:\"admin\";}'),('5ef58a2012f3f330782526922a771a46442c7272','177.221.61.20',1547730073,'__ci_last_regenerate|i:1547730073;'),('3e42f0a9291a0ba418b40652af6a124bb4f5d3b6','177.221.61.20',1547739045,'__ci_last_regenerate|i:1547739045;'),('21b6df8c97156c0763bf0c6fddce2e2cee451256','54.183.108.90',1547744203,'__ci_last_regenerate|i:1547744203;'),('c4592829736f2034a800eb5f8dcb3bacb2722ab9','177.221.61.20',1547746071,'__ci_last_regenerate|i:1547746071;'),('e9bb21900283b8a0955012aca3c0c61aeb51ce6f','177.221.61.20',1547746548,'__ci_last_regenerate|i:1547746548;'),('rmvkcp8nkk4j41mqrub7vbj81aouedt6','127.0.0.1',1547768259,'__ci_last_regenerate|i:1547768198;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-17 09:30:51\";s:4:\"tipo\";s:5:\"admin\";}'),('7v9v63hbtkcrb2154hc412j0hciihk30','127.0.0.1',1547917525,'__ci_last_regenerate|i:1547917524;'),('r165u5hbe1hu0re4en2enfuc0k8dlq59','127.0.0.1',1547923255,'__ci_last_regenerate|i:1547923248;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-17 21:36:47\";s:4:\"tipo\";s:5:\"admin\";}'),('7o5kd17ghvpkcr7qutl3aq3o8a52lkq2','127.0.0.1',1547978024,'__ci_last_regenerate|i:1547978017;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"13\";s:5:\"login\";s:6:\"Robson\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-20 07:53:33\";s:4:\"tipo\";s:5:\"admin\";}'),('n2fa0p7km7sr40tiia4garr40ekjodum','127.0.0.1',1547990010,'__ci_last_regenerate|i:1547989962;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-20 11:09:16\";s:4:\"tipo\";s:5:\"admin\";}'),('emr68ift4tj8c2fbruga4uq3kmnv7agv','127.0.0.1',1547990096,'__ci_last_regenerate|i:1547990096;'),('3kv3ud5r6r745cp6n19b4nqgt3ovvc3h','127.0.0.1',1548011629,'__ci_last_regenerate|i:1548011585;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-20 15:27:15\";s:4:\"tipo\";s:5:\"admin\";}'),('o63ca0kitk3p0df28tkfj8u7t3vbooup','127.0.0.1',1548100488,'__ci_last_regenerate|i:1548100193;admin|O:8:\"stdClass\":11:{s:9:\"alunos_id\";s:1:\"6\";s:4:\"nome\";s:6:\"Flavio\";s:5:\"email\";s:17:\"flavio@uol.com.br\";s:9:\"matricula\";s:3:\"001\";s:5:\"login\";s:6:\"flavio\";s:13:\"data_cadastro\";s:10:\"2019-01-16\";s:8:\"endereco\";s:22:\"Rua Estados Unidos 123\";s:5:\"turma\";s:3:\"001\";s:15:\"historico_turma\";s:1:\"x\";s:10:\"last_login\";s:19:\"2019-01-21 16:55:43\";s:4:\"tipo\";s:5:\"aluno\";}'),('d83sslqujem9q1uoemafj8l7n8kov735','127.0.0.1',1548156603,'__ci_last_regenerate|i:1548156602;'),('4ao0vqn9n2qssklfudgnupv948uqgi19','127.0.0.1',1548157119,'__ci_last_regenerate|i:1548157119;'),('2deuq9qlt4ks14mr9fdj6i6t6o5l6i1n','127.0.0.1',1548253670,'__ci_last_regenerate|i:1548253390;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-23 11:51:44\";s:4:\"tipo\";s:5:\"admin\";}'),('kr73fupt91nauav3ph4gs0lc9gqivkqp','127.0.0.1',1548269682,'__ci_last_regenerate|i:1548269657;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-23 12:12:34\";s:4:\"tipo\";s:5:\"admin\";}'),('j67le8ohdcdpo3krvklf7cqguc21v0et','127.0.0.1',1549476454,'__ci_last_regenerate|i:1549476450;admin|O:8:\"stdClass\":5:{s:8:\"admin_id\";s:2:\"12\";s:5:\"login\";s:5:\"admin\";s:5:\"email\";s:0:\"\";s:10:\"last_login\";s:19:\"2019-01-23 15:27:07\";s:4:\"tipo\";s:5:\"admin\";}'),('d3q2aegv2glanj07gsudlkse35ju2dc3','127.0.0.1',1549748757,'__ci_last_regenerate|i:1549748757;'),('iturgj8pg9j9dhgaln90aurtq1d63k26','127.0.0.1',1549807845,'__ci_last_regenerate|i:1549807845;');
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -708,4 +713,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-06 16:18:59
+-- Dump completed on 2019-02-10 12:13:10
