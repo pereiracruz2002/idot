@@ -86,10 +86,10 @@ class Agendamento_model extends My_Model
             'label' => '',
             'class' => '',
             'rules' => '',
-            'label_class' => 'col-md-3',
+            'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-9">',
             'append' => '</div>',
-            'values' => array('sexta manhã'=>'Sexta Manhã','sexta tarde'=>'Sexta Tarde','sábado manhã'=>'Sábado Manhã','domingo manhã'=>'Domingo Manhã'),
+            'values' => array('sexta manhã'=>'Sexta Manhã','sexta tarde'=>'Sexta Tarde','sábado manhã'=>'Sábado Manhã','sábado tarde'=>'Sábado Tarde','domingo manhã'=>'Domingo Manhã'),
         ),
 
 
