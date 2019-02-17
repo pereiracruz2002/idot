@@ -223,6 +223,12 @@ class Agendamento extends BaseCrud
 
         $this->data['itens'] = $this->agendamento->get_where($where)->result();
 
+        $consulta = unserialize($this->data['itens'][0]->dias_semana);
+
+
+
+
+
         $aulas = array();
         $mesas_ocupadas = array();
         foreach($this->data['itens'] as $itens){
@@ -244,7 +250,8 @@ class Agendamento extends BaseCrud
             foreach($resultados as $resultado){
                 $aulas[$resultado->modulos_id] = $resultado->presente;
                 $this->db->select('presenca.mesa');
-                $mesas_ocupadas[$resultado->agenda_id] = $this->presenca->get_where(array('presenca_id'=>$resultado->presenca_id))->result();
+                $mesas_ocupadas[$resultado->agenda_id] = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id,'data_dia'=>$this->data['itens'][0]->data,'dia_semana'=>$consulta[0]))->result();
+
             } 
 
             $this->data['mesas_ocupadas'] = $mesas_ocupadas;
@@ -261,19 +268,65 @@ class Agendamento extends BaseCrud
         $this->load->view('admin/aulas_alunos', $this->data);
     }
 
-    public function checar_presenca($aluno_id, $agenda_id, $presente, $data_dia, $dias_semana, $mesa){
-        $data['aluno_id'] = $aluno_id;
-        $data['agenda_id'] = $agenda_id;
+
+    public function trocarData(){
+        $this->load->model('presenca_model','presenca');
+        $post = $this->input->posts();
+        $where['data_dia'] = $post['data_dia'];
+        $where['dia_semana'] = $post['dias_semana'];
+        $where['agenda_id'] = $post['agenda_id'];
+        $where['aluno_id'] = $post['aluno_id'];
+        $result = $this->presenca->get_where($where)->row();
+        $msg['status'] = 0;
+        if(count($result)>0){
+           $msg['status'] = 1;
+        }
+
+        $json = json_encode($msg);
+        $this->output->set_header('content-type: application/json');
+        $this->output->set_output($json);
+    }
+
+
+    public function returnVagas(){
+        $this->load->model('presenca_model','presenca');
+        $post = $this->input->posts();
+        $where['data_dia'] = $post['data_dia'];
+        $where['dia_semana'] = $post['dias_semana'];
+        $where['agenda_id'] = $post['agenda_id'];
+
+
+        $this->db->select('presenca.mesa');
+        $result =$mesas_ocupadas[] = $this->presenca->get_where($where)->result();
+        $json = json_encode($result);
+        $this->output->set_header('content-type: application/json');
+        $this->output->set_output($json);
+
+    }
+
+
+
+    public function checar_presenca(){
+
+        $post = $this->input->posts();
+
+        $data['aluno_id'] = $post['aluno_id'];
+        $data['agenda_id'] = $post['agenda_id'];
+        $data_dia = $post['data_dia'];
+        $dia_semana = $post['dias_semana'];
+        $mesa = $post['mesa'];
+        $presente = $post['presente'];
+
         if($presente == 1){
              $this->db->set('presente', 'sim');
              $this->db->set('mesa',$mesa);
              $this->db->set('data_dia',$data_dia);
-             $this->db->set('dia_semana',$dias_semana);
+             $this->db->set('dia_semana',$dia_semana);
         }else{
              $this->db->set('presente', 'nao');
              $this->db->set('mesa',$mesa);
              $this->db->set('data_dia',$data_dia);
-             $this->db->set('dia_semana',$dias_semana);
+             $this->db->set('dia_semana',$dia_semana);
         }
 
         $this->db->where($data);
@@ -284,12 +337,6 @@ class Agendamento extends BaseCrud
            $this->output->set_output("erro ao inserir uma presença"); 
         }
 
-        // if($this->db->insert('presenca',$data)){
-        //     $this->output->set_output("ok");
-        // }else{
-        //     echo $this->db->last_query();
-        //     $this->output->set_output("erro ao inserir uma presença");
-        // }
     }
 
     public function mudar_status($agenda_id){

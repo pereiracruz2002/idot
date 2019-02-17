@@ -41,17 +41,53 @@ $(document).ready(function () {
         var _self = $(this);
         var data_dia = $('.data_dia:checked').val();
         var dias_semana = $('.dias_semana:checked').val();
-        var mesa = $('input[type=hidden]').val();
+        var mesa = $('#mesa').val();
+        var presente = _self.attr('href');
+        var aluno_id = $('#aluno_id').val();
+        var agenda_id = $('#minha_agenda_id').val();
+
+        console.log($('#minha_agenda_id').val());
+
+        
+
         var decisao = confirm("Tem certeza que deseja confirmar presença?");
         if (decisao) {
-            $.get(_self.attr('data-confirm')+ '/'+data_dia+'/'+dias_semana+'/'+mesa);
-            uri = _self.attr('href')
-            if ($('.alert-success').length == 0)
-                $('.m-top-md').after('<div class="alert alert-success"><p>Registrado a presença do aluno!</p></div>');
-            //window.location= base_url+'agendamento/ver_inscritos/'+uri;
-            window.location= base_url+'agendamento/ver_minha_agenda/';
+            //$.get(_self.attr('data-confirm'));
+            
+            $.ajax({
+                 url :_self.attr('data-confirm'),
+                 type : 'post',
+                 
+                  data : {
+                        data_dia: data_dia,
+                        dias_semana: dias_semana,
+                        mesa:mesa,
+                        presente:presente,
+                        agenda_id : agenda_id,
+                        aluno_id:aluno_id
+                  },
+                  
+            })
+             .done(function(msg){
+                //console.log(msg)
+                  window.location= base_url+'agendamento/ver_minha_agenda/';
+             })
+             .fail(function(jqXHR, textStatus, msg){
+                  alert(msg);
+             }); 
+
+           
+         
+
+
+            // if ($('.alert-success').length == 0)
+            //     $('.m-top-md').after('<div class="alert alert-success"><p>Registrado a presença do aluno!</p></div>');
+
+            // window.location= base_url+'agendamento/ver_minha_agenda/';
         }
     });
+
+    
 
      $('body').on('click', '.change_status', function (e) {
         e.preventDefault();

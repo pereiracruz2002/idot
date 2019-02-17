@@ -82,8 +82,8 @@
 
 
 #holder{    
-     height:100px;   
-     width:550px;
+     height:160px;   
+     width:275px;
      background-color:#F5F5F5;
      border:1px solid #A4A4A4;
      margin-left:10px;  
@@ -94,6 +94,7 @@
 }
 #place a{
     font-size:0.6em;
+    color:#fff;
 }
 #place li
 {
@@ -105,19 +106,44 @@
     background-color:yellow;      
 } 
 #place .seat{
-    background:url("../img/available_seat_img.gif") no-repeat scroll 0 0 transparent;
-    height:33px;
-    width:33px;
-    display:block;  
+    
+    height:34px;
+    width:35px;
+    display:block;
+    text-align: center;
 }
-#place .selectedSeat
+
+#place .col-0, #place .col-2, #place .col-4{
+    background:url("../img/mesa_on_esq.png") no-repeat scroll 5px 0 transparent;
+}
+
+#place .col-1, #place .col-3{
+    background:url("../img/mesa_on_dir.png") no-repeat scroll 0 0 transparent;
+}
+
+
+#place .selectedSeat_col-0, .selectedSeat_col-3, .selectedSeat_col-4{
+    background:url("../img/mesa_off_esq.png") no-repeat scroll 0 0 transparent;
+}
+
+
+#place .selectedSeat_col-1, #place .selectedSeat_col-3{
+    background:url("../img/mesa_off_dir.png") no-repeat scroll 0 0 transparent;
+}
+
+
+
+#place .selectingSeat_par
 { 
-    background-image:url("../img/booked_seat_img.gif");          
+   background-image:url("../img/mesa_off_esq.png");        
 }
-#place .selectingSeat
+
+#place .selectingSeat_impar
 { 
-    background-image:url("../img/selected_seat_img.gif");        
+   background-image:url("../img/mesa_off_dir.png");        
 }
+
+
 #place .row-3, #place .row-4{
     margin-top:10px;
 }

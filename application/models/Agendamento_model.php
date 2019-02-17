@@ -89,6 +89,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-3',
             'prepend' => '<div class="col-md-9">',
             'append' => '</div>',
+            'extra' => array('class'=>'dias_semana'),
             'values' => array('sexta manhã'=>'Sexta Manhã','sexta tarde'=>'Sexta Tarde','sábado manhã'=>'Sábado Manhã','domingo manhã'=>'Domingo Manhã'),
         ),
 
