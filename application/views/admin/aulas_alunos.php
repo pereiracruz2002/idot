@@ -26,7 +26,9 @@
                             </thead>
                             <tbody>
                                 <?php 
+
                                 if(count($itens)>0):
+
                                     foreach ($itens as $row): 
 
                                         $agenda_id = $row->agenda_id;
@@ -120,17 +122,26 @@
                                                             <?php endif; ?>
                                                         <?php }?>
                                                     
+<<<<<<< HEAD
                                                             
                                                         
                                             <?php } ?>
                                             </td>
                                             <?php */?>
                                         </tr>
+
+                                        <?php } ?>
+                                        </td>
+                                        <?php */?>
+                                    </tr>
+
                                     <?php endforeach; ?>
                                 <?php endif;?>
                             </tbody>
                         </table>
+
                         <?php if(count($itens)>0):?>
+
                             <div class="col-sm-12">
                                 <form id="form1" runat="server">
                                     <h2 style="font-size:1.2em;"> Selecione a mesa:</h2>
@@ -143,27 +154,41 @@
                                     </div>
 
 
+
                                     <input type="hidden" id="mesa" name="mesa" value="" />
                                     <input type="hidden" id="aluno_id" name="aluno_id" value="<?php echo $aluno_id ?>"/>
                                     <input type="hidden" id="minha_agenda_id" name="agenda_id" value="<?php echo $agenda_id ?>"/>
+
+                                    <input type="hidden" name="mesa" value="" />
+
                                 </form>
                             </div>
                             <?php if($this->session->userdata('admin')->tipo=="aluno"){?>
                                 <div style="margin-top:10px;" class="col-sm-12">
                                     <?php 
                                     if(empty($row->presenca)){?>
+
                                         <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="1" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
                                         <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="2" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Ausencia</a>
                                     <?php }else{?>
                                         <?php if($row->presenca=='sim'):?>
                                             <p><i class="pe-7s-check">Confirmado</i></p>
                                             <p> <a  class="hide btn btn-xs btn-info btn btn-info confirmar_presenca" href="1" title="Editar Presença" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Editar Presença</a></p>
+
+                                        <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/1" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Presença</a>
+                                        <a class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="<?php echo $row->agenda_id ?>" title="Visulizar este registro" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca/<?php echo $row->aluno_id ?>/<?php echo $row->agenda_id ?>/2" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Confirmar Ausencia</a>
+                                    <?php }else{?>
+                                        <?php if($row->presenca=='sim'):?>
+                                            <p><i class="pe-7s-check">Presente</i></p>
+
                                         <?php else:?>
                                              <p><i class="pe-7s-close-circle">Ausente</i></p>
                                         <?php endif;?>
                                     <?php } ?>
                                 </div>
-                            <?php }?>
+
+                           <?php }?>
+
                         <?php endif;?>
                     </div>
                 </div>

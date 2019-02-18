@@ -165,6 +165,8 @@ class Agendamento extends BaseCrud
 
         //$this->db->group_by("agendamento.agenda_id");
 
+
+
         $this->db->select('agendamento.agenda_id,agendamento.data,cursos.titulo as curso,modulos.titulo as modulo,alunos.nome,alunos.alunos_id as aluno_id,presenca.presente as presenca, presenca.tipo as tipo')
         ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
         ->join('alunos','alunos.alunos_id=presenca.aluno_id')
@@ -198,7 +200,7 @@ class Agendamento extends BaseCrud
         // }
         // $this->data['presenca'] = $array_presenca;
 
-        $this->load->view('admin/aulas_alunos', $this->data);
+        $this->load->view('admin/aulas_alunos_professor', $this->data);
     }
 
      public function ver_minha_agenda(){
@@ -209,7 +211,7 @@ class Agendamento extends BaseCrud
         // $where_mesas = 
         // $this->data['mesas_ocupadas'] = $this->agendamento->get_where($where)->result();
 
-        $this->db->select('agendamento.agenda_id,agendamento.turma,professor.nome as professor,agendamento.data,agendamento.data_segunda,agendamento.data_terceira,agendamento.sala_id, agendamento.dias_semana,cursos.titulo as curso,CONCAT(modulos.titulo," - ",modulos.descricao) as modulo,modulos.modulos_id,alunos.nome,alunos.alunos_id as aluno_id,alunos.status,presenca.presente as presenca, presenca.presenca_id,presenca.tipo')
+        $this->db->select('agendamento.agenda_id,agendamento.turma,professor.nome as professor,agendamento.data,agendamento.data_segunda,agendamento.data_terceira,agendamento.sala_id, agendamento.dias_semana,cursos.titulo as curso,cursos.cursos_id,CONCAT(modulos.titulo," - ",modulos.descricao) as modulo,modulos.modulos_id,alunos.nome,alunos.alunos_id as aluno_id,alunos.status,presenca.presente as presenca, presenca.presenca_id,presenca.tipo')
         ->join('presenca','presenca.agenda_id=agendamento.agenda_id')
         ->join('alunos','alunos.alunos_id=presenca.aluno_id')
         ->join('cursos','cursos.cursos_id=agendamento.curso_id')

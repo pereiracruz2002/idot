@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
 
     <!--  Checkbox, Radio & Switch Plugins -->
-    <script src="/assets/admin/js/bootstrap-checkbox-radio-switch.js"></script>
+    
 
     <!--  Charts Plugin -->
     <script src="/assets/admin/js/chartist.min.js"></script>
