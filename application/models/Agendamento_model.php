@@ -12,7 +12,8 @@ class Agendamento_model extends My_Model
                 'label_class' => 'col-md-2',
                 'prepend' => '<div class="col-md-3">',
                 'append' => '</div>',
-                'values' => array()
+                'values' => array(),
+                'extra' => array('required'=>'required')
         ),
 
         'curso_id' => array(
@@ -58,6 +59,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
+            'extra' => array('required'=>'required')
         ),
 
         'data_segunda' => array(
@@ -140,6 +142,7 @@ class Agendamento_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-6">',
             'append' => '</div>',
+            'extra' => array('required'=>'required')
         ),
 
         
