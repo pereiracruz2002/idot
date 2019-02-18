@@ -10,6 +10,7 @@ class Alunos_model extends My_Model{
 				'label_class' => 'col-md-2',
 				'prepend' => '<div class="col-md-3">',
 				'append' => '</div>',
+                'extra' => array('required'=>'required')
 			),
 
 		   "email" => array("type" => "text",
@@ -19,6 +20,7 @@ class Alunos_model extends My_Model{
 				'label_class' => 'col-md-2',
 		        'prepend' => '<div class="col-md-3">',
 		        'append' => '</div>',
+                'extra' => array('required'=>'required')
 			),
 		   'matricula' => array(
 	            'type' => 'text',
@@ -39,6 +41,7 @@ class Alunos_model extends My_Model{
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
+            'extra' => array('required'=>'required')
         ),
         'senha' => array(
             'type' => 'password',
@@ -48,6 +51,7 @@ class Alunos_model extends My_Model{
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
+            'extra' => array('required'=>'required')
         ),
 
         // 'data_cadastro' => array(
@@ -124,7 +128,8 @@ class Alunos_model extends My_Model{
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
-            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo')
+            'values' => array('ativo' => 'Ativo', 'inativo' => 'Inativo'),
+            'extra' => array('required'=>'required')
         ),
 
         
