@@ -11,15 +11,17 @@ class Admin_model extends My_Model
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
+            'extra' => array('required'=>'required')
         ),
         'senha' => array(
             'type' => 'password',
             'label' => 'Senha',
             'class' => '',
-            'rules' => '',
+            'rules' => 'required',
             'label_class' => 'col-md-2',
             'prepend' => '<div class="col-md-3">',
             'append' => '</div>',
+            'extra' => array('required'=>'required')
         ),
 
     );

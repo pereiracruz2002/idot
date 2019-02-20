@@ -37,17 +37,17 @@ class Aluno_cursos extends BaseCrud
     }
     
 
-    public function _filter_pre_read(&$data) 
+    public function _filter_pre_save(&$data) 
     {
-
-    
-
+        $this->load->model('aluno_cursos_model','aluno_curso');
+        $where = array('aluno_id'=>$data['aluno_id']);
+        $has_curso = $this->aluno_curso->get_where($where)->row();
+        if($has_curso){
+            $data['aluno_cursos_id'] = $has_curso->aluno_cursos_id;
+        }
     }
 
    
-
-    
-
 
 
  
@@ -56,6 +56,9 @@ class Aluno_cursos extends BaseCrud
     {
         $model->fields['aluno_id']['label'] = '';
         $model->fields['aluno_id']['value'] = $this->uri->segment(4);
+
+
+        $this->load->model('aluno_cursos_model','aluno_curso');
 
         $this->load->model('cursos_model','cursos');
         $where = array('status'=>'ativo');
@@ -78,16 +81,6 @@ class Aluno_cursos extends BaseCrud
         }
        
 
-        // $this->load->model('modulos_model','modulos');
-        // $where = array('status'=>'ativo');
-        // $where = array('curso_id'=>$cursos[0]->cursos_id);
-        // if($cursos[0]->nivel==2){
-        //     $model->fields['modulo_id']['values'][''] = '--Selecione um Encontro--';
-        //      $model->fields['modulo_id']['label'] = 'Encontros';
-        // }else{
-        //     $model->fields['modulo_id']['values'][''] = '--Selecione um Módulo--';
-        //      $model->fields['modulo_id']['label'] = 'Módulos';
-        // }
         
         
       

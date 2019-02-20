@@ -97,6 +97,10 @@ class Alunos extends BaseCrud {
 
   public function _filter_pos_save($data, $id) 
   {
+      
+        // $save_cursos[]= array('curso_id' => 0, 'aluno_id' => $id);
+        // $this->db->insert_batch('aluno_cursos', $save_cursos);
+
         redirect('admin/alunos');
 
   }

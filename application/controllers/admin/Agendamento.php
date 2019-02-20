@@ -218,14 +218,16 @@ class Agendamento extends BaseCrud
         ->join('modulos','modulos.modulos_id=agendamento.modulo_id')
         ->join('professor','professor.id_professor=agendamento.professor_id');
 
-        $this->db->group_by('cursos.cursos_id');
+        //$this->db->group_by('cursos.cursos_id');
 
          $where['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
 
 
         $this->data['itens'] = $this->agendamento->get_where($where)->result();
-
-        $consulta = unserialize($this->data['itens'][0]->dias_semana);
+        if(count($this->data['itens']) > 0){
+            $consulta = unserialize($this->data['itens'][0]->dias_semana);
+        }
+       
 
 
 
