@@ -506,7 +506,7 @@ class Agendamento extends BaseCrud
             $alunos = $this->aluno_cursos->get_where($where)->result();
 
 
-            
+
 
 
              if($alunos){

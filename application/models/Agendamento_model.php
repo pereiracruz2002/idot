@@ -133,22 +133,17 @@ class Agendamento_model extends My_Model
             
         ),
 
-         'descricao' => array(
-            'type' => 'text',
-            'label' => 'Descrição',
-            'class' => '',
-            'extra' => array('class'=>'mytextarea'),
-            'rules' => 'required',
-            'label_class' => 'col-md-2',
-            'prepend' => '<div class="col-md-6">',
-            'append' => '</div>',
-            'extra' => array('required'=>'required')
-        ),
-
         
-
-        
-        
+	 'descricao' => array(
+                'type' => 'textarea',
+                'label' => 'Descrição',
+                'class' => '',
+                'extra' => array('class'=>'mytextarea'),
+                'rules' => 'required',
+                'label_class' => 'col-md-2',
+                'prepend' => '<div class="col-md-6">',
+                'append' => '</div>',
+            ),
         
     );
 }
