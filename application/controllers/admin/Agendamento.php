@@ -37,6 +37,8 @@ class Agendamento extends BaseCrud
         // $data['dias_semana'] = $days;
 
         $data['dias_semana'] = serialize($data['dias_semana']);
+
+    
     }
 
      public function _filter_pre_listar(&$where, &$where_ativo)
@@ -240,10 +242,10 @@ class Agendamento extends BaseCrud
             ->join('modulos','modulos.modulos_id=agendamento.modulo_id');
             $where_alunos['agendamento.agenda_id'] = $itens->agenda_id;
             $where_alunos['agendamento.modulo_id'] = $itens->modulos_id;
-            $where_alunos['presenca.tipo'] = 'normal';
+            
             $where_alunos['alunos.alunos_id'] = $this->session->userdata('admin')->alunos_id;
 
-
+            $this->db->where_in('presenca.tipo', array('normal','confirmar'));
             $resultados = $this->agendamento->get_where($where_alunos)->result(); 
 
 
@@ -262,7 +264,10 @@ class Agendamento extends BaseCrud
                 $mesas_ocupadas[$resultado->agenda_id] = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id,'data_dia'=>$my_agendamento->data_dia,'dia_semana'=>$my_agendamento->dia_semana))->result();
 
             } 
-            $this->data['meu_agendamento'] = $my_agendamento;
+            if(count($my_agendamento > 0)){
+                $this->data['meu_agendamento'] = $my_agendamento;
+            }
+            
 
            
             $this->data['mesas_ocupadas'] = $mesas_ocupadas;

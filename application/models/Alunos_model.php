@@ -120,6 +120,19 @@ class Alunos_model extends My_Model{
             'append' => '</div>',
             'extra'=> array('class'=>'celular')
         ),
+
+        'situacao' => array(
+            'type' => 'select',
+            'label' => 'Situação',
+            'class' => '',
+            'rules' => 'required',
+            'label_class' => 'col-md-2',
+            'prepend' => '<div class="col-md-3">',
+            'append' => '</div>',
+            'values' => array('inadimplente' => 'Inadimplente', 'adimplente' => 'Adimplente'),
+            'extra' => array('required'=>'required')
+        ),
+
         'status' => array(
             'type' => 'select',
             'label' => 'Status',

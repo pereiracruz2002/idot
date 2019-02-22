@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: 20-Fev-2019 às 17:25
+-- Generation Time: 22-Fev-2019 às 17:43
 -- Versão do servidor: 5.6.41-84.1
 -- PHP Version: 5.6.30
 
@@ -41,7 +41,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `login`, `senha`, `email`, `last_login`) VALUES
-(12, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '2019-02-20 13:08:07');
+(12, 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '2019-02-22 10:03:52');
 
 -- --------------------------------------------------------
 
@@ -71,8 +71,8 @@ CREATE TABLE `agendamento` (
 --
 
 INSERT INTO `agendamento` (`agenda_id`, `data`, `vagas`, `professor_id`, `curso_id`, `modulo_id`, `encontro_id`, `sala_id`, `status`, `dias_semana`, `descricao`, `turma`, `data_segunda`, `data_terceira`) VALUES
-(3, '2019-02-22', 0, 12, 12, 1, 0, 1, 'aberto', 'a:5:{i:0;s:12:\"sexta manhã\";i:1;s:11:\"sexta tarde\";i:2;s:14:\"sábado manhã\";i:3;s:13:\"sábado tarde\";i:4;s:14:\"domingo manhã\";}', '<p>ss</p>', '1', '2019-02-23', '2019-02-24'),
-(4, '2019-02-22', 0, 12, 13, 16, 0, 2, 'aberto', 'a:5:{i:0;s:12:\"sexta manhã\";i:1;s:11:\"sexta tarde\";i:2;s:14:\"sábado manhã\";i:3;s:13:\"sábado tarde\";i:4;s:14:\"domingo manhã\";}', '<p>qq</p>', '1', '2019-02-23', '2019-02-24');
+(2, '2019-02-22', 0, 12, 12, 4, 0, 1, 'aberto', 'a:4:{i:0;s:12:\"sexta manhã\";i:1;s:11:\"sexta tarde\";i:2;s:13:\"sábado tarde\";i:3;s:14:\"domingo manhã\";}', '<p>www</p>', '1', '2019-02-23', '2019-02-24'),
+(3, '2019-02-22', 0, 13, 13, 16, 0, 2, 'aberto', 'a:3:{i:0;s:11:\"sexta tarde\";i:1;s:14:\"sábado manhã\";i:2;s:14:\"domingo manhã\";}', '<p>qqqq</p>', '1', '2019-02-23', '2019-02-24');
 
 -- --------------------------------------------------------
 
@@ -97,18 +97,19 @@ CREATE TABLE `alunos` (
   `bairro` text,
   `telefone` varchar(45) DEFAULT NULL,
   `status` enum('ativo','inativo') DEFAULT NULL,
-  `celular` varchar(45) DEFAULT NULL
+  `celular` varchar(45) DEFAULT NULL,
+  `situacao` enum('inadimplente','adimplente') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Extraindo dados da tabela `alunos`
 --
 
-INSERT INTO `alunos` (`alunos_id`, `nome`, `email`, `matricula`, `login`, `senha`, `data_cadastro`, `endereco`, `turma`, `historico_turma`, `last_login`, `cep`, `complemento`, `bairro`, `telefone`, `status`, `celular`) VALUES
-(5, 'Robson', 'robson@uol.com.br', '20/20/2109-0001', 'robson', '81dc9bdb52d04dc20036dbd8313ed055', NULL, '', NULL, NULL, '2019-02-20 10:25:24', '', '', '', '', 'ativo', ''),
-(6, 'eduardo', 'eduardo@uol.com.br', '', 'eduardo', '65cc2c8205a05d7379fa3a6386f710e1', NULL, '', NULL, NULL, '2019-02-20 10:27:33', '', '', '', '', 'ativo', ''),
-(7, 'ricardo', 'ricardo@uol.com.br', '', 'ricardo', '81dc9bdb52d04dc20036dbd8313ed055', NULL, '', NULL, NULL, '2019-02-20 10:29:45', '', '', '', '', 'ativo', ''),
-(8, 'flavio', 'flavio@uol.com.br', '', 'flavio', '81dc9bdb52d04dc20036dbd8313ed055', NULL, '', NULL, NULL, '2019-02-20 14:21:20', '', '', '', '', 'ativo', '');
+INSERT INTO `alunos` (`alunos_id`, `nome`, `email`, `matricula`, `login`, `senha`, `data_cadastro`, `endereco`, `turma`, `historico_turma`, `last_login`, `cep`, `complemento`, `bairro`, `telefone`, `status`, `celular`, `situacao`) VALUES
+(1, 'robson', 'robson@uol.com.br', '22/03/2002-0001', 'robson', '81dc9bdb52d04dc20036dbd8313ed055', NULL, '', NULL, NULL, '2019-02-22 09:37:21', '', '', '', '', 'ativo', '', NULL),
+(2, 'flavio', 'flavio@uol.com.br', '03/02/2001-0001', 'flavio', '81dc9bdb52d04dc20036dbd8313ed055', NULL, '', NULL, NULL, '2019-02-22 11:51:14', '', '', '', '', 'ativo', '', NULL),
+(3, 'eduardo', 'eduardo@uol.com.br', '02/02/2008-0003', 'eduardo', '65cc2c8205a05d7379fa3a6386f710e1', NULL, '', NULL, NULL, '2019-02-22 09:35:33', '', '', '', '', 'ativo', '', NULL),
+(4, 'massa', 'massa@uol.com.br', '02/03/2005-0004', 'massa', '81dc9bdb52d04dc20036dbd8313ed055', NULL, '', NULL, NULL, '2019-02-22 10:04:21', '', '', '', '', 'ativo', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -132,14 +133,11 @@ CREATE TABLE `aluno_cursos` (
 --
 
 INSERT INTO `aluno_cursos` (`aluno_cursos_id`, `aluno_id`, `curso_id`, `modulo_id`, `submodulo_id`, `turma`, `historico`, `sala_id`) VALUES
-(1, 1, 12, 1, NULL, '1', NULL, 1),
-(2, 2, 12, 1, NULL, '1', NULL, 1),
+(1, 1, 12, 4, NULL, '1', NULL, 1),
+(2, 2, 12, 4, NULL, '1', NULL, 1),
 (3, 3, 13, 16, NULL, '1', NULL, 1),
-(4, 4, 13, 16, NULL, '1', NULL, 1),
-(5, 5, 12, 1, NULL, '1', NULL, 1),
-(6, 6, 12, 1, NULL, '1', NULL, 1),
-(7, 7, 13, 16, NULL, '1', NULL, 1),
-(8, 8, 13, 16, NULL, '1', NULL, 1);
+(4, 3, 13, 16, NULL, '1', NULL, 2),
+(5, 4, 13, 16, NULL, '1', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -202,50 +200,15 @@ CREATE TABLE `avisos` (
 --
 
 INSERT INTO `avisos` (`avisos_id`, `tipo`, `mensagem`, `visualizado`, `data`, `id`) VALUES
-(1, 'aluno', 'Há uma nova aula agendada para você no dia 01/02/2019', 'nao', '2019-02-17', '13'),
-(2, 'aluno', 'Há uma nova aula agendada para você no dia 01/02/2019', 'nao', '2019-02-17', '14'),
-(3, 'aluno', 'Há uma nova aula agendada para você no dia 01/02/2019', 'nao', '2019-02-17', '15'),
-(4, 'aluno', 'Há uma nova aula agendada para você no dia 01/02/2019', 'nao', '2019-02-17', '16'),
-(5, 'professor', 'Há uma nova aula agendada para você no dia 01/02/2019', 'nao', '2019-02-17', '10'),
-(6, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-18', '11'),
-(7, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-18', '11'),
-(8, 'professor', 'Há uma nova aula agendada para você no dia 22/02/0219', 'nao', '2019-02-19', '11'),
-(9, 'professor', 'Há uma nova aula agendada para você no dia 01/03/2019', 'nao', '2019-02-19', '11'),
-(10, 'aluno', 'Há uma nova aula agendada para você no dia 16/03/2019', 'nao', '2019-02-19', '22'),
-(11, 'aluno', 'Há uma nova aula agendada para você no dia 16/03/2019', 'nao', '2019-02-19', '23'),
-(12, 'aluno', 'Há uma nova aula agendada para você no dia 16/03/2019', 'nao', '2019-02-19', '24'),
-(13, 'aluno', 'Há uma nova aula agendada para você no dia 16/03/2019', 'nao', '2019-02-19', '25'),
-(14, 'professor', 'Há uma nova aula agendada para você no dia 16/03/2019', 'nao', '2019-02-19', '11'),
-(15, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-19', '12'),
-(16, 'professor', 'Há uma nova aula agendada para você no dia 01/03/2019', 'nao', '2019-02-19', '12'),
-(17, 'aluno', 'Há uma nova aula agendada para você no dia 16/02/2019', 'nao', '2019-02-19', '27'),
-(18, 'aluno', 'Há uma nova aula agendada para você no dia 16/02/2019', 'nao', '2019-02-19', '28'),
-(19, 'professor', 'Há uma nova aula agendada para você no dia 16/02/2019', 'nao', '2019-02-19', '12'),
-(20, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-19', '12'),
-(21, 'professor', 'Há uma nova aula agendada para você no dia 01/03/2019', 'nao', '2019-02-19', '12'),
-(22, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-19', '12'),
-(23, 'aluno', 'Há uma nova aula agendada para você no dia 23/02/2019', 'nao', '2019-02-20', '34'),
-(24, 'professor', 'Há uma nova aula agendada para você no dia 23/02/2019', 'nao', '2019-02-20', '12'),
-(25, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '12'),
-(26, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '12'),
-(27, 'aluno', 'Há uma nova aula agendada para você no dia 23/02/2019', 'nao', '2019-02-20', '35'),
-(28, 'professor', 'Há uma nova aula agendada para você no dia 23/02/2019', 'nao', '2019-02-20', '12'),
-(29, 'aluno', 'Há uma nova aula agendada para você no dia 23/02/2019', 'nao', '2019-02-20', '1'),
-(30, 'professor', 'Há uma nova aula agendada para você no dia 23/02/2019', 'nao', '2019-02-20', '12'),
-(31, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '1'),
-(32, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '12'),
-(33, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '1'),
-(34, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '2'),
-(35, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '12'),
-(36, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '3'),
-(37, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '4'),
-(38, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '12'),
-(39, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '5'),
-(40, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '6'),
-(41, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '12'),
-(42, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '7'),
-(43, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '8'),
-(44, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-20', '12');
+(1, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-22', '1'),
+(2, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-22', '2'),
+(3, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-22', '12'),
+(4, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/0219', 'nao', '2019-02-22', '1'),
+(5, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/0219', 'nao', '2019-02-22', '2'),
+(6, 'professor', 'Há uma nova aula agendada para você no dia 22/02/0219', 'nao', '2019-02-22', '12'),
+(7, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-22', '3'),
+(8, 'aluno', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-22', '4'),
+(9, 'professor', 'Há uma nova aula agendada para você no dia 22/02/2019', 'nao', '2019-02-22', '13');
 
 -- --------------------------------------------------------
 
@@ -1037,10 +1000,13 @@ CREATE TABLE `presenca` (
 --
 
 INSERT INTO `presenca` (`presenca_id`, `aluno_id`, `agenda_id`, `presente`, `tipo`, `mesa`, `data_dia`, `dia_semana`) VALUES
-(5, 5, '3', 'sim', 'normal', 1, '2019-02-22', 'sexta tarde'),
-(6, 6, '3', 'sim', 'normal', 2, '2019-02-22', 'sexta tarde'),
-(7, 7, '4', 'sim', 'normal', 16, '2019-02-23', 'sábado tarde'),
-(8, 8, '4', 'sim', 'normal', 1, '2019-02-23', 'sábado tarde');
+(1, 1, '1', NULL, 'normal', NULL, NULL, NULL),
+(2, 2, '1', NULL, 'normal', NULL, NULL, NULL),
+(3, 1, '2', NULL, 'normal', NULL, NULL, NULL),
+(4, 2, '2', NULL, 'normal', NULL, NULL, NULL),
+(5, 3, '3', 'sim', 'normal', 1, '2019-02-22', 'sexta tarde'),
+(6, 3, '3', 'sim', 'confirmar', 1, '2019-02-22', 'sexta tarde'),
+(7, 4, '3', 'sim', 'confirmar', 2, '2019-02-23', 'sábado manhã');
 
 -- --------------------------------------------------------
 
@@ -1066,7 +1032,8 @@ CREATE TABLE `professor` (
 --
 
 INSERT INTO `professor` (`id_professor`, `email`, `nome`, `texto`, `foto`, `ativo`, `login`, `senha`, `status`, `last_login`) VALUES
-(12, 'pardal@uol.com.br', 'Pardal', '<p>wwwwwwww</p>', NULL, 1, 'pardal', '2e7e1d654a0b769d68b7336703a8ddd3', 'ativo', '2019-02-20 07:35:13');
+(12, 'pardal@uol.com.br', 'Pardal', '<p>wwwwwwww</p>', NULL, 1, 'pardal', '2e7e1d654a0b769d68b7336703a8ddd3', 'ativo', '2019-02-20 07:35:13'),
+(13, 'patinhas@uol.com.br', 'patinhas', '<p>asdadsdas</p>', NULL, 1, 'patinhas', '81dc9bdb52d04dc20036dbd8313ed055', 'ativo', NULL);
 
 -- --------------------------------------------------------
 
@@ -1106,15 +1073,12 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
-('b12c52b17971e90a27aaa91567f6d6fd704f6a79', '177.221.61.10', 1550667334, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303636373333343b),
-('746cbbfa0b116b973265b7c7511785639b3b9069', '177.221.61.8', 1550669587, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303636393538363b),
-('ce52016b325c7485a47aab8d71fce3204a555191', '177.221.61.10', 1550675172, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303637353032303b61646d696e7c4f3a383a22737464436c617373223a31373a7b733a393a22616c756e6f735f6964223b733a313a2234223b733a343a226e6f6d65223b733a363a22666c6176696f223b733a353a22656d61696c223b733a31373a22666c6176696f40756f6c2e636f6d2e6272223b733a393a226d6174726963756c61223b733a31353a2230322f30322f323031352d30303031223b733a353a226c6f67696e223b733a363a22666c6176696f223b733a31333a22646174615f636164617374726f223b4e3b733a383a22656e64657265636f223b733a303a22223b733a353a227475726d61223b4e3b733a31353a22686973746f7269636f5f7475726d61223b4e3b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32302030393a30323a3332223b733a333a22636570223b733a303a22223b733a31313a22636f6d706c656d656e746f223b733a303a22223b733a363a2262616972726f223b733a303a22223b733a383a2274656c65666f6e65223b733a303a22223b733a363a22737461747573223b733a353a22617469766f223b733a373a2263656c756c6172223b733a303a22223b733a343a227469706f223b733a353a22616c756e6f223b7d),
-('76b6e649620433f5c4e9d0d14fa51841240fa837', '177.221.61.8', 1550677856, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303637373835313b61646d696e7c4f3a383a22737464436c617373223a353a7b733a383a2261646d696e5f6964223b733a323a223132223b733a353a226c6f67696e223b733a353a2261646d696e223b733a353a22656d61696c223b733a303a22223b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32302030393a34393a3039223b733a343a227469706f223b733a353a2261646d696e223b7d),
-('abfdd1dbf3e8c94a292f98f89475df46aad5c558', '177.221.61.10', 1550680356, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303638303335363b),
-('d44492df1f13f79c56b3b8029893bf9a0447d429', '191.162.236.4', 1550684078, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303638343035383b61646d696e7c4f3a383a22737464436c617373223a31373a7b733a393a22616c756e6f735f6964223b733a313a2238223b733a343a226e6f6d65223b733a363a22666c6176696f223b733a353a22656d61696c223b733a31373a22666c6176696f40756f6c2e636f6d2e6272223b733a393a226d6174726963756c61223b733a303a22223b733a353a226c6f67696e223b733a363a22666c6176696f223b733a31333a22646174615f636164617374726f223b4e3b733a383a22656e64657265636f223b733a303a22223b733a353a227475726d61223b4e3b733a31353a22686973746f7269636f5f7475726d61223b4e3b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32302031303a32393a3134223b733a333a22636570223b733a303a22223b733a31313a22636f6d706c656d656e746f223b733a303a22223b733a363a2262616972726f223b733a303a22223b733a383a2274656c65666f6e65223b733a303a22223b733a363a22737461747573223b733a353a22617469766f223b733a373a2263656c756c6172223b733a303a22223b733a343a227469706f223b733a353a22616c756e6f223b7d),
-('81708445816c4448e9b46a2dcf7457cac00fb3ef', '191.162.236.4', 1550684117, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303638343037393b61646d696e7c4f3a383a22737464436c617373223a31373a7b733a393a22616c756e6f735f6964223b733a313a2238223b733a343a226e6f6d65223b733a363a22666c6176696f223b733a353a22656d61696c223b733a31373a22666c6176696f40756f6c2e636f6d2e6272223b733a393a226d6174726963756c61223b733a303a22223b733a353a226c6f67696e223b733a363a22666c6176696f223b733a31333a22646174615f636164617374726f223b4e3b733a383a22656e64657265636f223b733a303a22223b733a353a227475726d61223b4e3b733a31353a22686973746f7269636f5f7475726d61223b4e3b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32302031313a33343a3338223b733a333a22636570223b733a303a22223b733a31313a22636f6d706c656d656e746f223b733a303a22223b733a363a2262616972726f223b733a303a22223b733a383a2274656c65666f6e65223b733a303a22223b733a363a22737461747573223b733a353a22617469766f223b733a373a2263656c756c6172223b733a303a22223b733a343a227469706f223b733a353a22616c756e6f223b7d),
-('e8969b7586442bc18cc1a202fb1e9dfcd65ce772', '177.221.61.10', 1550689699, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303638393639393b),
-('2f731feb9e663a63e692968f0907f8a0260b0e75', '191.162.236.4', 1550694184, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303639343038303b61646d696e7c4f3a383a22737464436c617373223a31373a7b733a393a22616c756e6f735f6964223b733a313a2238223b733a343a226e6f6d65223b733a363a22666c6176696f223b733a353a22656d61696c223b733a31373a22666c6176696f40756f6c2e636f6d2e6272223b733a393a226d6174726963756c61223b733a303a22223b733a353a226c6f67696e223b733a363a22666c6176696f223b733a31333a22646174615f636164617374726f223b4e3b733a383a22656e64657265636f223b733a303a22223b733a353a227475726d61223b4e3b733a31353a22686973746f7269636f5f7475726d61223b4e3b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32302031313a33353a3133223b733a333a22636570223b733a303a22223b733a31313a22636f6d706c656d656e746f223b733a303a22223b733a363a2262616972726f223b733a303a22223b733a383a2274656c65666f6e65223b733a303a22223b733a363a22737461747573223b733a353a22617469766f223b733a373a2263656c756c6172223b733a303a22223b733a343a227469706f223b733a353a22616c756e6f223b7d);
+('a6f161adc3ed008ca6e66fe34038ad64d946f513', '209.17.96.226', 1550846028, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303834363032383b),
+('34f7d7ea6caeaf176d6dc741c9edf39135db0478', '191.162.252.17', 1550847795, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303834373539303b61646d696e7c4f3a383a22737464436c617373223a31373a7b733a393a22616c756e6f735f6964223b733a323a223135223b733a343a226e6f6d65223b733a353a226d61737361223b733a353a22656d61696c223b733a31383a226d61737361406d617373612e636f6d2e6272223b733a393a226d6174726963756c61223b733a303a22223b733a353a226c6f67696e223b733a353a226d61737361223b733a31333a22646174615f636164617374726f223b4e3b733a383a22656e64657265636f223b733a303a22223b733a353a227475726d61223b4e3b733a31353a22686973746f7269636f5f7475726d61223b4e3b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32322030363a30373a3430223b733a333a22636570223b733a303a22223b733a31313a22636f6d706c656d656e746f223b733a303a22223b733a363a2262616972726f223b733a303a22223b733a383a2274656c65666f6e65223b733a303a22223b733a363a22737461747573223b733a353a22617469766f223b733a373a2263656c756c6172223b733a303a22223b733a343a227469706f223b733a353a22616c756e6f223b7d),
+('2673745ec42dce48aef51d8f15214671d59adaf5', '177.221.61.10', 1550848699, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303834383637343b61646d696e7c4f3a383a22737464436c617373223a353a7b733a383a2261646d696e5f6964223b733a323a223132223b733a353a226c6f67696e223b733a353a2261646d696e223b733a353a22656d61696c223b733a303a22223b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32322030383a32353a3437223b733a343a227469706f223b733a353a2261646d696e223b7d),
+('073f6523cf97028d7ccbd5729ea2865032e758d4', '177.221.61.10', 1550849870, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303834393837303b),
+('f21c2805af2172e0fefacf9cda5d2547ef32cfde', '191.162.252.17', 1550857885, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303835373836373b61646d696e7c4f3a383a22737464436c617373223a31373a7b733a393a22616c756e6f735f6964223b733a313a2232223b733a343a226e6f6d65223b733a363a22666c6176696f223b733a353a22656d61696c223b733a31373a22666c6176696f40756f6c2e636f6d2e6272223b733a393a226d6174726963756c61223b733a31353a2230332f30322f323030312d30303031223b733a353a226c6f67696e223b733a363a22666c6176696f223b733a31333a22646174615f636164617374726f223b4e3b733a383a22656e64657265636f223b733a303a22223b733a353a227475726d61223b4e3b733a31353a22686973746f7269636f5f7475726d61223b4e3b733a31303a226c6173745f6c6f67696e223b733a31393a22323031392d30322d32322030393a33313a3234223b733a333a22636570223b733a303a22223b733a31313a22636f6d706c656d656e746f223b733a303a22223b733a363a2262616972726f223b733a303a22223b733a383a2274656c65666f6e65223b733a303a22223b733a363a22737461747573223b733a353a22617469766f223b733a373a2263656c756c6172223b733a303a22223b733a343a227469706f223b733a353a22616c756e6f223b7d),
+('e89bed44754d9a5c1de6943e1ba7f65a2973a5d8', '209.17.97.34', 1550860706, 0x5f5f63695f6c6173745f726567656e65726174657c693a313535303836303730363b);
 
 -- --------------------------------------------------------
 
@@ -1322,19 +1286,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `agendamento`
 --
 ALTER TABLE `agendamento`
-  MODIFY `agenda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `agenda_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `alunos`
 --
 ALTER TABLE `alunos`
-  MODIFY `alunos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `alunos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `aluno_cursos`
 --
 ALTER TABLE `aluno_cursos`
-  MODIFY `aluno_cursos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `aluno_cursos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `aulas`
@@ -1352,7 +1316,7 @@ ALTER TABLE `aula_modulos`
 -- AUTO_INCREMENT for table `avisos`
 --
 ALTER TABLE `avisos`
-  MODIFY `avisos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `avisos_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `cursos`
@@ -1418,13 +1382,13 @@ ALTER TABLE `planos`
 -- AUTO_INCREMENT for table `presenca`
 --
 ALTER TABLE `presenca`
-  MODIFY `presenca_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `presenca_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `professor`
 --
 ALTER TABLE `professor`
-  MODIFY `id_professor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_professor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `salas`
