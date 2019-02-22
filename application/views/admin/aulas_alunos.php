@@ -173,8 +173,12 @@
           
                                     </div>
 
-
-                                    <input type="hidden" id="mesa" name="mesa" value="" />
+                                    <?php if(isset($meu_agendamento->mesa)):?>
+                                     <input type="hidden" id="mesa" name="mesa" value="<?php echo $meu_agendamento->mesa;?>" />
+                                    <?php else:?>
+                                     <input type="hidden" id="mesa" name="mesa" value="" />
+                                    <?php endif;?>
+                                   
                                     <input type="hidden" id="aluno_id" name="aluno_id" value="<?php echo $aluno_id ?>"/>
                                     <input type="hidden" id="minha_agenda_id" name="agenda_id" value="<?php echo $agenda_id ?>"/>
                                 </form>

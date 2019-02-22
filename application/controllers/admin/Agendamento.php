@@ -252,13 +252,19 @@ class Agendamento extends BaseCrud
             foreach($resultados as $resultado){
                 $aulas[$resultado->modulos_id] = $resultado->presente;
                 $this->db->select('presenca.*');
+                
+
                 $meu_agendamento = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id))->row();
-                $my_agendamento = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id,'aluno_id'=>$this->session->userdata('admin')->alunos_id))->row();
+                $this->db->select('agendamento.*,presenca.*')
+                ->join('agendamento','agendamento.agenda_id =presenca.agenda_id');
+                $my_agendamento = $this->presenca->get_where(array('presenca.agenda_id'=>$resultado->agenda_id,'aluno_id'=>$this->session->userdata('admin')->alunos_id))->row();
                 $this->db->select('presenca.mesa');
                 $mesas_ocupadas[$resultado->agenda_id] = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id,'data_dia'=>$my_agendamento->data_dia,'dia_semana'=>$my_agendamento->dia_semana))->result();
 
             } 
             $this->data['meu_agendamento'] = $my_agendamento;
+
+           
             $this->data['mesas_ocupadas'] = $mesas_ocupadas;
            
             
