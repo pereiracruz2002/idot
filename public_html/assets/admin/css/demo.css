@@ -122,7 +122,7 @@
 }
 
 
-#place .selectedSeat_col-0, .selectedSeat_col-3, .selectedSeat_col-4{
+#place .selectedSeat_col-0,#place .selectedSeat_col-2, .selectedSeat_col-4{
     background:url("../img/mesa_off_esq.png") no-repeat scroll 0 0 transparent;
 }
 

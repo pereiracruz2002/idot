@@ -230,9 +230,6 @@ class Agendamento extends BaseCrud
        
 
 
-
-
-
         $aulas = array();
         $mesas_ocupadas = array();
         foreach($this->data['itens'] as $itens){
@@ -256,11 +253,12 @@ class Agendamento extends BaseCrud
                 $aulas[$resultado->modulos_id] = $resultado->presente;
                 $this->db->select('presenca.*');
                 $meu_agendamento = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id))->row();
+                $my_agendamento = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id,'aluno_id'=>$this->session->userdata('admin')->alunos_id))->row();
                 $this->db->select('presenca.mesa');
-                $mesas_ocupadas[$resultado->agenda_id] = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id,'data_dia'=>$meu_agendamento->data_dia,'dia_semana'=>$meu_agendamento->dia_semana))->result();
+                $mesas_ocupadas[$resultado->agenda_id] = $this->presenca->get_where(array('agenda_id'=>$resultado->agenda_id,'data_dia'=>$my_agendamento->data_dia,'dia_semana'=>$my_agendamento->dia_semana))->result();
 
             } 
-
+            $this->data['meu_agendamento'] = $my_agendamento;
             $this->data['mesas_ocupadas'] = $mesas_ocupadas;
            
             
@@ -268,7 +266,7 @@ class Agendamento extends BaseCrud
 
  
         $this->data['aulas'] = $aulas;
-      ;
+      
 
     
         
@@ -594,5 +592,21 @@ class Agendamento extends BaseCrud
         $this->data['jsFiles'] = array('notificacoes.js');
         $this->load->view('admin/notificacoes', $this->data);
 	}
+
+
+    public function returnDadosDia(){
+        $days_of_week[0] = 'domingo';
+        $days_of_week[1] = 'segunda';
+        $days_of_week[2] = 'terca';
+        $days_of_week[3] = 'quarta';
+        $days_of_week[4] = 'quinta';
+        $days_of_week[5] = 'sexta';
+        $days_of_week[6] = 'sábado';
+
+        $posts = $this->input->posts();
+        $data_dia = $posts['data_dia'];
+        $data_semana = date('w', strtotime($data_dia));
+        echo $days_of_week[$data_semana];
+    }
 
 }

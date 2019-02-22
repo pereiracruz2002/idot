@@ -56,15 +56,34 @@
                                             <td><?= strip_tags($row->modulo) ?></td>
                                             <td><?= $row->professor ?></td>
                                             <td><?php 
-                                            echo  "<input type='radio' checked='checked' class='data_dia' name='data_dia' value='".$row->data."'>".formata_data($row->data);
+
+                                            
+                                            if($meu_agendamento->data_dia==$row->data){
+                                                $checked = " checked='checked'";
+                                            }else{
+                                                $checked = '';
+                                            }
+                                            
+                                            echo  "<input type='radio' ".$checked." class='data_dia' name='data_dia' value='".$row->data."'>".formata_data($row->data);
                                             echo "<br >";
                                             if($row->data_segunda!='0000-00-00'){
-                                                echo  "<input type='radio' class='data_dia' name='data_dia' value='".$row->data_segunda."'>".formata_data($row->data_segunda);
+                                                if($meu_agendamento->data_dia==$row->data_segunda){
+                                                    $checked = " checked='checked'";
+                                                }else{
+                                                    $checked = '';
+                                                }
+
+                                                echo  "<input type='radio' ".$checked." class='data_dia' name='data_dia' value='".$row->data_segunda."'>".formata_data($row->data_segunda);
                                                 echo "<br >";
 
                                             }
                                             if($row->data_terceira!='0000-00-00'){
-                                                echo  "<input type='radio' class='data_dia' name='data_dia' value='".$row->data_terceira."'>".formata_data($row->data_terceira);
+                                                if($meu_agendamento->data_dia==$row->data_terceira){
+                                                    $checked = " checked='checked'";
+                                                }else{
+                                                    $checked = '';
+                                                }
+                                                echo  "<input type='radio' ".$checked." class='data_dia' name='data_dia' value='".$row->data_terceira."'>".formata_data($row->data_terceira);
                                                 echo "<br >";
                                             }
                                             ?>
@@ -74,13 +93,25 @@
                                                 $i = 0;
                                                 
                                                 foreach ($dias as $key => $value) {
-                                                    if($i==0){
-                                                        echo "<input type='radio' class='dias_semana' checked='checked' name='dias_semana' value='".$value."'>".$value;
-                                                        echo "<br />";
+                                                    $atributo_data_dias = explode(' ',$value);
+                                                    if(count($atributo_data_dias)>0){
+                                                        $attr = $atributo_data_dias[0];
                                                     }else{
-                                                        echo "<input type='radio' class='dias_semana' name='dias_semana' value='".$value."'>".$value;
-                                                        echo "<br />";
+                                                        $attr=$value;
                                                     }
+                                                    //if($i==0){
+
+                                                        if($meu_agendamento->dia_semana==$value){
+                                                            $checked = " checked='checked'";
+                                                        }else{
+                                                            $checked = '';
+                                                        }
+                                                        echo "<input data-dias='".$attr."' type='radio' class='dias_semana' ".$checked." name='dias_semana' value='".$value."'>".$value;
+                                                        echo "<br />";
+                                                    // }else{
+                                                    //     echo "<input type='radio' data-dias='".$attr."' class='dias_semana' name='dias_semana' value='".$value."'>".$value;
+                                                    //     echo "<br />";
+                                                    // }
                                                     $i++;
                                                     
                                                 }
@@ -157,7 +188,7 @@
                                     <?php }else{?>
                                         <?php if($row->presenca=='sim'):?>
                                             <p><i class="pe-7s-check">Confirmado</i></p>
-                                            <p> <a  class="hide btn btn-xs btn-info btn btn-info confirmar_presenca" href="1" title="Editar Presença" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Editar Presença</a></p>
+                                            <p> <a  class="btn btn-xs btn-info btn btn-info confirmar_presenca" href="1" title="Editar Presença" data-confirm="<?php echo site_url(); ?>/admin/agendamento/checar_presenca" class="btn btn-mini btn-warning confirmar_presenca"><i class="fa fa-eye"></i>Editar Presença</a></p>
                                         <?php else:?>
                                              <p><i class="pe-7s-close-circle">Ausente</i></p>
                                         <?php endif;?>

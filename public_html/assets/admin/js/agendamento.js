@@ -37,7 +37,7 @@ $(function () {
 
     //Case II: If already booked
 
-    //var bookedSeats = [5, 10];
+    //var bookedSeats = [1,2,3,4,5,6,7,8,9];
     console.log(bookedSeats)
     init(bookedSeats);
 
@@ -59,6 +59,26 @@ $(function () {
             str.push(item);                   
         });
         alert(str.join(','));
+    })
+
+    $('.data_dia').on('click',function(){
+        var data_dia = $(this).val();
+        
+
+        $.post(base_url+"/agendamento/returnDadosDia",
+          {
+            data_dia: data_dia
+
+          },
+          function(data, status){
+             $('.dias_semana').each(function( index ) {
+                if($( this ).attr('data-dias') != data){
+                    $( this ).attr("disabled", true);
+                }else{
+                    $( this ).removeAttr("disabled", true);
+                } 
+            });
+        });   
     })
 
     $('.dias_semana').on('click',function(){
