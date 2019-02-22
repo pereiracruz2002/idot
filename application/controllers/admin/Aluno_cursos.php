@@ -39,12 +39,12 @@ class Aluno_cursos extends BaseCrud
 
     public function _filter_pre_save(&$data) 
     {
-        $this->load->model('aluno_cursos_model','aluno_curso');
-        $where = array('aluno_id'=>$data['aluno_id']);
-        $has_curso = $this->aluno_curso->get_where($where)->row();
-        if($has_curso){
-            $data['aluno_cursos_id'] = $has_curso->aluno_cursos_id;
-        }
+        //$this->load->model('aluno_cursos_model','aluno_curso');
+        //$where = array('aluno_id'=>$data['aluno_id']);
+        //$has_curso = $this->aluno_curso->get_where($where)->row();
+        //if($has_curso){
+            //$data['aluno_cursos_id'] = $has_curso->aluno_cursos_id;
+       // }
     }
 
    

@@ -54,6 +54,9 @@ class Cursos extends BaseCrud
     {
         // foreach ($data as $key) {
 
+            
+        // }
+
  
 
     }
